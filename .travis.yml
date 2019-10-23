@@ -1,0 +1,12 @@
+sudo: required
+
+matrix:
+  include:
+    - language: csharp
+      install:
+        - git checkout $TRAVIS_BRANCH
+      before_script:
+        - sh init.sh
+      script:
+        - sh build.sh
+
