@@ -1,0 +1,10 @@
+ [Unit]
+ Description=GrowSense SystemManager WWW Service
+ After=multi-user.target
+
+ [Service]
+ Type=idle
+ ExecStart=/bin/bash -c "bash /usr/local/GrowSense/Index/start-www.sh"
+
+ [Install]
+ WantedBy=multi-user.target

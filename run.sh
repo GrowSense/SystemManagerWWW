@@ -1,3 +1,3 @@
 cd src/GrowSense.SystemManager.WWW
 
-xsp4
+xsp4 --port 80
