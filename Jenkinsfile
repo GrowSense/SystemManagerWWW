@@ -34,6 +34,12 @@ pipeline {
                 sh 'sh build.sh'
             }
         }
+        stage('Graduate') {
+            when { expression { !shouldSkipBuild() } }
+            steps {
+                sh 'sh graduate.sh'
+            }
+        }
         stage('CleanWSEnd') {
             steps {
                 deleteDir()
