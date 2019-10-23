@@ -34,12 +34,6 @@ pipeline {
                 sh 'sh build.sh'
             }
         }
-        stage('Clean') {
-            when { expression { !shouldSkipBuild() } }
-            steps {
-                sh 'sh clean.sh'
-            }
-        }
         stage('CleanWSEnd') {
             steps {
                 deleteDir()
