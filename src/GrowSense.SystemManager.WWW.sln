@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrowSense.SystemManager.Devices", "GrowSense.SystemManager.Devices\GrowSense.SystemManager.Devices.csproj", "{93B07A96-9021-48A1-AD85-84016529195D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrowSense.SystemManager.Computers", "GrowSense.SystemManager.Computers\GrowSense.SystemManager.Computers.csproj", "{E4F593D4-C92A-4A37-A51A-2183EEAF476C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrowSense.SystemManager.Mqtt", "GrowSense.SystemManager.Mqtt\GrowSense.SystemManager.Mqtt.csproj", "{ADA4F823-92BA-47BA-8B03-FEC87C02B89F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrowSense.SystemManager.Web", "GrowSense.SystemManager.Web\GrowSense.SystemManager.Web.csproj", "{BB1564DF-7C46-402A-AC9E-61BEF9577261}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrowSense.SystemManager.WWW", "GrowSense.SystemManager.WWW\GrowSense.SystemManager.WWW.csproj", "{5E67C20C-04CE-4BFF-95F4-D04D4E1548E1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5E67C20C-04CE-4BFF-95F4-D04D4E1548E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E67C20C-04CE-4BFF-95F4-D04D4E1548E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E67C20C-04CE-4BFF-95F4-D04D4E1548E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E67C20C-04CE-4BFF-95F4-D04D4E1548E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93B07A96-9021-48A1-AD85-84016529195D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93B07A96-9021-48A1-AD85-84016529195D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93B07A96-9021-48A1-AD85-84016529195D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93B07A96-9021-48A1-AD85-84016529195D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADA4F823-92BA-47BA-8B03-FEC87C02B89F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADA4F823-92BA-47BA-8B03-FEC87C02B89F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADA4F823-92BA-47BA-8B03-FEC87C02B89F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADA4F823-92BA-47BA-8B03-FEC87C02B89F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB1564DF-7C46-402A-AC9E-61BEF9577261}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB1564DF-7C46-402A-AC9E-61BEF9577261}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB1564DF-7C46-402A-AC9E-61BEF9577261}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB1564DF-7C46-402A-AC9E-61BEF9577261}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4F593D4-C92A-4A37-A51A-2183EEAF476C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4F593D4-C92A-4A37-A51A-2183EEAF476C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4F593D4-C92A-4A37-A51A-2183EEAF476C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4F593D4-C92A-4A37-A51A-2183EEAF476C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = GrowSense.SystemManager.Devices\GrowSense.SystemManager.Devices.csproj
+	EndGlobalSection
+EndGlobal
