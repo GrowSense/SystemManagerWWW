@@ -1,0 +1,1 @@
+cp -f src/GrowSense.SystemManager.WWW/web.config.default src/GrowSense.SystemManager.WWW/web.config
