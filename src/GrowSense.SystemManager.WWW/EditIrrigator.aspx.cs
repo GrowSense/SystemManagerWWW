@@ -131,6 +131,10 @@ namespace GrowSense.SystemManager.WWW
       HandleReadingIntervalSubmission ();
       HandleThresholdSubmission ();
       HandlePumpModeSubmission ();
+      HandleBurstOnTimeSubmission ();
+      HandleBurstOffTimeSubmission ();
+      HandleDryCalibrationSubmission ();
+      HandleWetCalibrationSubmission ();
     }
 
     public void HandleLabelSubmission ()
