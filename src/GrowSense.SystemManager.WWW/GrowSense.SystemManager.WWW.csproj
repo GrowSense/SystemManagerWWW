@@ -44,6 +44,7 @@
     <Content Include="Default.aspx" />
     <Content Include="Devices.aspx" />
     <Content Include="Computers.aspx" />
+    <Content Include="EditIrrigator.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -69,6 +70,12 @@
     </Compile>
     <Compile Include="Computers.aspx.designer.cs">
       <DependentUpon>Computers.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditIrrigator.aspx.cs">
+      <DependentUpon>EditIrrigator.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditIrrigator.aspx.designer.cs">
+      <DependentUpon>EditIrrigator.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -97,5 +104,8 @@
       <Project>{BB1564DF-7C46-402A-AC9E-61BEF9577261}</Project>
       <Name>GrowSense.SystemManager.Web</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Irrigator\" />
   </ItemGroup>
 </Project>

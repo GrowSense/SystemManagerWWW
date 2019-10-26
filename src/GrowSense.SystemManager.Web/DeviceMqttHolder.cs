@@ -6,11 +6,11 @@ using System.Configuration;
 
 namespace GrowSense.SystemManager.Web
 {
-  public class DeviceMqttListenerHolder
+  public class DeviceMqttHolder
   {
-    static public DeviceMqttListener Current;
+    static public DeviceMqtt Current;
 
-    public DeviceMqttListenerHolder ()
+    public DeviceMqttHolder ()
     {
     }
 
@@ -24,7 +24,7 @@ namespace GrowSense.SystemManager.Web
       
       var devicesDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["DevicesDirectory"]);
     
-      Current = new DeviceMqttListener (new DeviceManager (devicesDirectory).GetDevicesInfo ());
+      Current = new DeviceMqtt (new DeviceManager (devicesDirectory).GetDevicesInfo ());
       Current.Connect (mqttDeviceName, mqttHost, mqttUsername, mqttPassword, mqttPort);
     }
   }

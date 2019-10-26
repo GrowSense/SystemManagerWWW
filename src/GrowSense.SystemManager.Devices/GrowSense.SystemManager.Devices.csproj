@@ -38,4 +38,10 @@
     <Compile Include="DeviceInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\GrowSense.SystemManager.Common\GrowSense.SystemManager.Common.csproj">
+      <Project>{B772BBBE-B363-438F-9215-E2D533A3CD2D}</Project>
+      <Name>GrowSense.SystemManager.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

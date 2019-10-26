@@ -3,16 +3,17 @@ using uPLibrary.Networking.M2Mqtt;
 using GrowSense.SystemManager.Devices;
 using uPLibrary.Networking.M2Mqtt.Messages;
 using System.Collections.Generic;
+using System.Text;
 
 namespace GrowSense.SystemManager.Mqtt
 {
-  public class DeviceMqttListener
+  public class DeviceMqtt
   {
     public DeviceInfo[] Devices;
     MqttClient Client;
     public Dictionary<string, Dictionary<string, string>> Data = new Dictionary<string, Dictionary<string, string>> ();
-    //public event MqttClient.MqttMsgPublishEventHandler MqttMsgPublishReceived;
-    public DeviceMqttListener (DeviceInfo[] devicesInfo)
+
+    public DeviceMqtt (DeviceInfo[] devicesInfo)
     {
       Devices = devicesInfo;
     }
@@ -47,11 +48,14 @@ namespace GrowSense.SystemManager.Mqtt
       Data [deviceName] [topicKey] = value;
     }
 
-    public int GetInt32 (string topicKey)
+    public void Publish (string deviceName, string topicKey, int value)
     {
-      //var mqtt = new Mqtt
-      
-      return 0;
+      Publish (deviceName, topicKey, value.ToString ());
+    }
+
+    public void Publish (string deviceName, string topicKey, string value)
+    {
+      Client.Publish ("/" + deviceName + "/" + topicKey + "/in", Encoding.UTF8.GetBytes (value), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
     }
   }
 }

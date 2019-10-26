@@ -1730,7 +1730,7 @@ background: #fffbcc !important;
 /* FORMS CONFIGURATION */
 .form-panel {
 	background: #ffffff;
-	margin: 10px;
+	margin: 0px;
 	padding: 10px;
 	box-shadow: 0px 3px 2px #aab2bd;
 	text-align: left;

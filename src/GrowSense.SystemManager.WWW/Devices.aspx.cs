@@ -29,7 +29,11 @@ namespace GrowSense.SystemManager
     
     public string GetDeviceData (string deviceName, string topicKey)
     {
-    return DeviceMqttListenerHolder.Current.Data[deviceName][topicKey];
+      if (!DeviceMqttHolder.Current.Data.ContainsKey (deviceName))
+        return 0.ToString(); // throw new Exception ("Device not found in DeviceMqttHolder.Current.Data: " + deviceName);
+      if (!DeviceMqttHolder.Current.Data [deviceName].ContainsKey (topicKey))
+        return 0.ToString(); // throw new Exception ("Topic key not found in DeviceMqttHolder.Current.Data[" + deviceName + "]: " + topicKey);
+      return DeviceMqttHolder.Current.Data [deviceName] [topicKey];
     }
     
     public string GenerateDeviceStatusIcon (string deviceName)
@@ -109,6 +113,28 @@ namespace GrowSense.SystemManager
                       text,
                       cssClass
         );
+    }
+    
+    public string GetDeviceEditLink (DeviceInfo deviceInfo)
+    {
+      var targetName = "";
+      
+      if (deviceInfo.Group == "irrigator")
+        targetName = "Irrigator";
+      if (deviceInfo.Group == "ventilator")
+        targetName = "Ventilator";
+      if (deviceInfo.Group == "illuminator")
+        targetName = "Illuminator";
+      if (deviceInfo.Group == "monitor") {
+        if (deviceInfo.Project.StartsWith("SoilMoisture"))
+          targetName = "SoilMoistureMonitor";
+        if (deviceInfo.Project.StartsWith("TemperatureHumidity"))
+          targetName = "TemperatureHumidityMonitor";
+        if (deviceInfo.Project.StartsWith("Light"))
+          targetName = "LightMonitor";
+      }
+    
+      return "Edit" + targetName + ".aspx?DeviceName=" + deviceInfo.Name;
     }
   }
 }

@@ -5,10 +5,10 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{ADA4F823-92BA-47BA-8B03-FEC87C02B89F}</ProjectGuid>
+    <ProjectGuid>{B772BBBE-B363-438F-9215-E2D533A3CD2D}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>GrowSense.SystemManager.Mqtt</RootNamespace>
-    <AssemblyName>GrowSense.SystemManager.Mqtt</AssemblyName>
+    <RootNamespace>GrowSense.SystemManager.Common</RootNamespace>
+    <AssemblyName>GrowSense.SystemManager.Common</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -31,19 +31,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="M2Mqtt.Net">
-      <HintPath>..\..\lib\M2Mqtt\lib\net45\M2Mqtt.Net.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DeviceMqtt.cs" />
+    <Compile Include="ProcessStarter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <ProjectReference Include="..\GrowSense.SystemManager.Devices\GrowSense.SystemManager.Devices.csproj">
-      <Project>{93B07A96-9021-48A1-AD85-84016529195D}</Project>
-      <Name>GrowSense.SystemManager.Devices</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>

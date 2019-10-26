@@ -13,7 +13,7 @@ namespace WWW
 		
     protected void Application_Start (Object sender, EventArgs e)
     {
-      DeviceMqttListenerHolder.Initialize ();
+      DeviceMqttHolder.Initialize ();
     }
 
     protected void Session_Start (Object sender, EventArgs e)
