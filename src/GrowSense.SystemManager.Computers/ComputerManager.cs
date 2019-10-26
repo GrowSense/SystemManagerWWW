@@ -18,14 +18,18 @@ namespace GrowSense.SystemManager.Computers
       var list = new List<ComputerInfo> ();
       
       var localComputerInfo = new ComputerInfo ();
-      localComputerInfo.Host = "localhost";
+      localComputerInfo.Name = "localhost";
+      localComputerInfo.Host = "127.0.0.1";
         
       list.Add (localComputerInfo);
         
-      foreach (var dir in Directory.GetDirectories(ComputersDirectory)) {
-        var computerInfo = new ComputerInfo ();
-        computerInfo.Host = File.ReadAllText (Path.Combine (dir, "host.txt"));
-        list.Add (computerInfo);
+      if (Directory.Exists (ComputersDirectory)) {
+        foreach (var dir in Directory.GetDirectories(ComputersDirectory)) {
+          var computerInfo = new ComputerInfo ();
+          computerInfo.Name = File.ReadAllText (Path.Combine (dir, "name.security"));
+          computerInfo.Host = File.ReadAllText (Path.Combine (dir, "host.security"));
+          list.Add (computerInfo);
+        }
       }
       
       return list.ToArray ();

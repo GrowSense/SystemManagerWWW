@@ -35,6 +35,9 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Web.Services" />
+    <Reference Include="M2Mqtt.Net">
+      <HintPath>..\..\lib\M2Mqtt\lib\net45\M2Mqtt.Net.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -45,6 +48,7 @@
     <Content Include="Devices.aspx" />
     <Content Include="Computers.aspx" />
     <Content Include="EditIrrigator.aspx" />
+    <Content Include="MqttConnectionFailure.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -76,6 +80,12 @@
     </Compile>
     <Compile Include="EditIrrigator.aspx.designer.cs">
       <DependentUpon>EditIrrigator.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MqttConnectionFailure.aspx.cs">
+      <DependentUpon>MqttConnectionFailure.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MqttConnectionFailure.aspx.designer.cs">
+      <DependentUpon>MqttConnectionFailure.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

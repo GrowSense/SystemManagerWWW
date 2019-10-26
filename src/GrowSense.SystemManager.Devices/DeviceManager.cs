@@ -20,9 +20,11 @@ namespace GrowSense.SystemManager.Devices
     public DeviceInfo[] GetDevicesInfo ()
     {
       var list = new List<DeviceInfo> ();
-      foreach (var deviceDirectory in Directory.GetDirectories(DevicesDirectory)) {
-        var deviceInfo = GetDeviceInfo (Path.GetFileNameWithoutExtension (deviceDirectory));
-        list.Add (deviceInfo);
+      if (Directory.Exists (DevicesDirectory)) {
+        foreach (var deviceDirectory in Directory.GetDirectories(DevicesDirectory)) {
+          var deviceInfo = GetDeviceInfo (Path.GetFileNameWithoutExtension (deviceDirectory));
+          list.Add (deviceInfo);
+        }
       }
       return list.ToArray ();
     }

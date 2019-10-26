@@ -231,7 +231,7 @@ ul.top-menu > li > .logout {
 /*sidebar navigation*/
 
 #sidebar {
-    width: 170px;
+    width: 210px;
     height: 100%;
     position: fixed;
     background: #2f323a;
@@ -242,7 +242,7 @@ ul.top-menu > li > .logout {
 	font-weight: 700;
 }
 
-#sidebar div {
+#sidebar ul li {
     position: relative;
 }
 
@@ -399,9 +399,7 @@ ul.sidebar-menu li a.active i {
 
 /* MAIN CONTENT CONFIGURATION */
 #main-content {
-    margin-left: 80px;
-    margin-right: 10px;
-    width: 100%;
+    margin-left: 210px;
 }
 
 .header, .footer {
@@ -423,9 +421,9 @@ ul.sidebar-menu li a.active i {
 
 .wrapper {
     display: inline-block;
-    margin-top: 20px;
-    padding-left: 5px;
-    padding-right: 5px;
+    margin-top: 60px;
+    padding-left: 15px;
+    padding-right: 15px;
     padding-bottom: 15px;
     padding-top: 0px;
     width: 100%;
@@ -1731,7 +1729,7 @@ background: #fffbcc !important;
 /* FORMS CONFIGURATION */
 .form-panel {
 	background: #ffffff;
-	margin: 0px;
+	margin: 10px;
 	padding: 10px;
 	box-shadow: 0px 3px 2px #aab2bd;
 	text-align: left;
