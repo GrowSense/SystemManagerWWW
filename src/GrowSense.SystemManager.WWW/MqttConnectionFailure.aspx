@@ -7,15 +7,24 @@
     <div class="col-lg-12">
       <div class="form-panel">
         <h4 class="mb"><i class="fa fa-angle-right"></i> MQTT Connection Failed</h4>
+        <p>Failed to connect to the MQTT broker...</p>
         <div class="form-horizontal style-form">
           <div class="form-group">
-            <label>Failed to connect to the MQTT broker...</label>
-          </div>
-        </div><div class="form-horizontal style-form">
-          <div class="form-group">
             <label class="col-sm-2 col-sm-2 control-label">Host:</label>
-            <div class="col-sm-10">
-              <%= MqttHost %>
+            <div>
+              <input type="text" value="<%= MqttHost %>" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">Username:</label>
+            <div>
+              <input type="text" value="<%= MqttUsername %>" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">Port:</label>
+            <div>
+              <input type="text" value="<%= MqttPort %>" />
             </div>
           </div>
         </div>
