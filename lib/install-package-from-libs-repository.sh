@@ -36,7 +36,7 @@ if [ ! -f "$PACKAGE_FILE_EXT" ]; then
 	
 	if [ $IS_IN_INDEX ]; then
 	  # Get the path to the GrowSense index lib directory
-	  INDEX_LIB_DIR=$(readlink -f "../lib")
+	  INDEX_LIB_DIR=$(readlink -f "../../../lib")
 	  
 	  #echo "  GrowSense index lib directory:"
 	  #echo "    $INDEX_LIB_DIR"
