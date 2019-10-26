@@ -32,9 +32,9 @@ namespace GrowSense.SystemManager.Devices
       var deviceDirectory = Path.Combine (DevicesDirectory, deviceName);
       var deviceInfo = new DeviceInfo ();
       deviceInfo.Name = Path.GetFileNameWithoutExtension (deviceDirectory);
-      deviceInfo.Label = File.ReadAllText (Path.Combine (deviceDirectory, "label.txt"));
-      deviceInfo.Group = File.ReadAllText (Path.Combine (deviceDirectory, "group.txt"));
-      deviceInfo.Project = File.ReadAllText (Path.Combine (deviceDirectory, "project.txt"));
+      deviceInfo.Label = File.ReadAllText (Path.Combine (deviceDirectory, "label.txt")).Trim ();
+      deviceInfo.Group = File.ReadAllText (Path.Combine (deviceDirectory, "group.txt")).Trim ();
+      deviceInfo.Project = File.ReadAllText (Path.Combine (deviceDirectory, "project.txt")).Trim ();
       return deviceInfo;
     }
 
