@@ -17,9 +17,11 @@ namespace GrowSense.SystemManager.WWW
 
     public void Page_Load (object sender, EventArgs e)
     {
+      var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
+    
       var devicesDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["DevicesDirectory"]);
     
-      DeviceManager = new DeviceManager (devicesDirectory);
+      DeviceManager = new DeviceManager (indexDirectory, devicesDirectory);
       
       var deviceName = Request.QueryString ["DeviceName"];
   

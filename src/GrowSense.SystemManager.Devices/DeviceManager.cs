@@ -2,15 +2,18 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using GrowSense.SystemManager.Common;
+using System.Configuration;
 
 namespace GrowSense.SystemManager.Devices
 {
   public class DeviceManager
   {
-    public string DevicesDirectory = Path.GetFullPath ("devices");
+    public string IndexDirectory;
+    public string DevicesDirectory;
 
-    public DeviceManager (string devicesDirectory)
+    public DeviceManager (string indexDirectory, string devicesDirectory)
     {
+      IndexDirectory = indexDirectory;
       DevicesDirectory = devicesDirectory;
     }
 
@@ -37,8 +40,11 @@ namespace GrowSense.SystemManager.Devices
 
     public void SetDeviceLabel (string deviceName, string deviceLabel)
     {
+      var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
+    
       var starter = new ProcessStarter ();
-      starter.Start ("bash set-device-label.sh", deviceName, deviceLabel);
+      starter.WorkingDirectory = indexDirectory;
+      starter.StartBash ("bash set-device-label.sh " + deviceName + " " + deviceLabel);
       
       if (starter.IsError)
         throw new Exception ("Failed to set device label using set-device-label.sh script.\n\n" + starter.Output);

@@ -21,9 +21,11 @@ namespace GrowSense.SystemManager
 
     public void LoadDevicesInfo ()
     {
+      var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
+    
       var devicesDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["DevicesDirectory"]);
     
-      var deviceManager = new DeviceManager (Path.GetFullPath ("devices"));
+      var deviceManager = new DeviceManager (indexDirectory, devicesDirectory);
       DevicesInfo = deviceManager.GetDevicesInfo ();
     }
     

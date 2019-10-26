@@ -22,9 +22,11 @@ namespace GrowSense.SystemManager.Web
       var mqttPassword = ConfigurationSettings.AppSettings ["MqttPassword"];
       var mqttPort = Convert.ToInt32 (ConfigurationSettings.AppSettings ["MqttPort"]);
       
+      var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
+    
       var devicesDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["DevicesDirectory"]);
     
-      Current = new DeviceMqtt (new DeviceManager (devicesDirectory).GetDevicesInfo ());
+      Current = new DeviceMqtt (new DeviceManager (indexDirectory, devicesDirectory).GetDevicesInfo ());
       Current.Connect (mqttDeviceName, mqttHost, mqttUsername, mqttPassword, mqttPort);
     }
   }

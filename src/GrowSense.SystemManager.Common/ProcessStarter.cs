@@ -19,9 +19,11 @@ namespace GrowSense.SystemManager.Common
     }
 
     public StringBuilder OutputBuilder = new StringBuilder ();
+    public string WorkingDirectory;
 
     public ProcessStarter ()
     {
+      WorkingDirectory = Directory.GetCurrentDirectory ();
     }
 
     public Process Start (params string[] commandParts)
@@ -93,6 +95,8 @@ namespace GrowSense.SystemManager.Common
                 if (!File.Exists (Path.GetFullPath (command)))
                     throw new ArgumentException ("Cannot find the file '" + Path.GetFullPath (command) + "'.");
             }
+            
+            Directory.SetCurrentDirectory(WorkingDirectory);
 
             // Create the process start information
             ProcessStartInfo info = new ProcessStartInfo (
@@ -166,6 +170,11 @@ namespace GrowSense.SystemManager.Common
             }
 
             return process;
+        }
+        
+        public void StartBash (string command)
+        {
+          Start("/bin/bash -c " + command);
         }
 
         public string[] FixArguments (string[] arguments)

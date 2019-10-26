@@ -105,7 +105,4 @@
       <Name>GrowSense.SystemManager.Web</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Irrigator\" />
-  </ItemGroup>
 </Project>
