@@ -34,6 +34,8 @@ namespace GrowSense.SystemManager.WWW
         PopulateForm ();
       } else {
         HandleSubmission ();
+        
+        Response.Redirect ("Devices.aspx");
       }
     }
 
