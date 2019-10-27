@@ -26,7 +26,7 @@ namespace GrowSense.SystemManager.Mqtt
       Client.Connect (clientId, mqttUsername, mqttPassword);
       
       foreach (var deviceInfo in Devices) {
-        Client.Subscribe (new string[] { "/" + deviceInfo.Name + "/#" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+        Client.Subscribe (new string[] { deviceInfo.Name + "/#" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
       }
     }
 
@@ -38,9 +38,9 @@ namespace GrowSense.SystemManager.Mqtt
       
       var topicParts = topic.Split ('/');
       
-      var deviceName = topicParts [1];
+      var deviceName = topicParts [0];
       
-      var topicKey = topicParts [2];
+      var topicKey = topicParts [1];
       
       if (!Data.ContainsKey (deviceName))
         Data.Add (deviceName, new Dictionary<string, string> ());
@@ -55,7 +55,7 @@ namespace GrowSense.SystemManager.Mqtt
 
     public void Publish (string deviceName, string topicKey, string value)
     {
-      Client.Publish ("/" + deviceName + "/" + topicKey + "/in", Encoding.UTF8.GetBytes (value), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+      Client.Publish (deviceName + "/" + topicKey + "/in", Encoding.UTF8.GetBytes (value), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
     }
   }
 }
