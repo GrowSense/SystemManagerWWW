@@ -12,7 +12,7 @@
             <tr>
               <th><i class="fa fa-bullhorn"></i> Computer</th>
               <th><i class="fa fa-bullhorn"></i> Path</th>
-              <th><i class="fa fa-bullhorn"></i> Path</th>
+              <th><i class="fa fa-bullhorn"></i></th>
               <th></th>
             </tr>
           </thead>

@@ -13,6 +13,11 @@ namespace GrowSense.SystemManager.Computers
       ComputersDirectory = computersDirectory;
     }
 
+    public int CountComputers ()
+    {
+      return Directory.GetDirectories (ComputersDirectory).Length + 1; // +1 to include localhost
+    }
+
     public ComputerInfo[] GetComputersInfo ()
     {
       var list = new List<ComputerInfo> ();

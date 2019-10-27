@@ -17,6 +17,11 @@ namespace GrowSense.SystemManager.Devices
       DevicesDirectory = devicesDirectory;
     }
 
+    public int CountDevices ()
+    {
+      return Directory.GetDirectories (DevicesDirectory).Length;
+    }
+
     public DeviceInfo[] GetDevicesInfo ()
     {
       var list = new List<DeviceInfo> ();

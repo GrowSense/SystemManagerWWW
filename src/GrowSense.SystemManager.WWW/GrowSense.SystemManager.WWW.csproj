@@ -49,6 +49,10 @@
     <Content Include="Computers.aspx" />
     <Content Include="EditIrrigator.aspx" />
     <Content Include="MqttConnectionFailure.aspx" />
+    <Content Include="EditSoilMoistureMonitor.aspx" />
+    <Content Include="EditVentilator.aspx" />
+    <Content Include="EditIlluminator.aspx" />
+    <Content Include="EditLightMonitor.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -84,8 +88,29 @@
     <Compile Include="MqttConnectionFailure.aspx.cs">
       <DependentUpon>MqttConnectionFailure.aspx</DependentUpon>
     </Compile>
-    <Compile Include="MqttConnectionFailure.aspx.designer.cs">
-      <DependentUpon>MqttConnectionFailure.aspx</DependentUpon>
+    <Compile Include="EditSoilMoistureMonitor.aspx.cs">
+      <DependentUpon>EditSoilMoistureMonitor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditSoilMoistureMonitor.aspx.designer.cs">
+      <DependentUpon>EditSoilMoistureMonitor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditVentilator.aspx.cs">
+      <DependentUpon>EditVentilator.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditVentilator.aspx.designer.cs">
+      <DependentUpon>EditVentilator.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditIlluminator.aspx.cs">
+      <DependentUpon>EditIlluminator.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditIlluminator.aspx.designer.cs">
+      <DependentUpon>EditIlluminator.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditLightMonitor.aspx.cs">
+      <DependentUpon>EditLightMonitor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditLightMonitor.aspx.designer.cs">
+      <DependentUpon>EditLightMonitor.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

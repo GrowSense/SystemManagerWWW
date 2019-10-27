@@ -1,4 +1,4 @@
-<%@ Page Language="C#" Inherits="GrowSense.SystemManager.WWW.EditIrrigator" MasterPageFile="~/Master.master" %>
+<%@ Page Language="C#" Inherits="GrowSense.SystemManager.WWW.EditVentilator" MasterPageFile="~/Master.master" %>
 <%@ MasterType VirtualPath="~/Master.master" %>
 <asp:Content ContentPlaceHolderID="contentPlaceHolder" ID="contentPlaceHolderContent" runat="server">
   <h3><i class="fa fa-angle-right"></i> Garden</h3>
@@ -25,9 +25,9 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 col-sm-2 control-label">Pump Mode:</label>
+            <label class="col-sm-2 col-sm-2 control-label">Fan Mode:</label>
             <div class="col-sm-10">
-              <asp:DropDownList runat="server" id="PumpMode" CssClass="form-control" Style="width: 100px;">
+              <asp:DropDownList runat="server" id="FanMode" CssClass="form-control" Style="width: 100px;">
                  <asp:ListItem Enabled="true" Text="Off" Value="0"></asp:ListItem>
                  <asp:ListItem Enabled="true" Text="On" Value="1"></asp:ListItem>
                  <asp:ListItem Enabled="true" Text="Auto" Value="2"></asp:ListItem>
@@ -35,37 +35,26 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 col-sm-2 control-label">Threshold:</label>
-            <div class="col-sm-10">
-              <asp:DropDownList runat="server" id="Threshold" CssClass="form-control" Style="width: 100px;">
+            <label class="col-sm-2 col-sm-2 control-label">Temperature:</label>
+            <div class="col-sm-10 form-inline">
+              Minimum
+              <asp:DropDownList runat="server" id="MinimumTemperature" CssClass="form-control" Style="width: 100px;">
+              </asp:DropDownList>
+              &nbsp;&nbsp;&nbsp;
+              Maximum
+              <asp:DropDownList runat="server" id="MaximumTemperature" CssClass="form-control" Style="width: 100px;">
               </asp:DropDownList>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 col-sm-2 control-label">Pump Burst:</label>
+            <label class="col-sm-2 col-sm-2 control-label">Humidity:</label>
             <div class="col-sm-10 form-inline">
-              On for&nbsp;
-              <asp:TextBox runat="server" id="BurstOnQuantity" CssClass="form-control" Style="width: 100px;"></asp:TextBox>
-              <asp:DropDownList runat="server" id="BurstOnType" CssClass="form-control" Style="width: 100px;">
-                 <asp:ListItem Enabled="true" Text="Seconds" Value="Seconds"></asp:ListItem>
-                 <asp:ListItem Enabled="true" Text="Minutes" Value="Minutes"></asp:ListItem>
-                 <asp:ListItem Enabled="true" Text="Hours" Value="Hours"></asp:ListItem>
+              Minimum
+              <asp:DropDownList runat="server" id="MinimumHumidity" CssClass="form-control" Style="width: 100px;">
               </asp:DropDownList>
-              &nbsp;&nbsp;&nbsp;&nbsp;Off for&nbsp;
-              <asp:TextBox runat="server" id="BurstOffQuantity" CssClass="form-control" Style="width: 100px;"></asp:TextBox>
-              <asp:DropDownList runat="server" id="BurstOffType" CssClass="form-control" Style="width: 100px;">
-                 <asp:ListItem Enabled="true" Text="Seconds" Value="Seconds"></asp:ListItem>
-                 <asp:ListItem Enabled="true" Text="Minutes" Value="Minutes"></asp:ListItem>
-                 <asp:ListItem Enabled="true" Text="Hours" Value="Hours"></asp:ListItem>
-              </asp:DropDownList>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 col-sm-2 control-label">Calibration:</label>
-            <div class="col-sm-10 form-inline">
-              <asp:DropDownList runat="server" id="DryCalibration" CssClass="form-control" Style="width: 100px;">
-              </asp:DropDownList>
-              <asp:DropDownList runat="server" id="WetCalibration" CssClass="form-control" Style="width: 100px;">
+              &nbsp;&nbsp;&nbsp;
+              Maximum
+              <asp:DropDownList runat="server" id="MaximumHumidity" CssClass="form-control" Style="width: 100px;">
               </asp:DropDownList>
             </div>
           </div>
@@ -80,5 +69,4 @@
     </div>
   </div>
 </asp:Content>
-
 
