@@ -9,7 +9,7 @@
           <a href="Devices.aspx">
             <div class="darkblue-panel pn">
               <div class="darkblue-header">
-                <h1>Devices</h1>
+                <h2>Devices</h2>
               </div>
               <h1 class="mt"><i class="fa fa-gears fa-3x"></i></h1>
               <footer>
@@ -24,12 +24,44 @@
           <a href="Computers.aspx">
             <div class="darkblue-panel pn">
               <div class="darkblue-header">
-                <h1>Computers</h1>
+                <h2>Computers</h2>
               </div>
-              <h1 class="mt"><i class="fa fa-laptop fa-3x"></i></h1>
+              <h1 class="mt"><i class="fa fa-desktop fa-3x"></i></h1>
               <footer>
                 <div class="centered">
                   <h5><%= TotalComputers %></h5>
+                </div>
+              </footer>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-sm-4 mb">
+          <a href="Messages.aspx">
+            <div class="darkblue-panel pn">
+              <div class="darkblue-header">
+                <h2>Messages</h2>
+              </div>
+              <h1 class="mt"><i class="fa fa-comments fa-3x"></i></h1>
+              <footer>
+                <div class="centered">
+                  <h5><%= TotalMessages %></h5>
+                </div>
+              </footer>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-4 col-sm-4 mb">
+          <a href="Messages.aspx">
+            <div class="darkblue-panel pn">
+              <div class="darkblue-header">
+                <h2>Alerts</h2>
+              </div>
+              <h1 class="mt"><i class="fa fa-warning fa-3x"></i></h1>
+              <footer>
+                <div class="centered">
+                  <h5><%= TotalAlerts %></h5>
                 </div>
               </footer>
             </div>

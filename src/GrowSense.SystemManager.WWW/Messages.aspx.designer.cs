@@ -11,27 +11,9 @@
 namespace GrowSense.SystemManager.WWW {
 	
 	
-	public partial class EditIlluminator {
+	public partial class Messages {
 		
 		protected System.Web.UI.WebControls.Content contentPlaceHolderContent;
-		
-		protected System.Web.UI.WebControls.TextBox Label;
-		
-		protected System.Web.UI.WebControls.TextBox ReadingIntervalQuantity;
-		
-		protected System.Web.UI.WebControls.DropDownList ReadingIntervalType;
-		
-		protected System.Web.UI.WebControls.DropDownList LightMode;
-		
-		protected System.Web.UI.WebControls.DropDownList TimerStartHour;
-		
-		protected System.Web.UI.WebControls.DropDownList TimerStartMinute;
-		
-		protected System.Web.UI.WebControls.DropDownList TimerStopHour;
-		
-		protected System.Web.UI.WebControls.DropDownList TimerStopMinute;
-		
-		protected System.Web.UI.WebControls.DropDownList Threshold;
 		
 		public new GrowSense.SystemManager.Master Master {
 			get {

@@ -10,9 +10,8 @@
           <hr>
           <thead>
             <tr>
-              <th><i class="fa fa-bullhorn"></i> Computer</th>
-              <th><i class="fa fa-bullhorn"></i> Path</th>
-              <th><i class="fa fa-bullhorn"></i></th>
+              <th><i class="fa fa-desktop"></i> Computer</th>
+              <th><i class="fa fa-external-link"></i> Path</th>
               <th></th>
             </tr>
           </thead>

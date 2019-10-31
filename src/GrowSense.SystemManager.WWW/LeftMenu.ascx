@@ -18,6 +18,7 @@
         <ul class="sub">
           <li><a href="Devices.aspx">Devices</a></li>
           <li><a href="Computers.aspx">Computers</a></li>
+          <li><a href="Messages.aspx">Messages</a></li>
         </ul>
       </li>
     </ul>

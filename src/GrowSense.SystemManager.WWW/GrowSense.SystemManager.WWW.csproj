@@ -53,6 +53,7 @@
     <Content Include="EditVentilator.aspx" />
     <Content Include="EditIlluminator.aspx" />
     <Content Include="EditLightMonitor.aspx" />
+    <Content Include="Messages.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -65,9 +66,6 @@
       <DependentUpon>Master.master</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Devices.aspx.cs">
@@ -112,6 +110,12 @@
     <Compile Include="EditLightMonitor.aspx.designer.cs">
       <DependentUpon>EditLightMonitor.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Messages.aspx.cs">
+      <DependentUpon>Messages.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Messages.aspx.designer.cs">
+      <DependentUpon>Messages.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
@@ -138,6 +142,10 @@
     <ProjectReference Include="..\GrowSense.SystemManager.Web\GrowSense.SystemManager.Web.csproj">
       <Project>{BB1564DF-7C46-402A-AC9E-61BEF9577261}</Project>
       <Name>GrowSense.SystemManager.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GrowSense.SystemManager.Messages\GrowSense.SystemManager.Messages.csproj">
+      <Project>{741C95EF-6B69-4C92-8D97-CF95B21FDF96}</Project>
+      <Name>GrowSense.SystemManager.Messages</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

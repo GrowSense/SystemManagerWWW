@@ -25,6 +25,12 @@
               </asp:DropDownList>
             </div>
           </div>
+          <div class="form-group">
+            <div class="col-lg-offset-2 col-lg-10">
+              <asp:Button runat="server" CssClass="btn btn-theme" type="submit" Text="Save" />
+              <button class="btn btn-theme04" type="button" onclick="location.href='Devices.aspx'">Cancel</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

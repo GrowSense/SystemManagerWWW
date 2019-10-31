@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrowSense.SystemManager.WWW
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrowSense.SystemManager.Common", "GrowSense.SystemManager.Common\GrowSense.SystemManager.Common.csproj", "{B772BBBE-B363-438F-9215-E2D533A3CD2D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrowSense.SystemManager.Messages", "GrowSense.SystemManager.Messages\GrowSense.SystemManager.Messages.csproj", "{741C95EF-6B69-4C92-8D97-CF95B21FDF96}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{5E67C20C-04CE-4BFF-95F4-D04D4E1548E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E67C20C-04CE-4BFF-95F4-D04D4E1548E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E67C20C-04CE-4BFF-95F4-D04D4E1548E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{741C95EF-6B69-4C92-8D97-CF95B21FDF96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{741C95EF-6B69-4C92-8D97-CF95B21FDF96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{741C95EF-6B69-4C92-8D97-CF95B21FDF96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{741C95EF-6B69-4C92-8D97-CF95B21FDF96}.Release|Any CPU.Build.0 = Release|Any CPU
 		{93B07A96-9021-48A1-AD85-84016529195D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{93B07A96-9021-48A1-AD85-84016529195D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93B07A96-9021-48A1-AD85-84016529195D}.Release|Any CPU.ActiveCfg = Release|Any CPU
