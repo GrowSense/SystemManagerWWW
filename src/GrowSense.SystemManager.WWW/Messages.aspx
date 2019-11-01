@@ -25,8 +25,8 @@
           <thead>
             <tr>
               <th><i class="fa fa-clock-o"></i> Time</th>
-              <th><i class="fa fa-bullhorn"></i> Message</th>
               <th><i class=" fa fa-tag"></i> Type</th>
+              <th><i class="fa fa-bullhorn"></i> Message</th>
               <th></th>
             </tr>
           </thead>
@@ -37,10 +37,10 @@
                 <div><%= messageInfo.Timestamp.ToString() %></div>
               </td>
               <td>
-                <div><a href="basic_table.html#"><%= messageInfo.Text %></a></div>
+                <div><%= GenerateMessageTypeIcon(messageInfo.Type) %></div>
               </td>
               <td>
-                <div><%= GenerateMessageTypeIcon(messageInfo.Type) %></div>
+                <div><a href="basic_table.html#"><%= messageInfo.Text %></a></div>
               </td>
               <td>
                 <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
