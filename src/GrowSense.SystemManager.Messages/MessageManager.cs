@@ -33,7 +33,7 @@ namespace GrowSense.SystemManager.Messages
         else
           message.Type = MessageType.Message;
           
-        list.Add (message);
+        list.Insert (0, message);
       }
       return list.ToArray ();
     }
