@@ -19,6 +19,8 @@ namespace GrowSense.SystemManager.Devices
 
     public int CountDevices ()
     {
+      if (!Directory.Exists (DevicesDirectory))
+        return 0;
       return Directory.GetDirectories (DevicesDirectory).Length;
     }
 

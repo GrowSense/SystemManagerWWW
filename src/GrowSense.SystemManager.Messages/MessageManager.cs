@@ -40,6 +40,9 @@ namespace GrowSense.SystemManager.Messages
 
     public int CountMessages (MessageType type)
     {
+      if (!Directory.Exists (MessagesDirectory))
+        return 0;
+        
       if (type == MessageType.Message)
         return Directory.GetFiles (MessagesDirectory, "*.msg.txt").Length;
       else if (type == MessageType.Alert)

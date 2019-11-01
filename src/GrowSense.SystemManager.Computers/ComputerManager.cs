@@ -15,6 +15,8 @@ namespace GrowSense.SystemManager.Computers
 
     public int CountComputers ()
     {
+      if (!Directory.Exists (ComputersDirectory))
+        return 1;
       return Directory.GetDirectories (ComputersDirectory).Length + 1; // +1 to include localhost
     }
 
