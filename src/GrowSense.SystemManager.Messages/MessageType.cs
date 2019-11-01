@@ -4,8 +4,9 @@ namespace GrowSense.SystemManager.Messages
 {
   public enum MessageType
   {
-    Message,
-    Alert
+    NotSet = 0,
+    Message = 1,
+    Alert = 2
   }
 }
 

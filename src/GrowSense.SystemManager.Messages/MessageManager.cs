@@ -18,24 +18,31 @@ namespace GrowSense.SystemManager.Messages
     public MessageInfo[] GetMessagesInfo ()
     {
       var list = new List<MessageInfo> ();
-      foreach (var filePath in Directory.GetFiles(MessagesDirectory)) {
-        var fileName = Path.GetFileName (filePath);
+      if (Directory.Exists (MessagesDirectory)) {
+        foreach (var filePath in Directory.GetFiles(MessagesDirectory)) {
+          var fileName = Path.GetFileName (filePath);
         
-        var message = new MessageInfo ();
-        message.Timestamp = ExtractDateTimeFromFileName (fileName);
+          var message = new MessageInfo ();
+          message.Timestamp = ExtractDateTimeFromFileName (fileName);
         
-        message.FileName = fileName;
+          message.FileName = fileName;
         
-        message.Text = File.ReadAllText (filePath);
+          message.Text = File.ReadAllText (filePath);
         
-        if (fileName.Contains ("alert"))
-          message.Type = MessageType.Alert;
-        else
-          message.Type = MessageType.Message;
+          if (fileName.Contains ("alert"))
+            message.Type = MessageType.Alert;
+          else
+            message.Type = MessageType.Message;
           
-        list.Insert (0, message);
+          list.Insert (0, message);
+        }
       }
       return list.ToArray ();
+    }
+
+    public int CountMessages ()
+    {
+      return CountMessages (MessageType.NotSet);
     }
 
     public int CountMessages (MessageType type)
