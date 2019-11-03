@@ -25,8 +25,9 @@
           <thead>
             <tr>
               <th><i class="fa fa-clock-o"></i> Time</th>
-              <th><i class=" fa fa-tag"></i> Type</th>
+              <th><i class="fa fa-tag"></i> Type</th>
               <th><i class="fa fa-bullhorn"></i> Message</th>
+              <th><i class="fa fa-desktop"></i> Source</th>
               <th></th>
             </tr>
           </thead>
@@ -40,15 +41,18 @@
                 <div><%= GenerateMessageTypeIcon(messageInfo.Type) %></div>
               </td>
               <td>
-                <div><a href="basic_table.html#"><%= messageInfo.Text %></a></div>
+                <div><%= messageInfo.Text %></div>
+              </td>
+              <td>
+                <div><%= messageInfo.Host %></div>
               </td>
               <td>
                 <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
               </td>
             </tr>
             <% } %>
-            <% } %>
           </tbody>
+          <% } %>
         </table>
       </div>
     </div>
