@@ -24,7 +24,14 @@ namespace GrowSense.SystemManager.Common
 
     public ProcessStarter ()
     {
+      OriginalDirectory = Directory.GetCurrentDirectory ();
       WorkingDirectory = Directory.GetCurrentDirectory ();
+    }
+
+    public ProcessStarter (string workingDirectory)
+    {
+      OriginalDirectory = Directory.GetCurrentDirectory ();
+      WorkingDirectory = workingDirectory;
     }
 
     public Process Start (params string[] commandParts)
@@ -97,7 +104,6 @@ namespace GrowSense.SystemManager.Common
                     throw new ArgumentException ("Cannot find the file '" + Path.GetFullPath (command) + "'.");
             }
             
-            OriginalDirectory = WorkingDirectory;
             Directory.SetCurrentDirectory(WorkingDirectory);
 
             // Create the process start information

@@ -54,6 +54,8 @@
     <Content Include="EditIlluminator.aspx" />
     <Content Include="EditLightMonitor.aspx" />
     <Content Include="Messages.aspx" />
+    <Content Include="ComputerForm.aspx" />
+    <Content Include="RemoveComputer.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -72,9 +74,6 @@
       <DependentUpon>Devices.aspx</DependentUpon>
     </Compile>
     <Compile Include="Computers.aspx.cs">
-      <DependentUpon>Computers.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Computers.aspx.designer.cs">
       <DependentUpon>Computers.aspx</DependentUpon>
     </Compile>
     <Compile Include="EditIrrigator.aspx.cs">
@@ -115,6 +114,18 @@
     </Compile>
     <Compile Include="Messages.aspx.designer.cs">
       <DependentUpon>Messages.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ComputerForm.aspx.cs">
+      <DependentUpon>ComputerForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ComputerForm.aspx.designer.cs">
+      <DependentUpon>ComputerForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RemoveComputer.aspx.cs">
+      <DependentUpon>RemoveComputer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RemoveComputer.aspx.designer.cs">
+      <DependentUpon>RemoveComputer.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

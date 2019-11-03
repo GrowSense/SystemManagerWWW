@@ -19,10 +19,17 @@ namespace GrowSense.SystemManager
 
     public void LoadComputersInfo ()
     {
+      var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
+    
       var computersDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["ComputersDirectory"]);
     
-      var computersManager = new ComputerManager (computersDirectory);
+      var computersManager = new ComputerManager (indexDirectory, computersDirectory);
       ComputersInfo = computersManager.GetComputersInfo ();
+    }
+    
+    public string GetEditComputerLink(ComputerInfo computer)
+    {
+    return "";
     }
   }
 }

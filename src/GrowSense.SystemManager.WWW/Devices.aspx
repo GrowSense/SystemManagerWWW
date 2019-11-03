@@ -1,4 +1,4 @@
-<%@ Page Language="C#" Inherits="GrowSense.SystemManager.DevicesPage" MasterPageFile="~/Master.master" EnableViewState="false" %>
+  <%@ Page Language="C#" Inherits="GrowSense.SystemManager.DevicesPage" MasterPageFile="~/Master.master" EnableViewState="false" %>
 <%@ MasterType VirtualPath="~/Master.master" %>
 <%@ Import Namespace="GrowSense.SystemManager.Web" %>
 <asp:Content ContentPlaceHolderID="contentPlaceHolder" ID="contentPlaceHolderContent" runat="server">
@@ -41,7 +41,7 @@
                 <%= GenerateDeviceProgressBars(deviceInfo) %>
               </td>
               <td>
-                <div class="btn btn-primary btn-xs"><i class="fa fa-pencil" onclick="location.href='<%= GetDeviceEditLink(deviceInfo) %>'"></i></div>
+                <div class="btn btn-primary btn-xs" onclick="location.href='<%= GetDeviceEditLink(deviceInfo) %>'"><i class="fa fa-pencil"></i></div>
                 <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
               </td>
             </tr>

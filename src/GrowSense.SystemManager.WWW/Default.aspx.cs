@@ -27,7 +27,7 @@ namespace GrowSense.SystemManager
       TotalDevices = new DeviceManager (indexDirectory, devicesDirectory).CountDevices ();
       TotalMessages = new MessageManager (indexDirectory, messagesDirectory).CountMessages (MessageType.Message);
       TotalAlerts = new MessageManager (indexDirectory, messagesDirectory).CountMessages (MessageType.Alert);
-      TotalComputers = new ComputerManager (computersDirectory).CountComputers ();
+      TotalComputers = new ComputerManager (indexDirectory, computersDirectory).CountComputers ();
     }
   }
 }
