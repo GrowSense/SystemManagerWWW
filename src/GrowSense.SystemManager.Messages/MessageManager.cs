@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using GrowSense.SystemManager.Common;
 
 namespace GrowSense.SystemManager.Messages
 {
@@ -8,11 +9,13 @@ namespace GrowSense.SystemManager.Messages
   {
     public string IndexDirectory = String.Empty;
     public string MessagesDirectory = String.Empty;
+    public ProcessStarter Starter;
 
     public MessageManager (string indexDirectory, string messagesDirectory)
     {
       IndexDirectory = indexDirectory;
       MessagesDirectory = messagesDirectory;
+      Starter = new ProcessStarter (indexDirectory);
     }
 
     public MessageInfo[] GetMessagesInfo ()
@@ -66,6 +69,13 @@ namespace GrowSense.SystemManager.Messages
         return Directory.GetFiles (MessagesDirectory, "*.alert.txt", SearchOption.AllDirectories).Length;
       else
         return Directory.GetFiles (MessagesDirectory, "*.txt", SearchOption.AllDirectories).Length;
+    }
+
+    public bool RemoveMessage (string messageId)
+    {
+      Starter.Start ("bash remove-message.sh " + messageId);
+      
+      return !Starter.IsError;
     }
 
     public string ExtractMessageHostFromFilePath (string filePath)

@@ -56,6 +56,7 @@
     <Content Include="Messages.aspx" />
     <Content Include="ComputerForm.aspx" />
     <Content Include="RemoveComputer.aspx" />
+    <Content Include="RemoveMessage.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -112,9 +113,6 @@
     <Compile Include="Messages.aspx.cs">
       <DependentUpon>Messages.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Messages.aspx.designer.cs">
-      <DependentUpon>Messages.aspx</DependentUpon>
-    </Compile>
     <Compile Include="ComputerForm.aspx.cs">
       <DependentUpon>ComputerForm.aspx</DependentUpon>
     </Compile>
@@ -126,6 +124,12 @@
     </Compile>
     <Compile Include="RemoveComputer.aspx.designer.cs">
       <DependentUpon>RemoveComputer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RemoveMessage.aspx.cs">
+      <DependentUpon>RemoveMessage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RemoveMessage.aspx.designer.cs">
+      <DependentUpon>RemoveMessage.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

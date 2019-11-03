@@ -1,9 +1,12 @@
 <%@ Page Language="C#" Inherits="GrowSense.SystemManager.WWW.Messages" MasterPageFile="~/Master.master" %>
 <%@ MasterType VirtualPath="~/Master.master" %>
 <asp:Content ContentPlaceHolderID="contentPlaceHolder" ID="contentPlaceHolderContent" runat="server">
-  <h3><i class="fa fa-angle-right"></i> Garden </h3>
+  <h3><i class="fa fa-angle-right"></i> Garden </h3> 
   <div class="row mt">
     <div class="col-md-12">
+      <% if (!String.IsNullOrEmpty(Request.QueryString["Result"])){ %>
+      <div class="alert alert-<%= (Request.QueryString["IsSuccess"] == "false" ? "danger" : "success") %> "><%= Request.QueryString["Result"] %></div>
+      <% } %>
       <div class="content-panel">
         <table class="table table-striped table-advance table-hover">
           <h4><i class="fa fa-angle-right"></i> Messages</h4>
@@ -47,7 +50,7 @@
                 <div><%= messageInfo.Host %></div>
               </td>
               <td>
-                <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                <div class="btn btn-danger btn-xs" onclick="location.href='RemoveMessage.aspx?MessageId=<%= messageInfo.Id %>'"><i class="fa fa-trash-o "></i></div>
               </td>
             </tr>
             <% } %>
