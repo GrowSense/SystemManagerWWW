@@ -5,6 +5,9 @@
   <h3><i class="fa fa-angle-right"></i> Garden </h3>
   <div class="row mt">
     <div class="col-md-12">
+      <% if (!String.IsNullOrEmpty(Request.QueryString["Result"])){ %>
+      <div class="alert alert-<%= (Request.QueryString["IsSuccess"] == "false" ? "danger" : "success") %> "><%= Request.QueryString["Result"] %></div>
+      <% } %>
       <div class="content-panel">
         <table class="table table-striped table-advance table-hover">
           <h4><i class="fa fa-angle-right"></i> Devices</h4>
@@ -42,7 +45,7 @@
               </td>
               <td>
                 <div class="btn btn-primary btn-xs" onclick="location.href='<%= GetDeviceEditLink(deviceInfo) %>'"><i class="fa fa-pencil"></i></div>
-                <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                <div class="btn btn-danger btn-xs" onclick="location.href='<%= GetDeviceRemoveLink(deviceInfo) %>'"><i class="fa fa-trash-o"></i></div>
               </td>
             </tr>
             <% } %>

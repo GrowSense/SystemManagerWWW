@@ -34,8 +34,6 @@ namespace GrowSense.SystemManager.WWW
         PopulateForm ();
       } else {
         HandleSubmission ();
-        
-        Response.Redirect ("Devices.aspx");
       }
     }
 
@@ -114,20 +112,32 @@ namespace GrowSense.SystemManager.WWW
 
     public void HandleSubmission ()
     {
-      HandleLabelSubmission ();
+      bool isSuccess = HandleLabelSubmission ();
       
       HandleReadingIntervalSubmission ();
       HandleLightModeSubmission ();
       HandleThresholdSubmission ();
       HandleTimerSubmission ();
+      
+      var resultMessage = "";
+      var queryStringPostFix = "";
+      if (isSuccess)  
+        resultMessage = "Device updated successfully!";
+      else {
+        resultMessage = "Failed to update device!";
+        queryStringPostFix = "&IsSuccess=false";
+      }
+      Response.Redirect ("Devices.aspx?Result=" + resultMessage + queryStringPostFix);
     }
 
-    public void HandleLabelSubmission ()
+    public bool HandleLabelSubmission ()
     {
       var newLabel = Label.Text;
     
       if (Device.Label != newLabel)
-        DeviceManager.SetDeviceLabel (Device.Name, newLabel);
+        return DeviceManager.SetDeviceLabel (Device.Name, newLabel);
+        
+      return true;
     }
 
     public void HandleReadingIntervalSubmission ()

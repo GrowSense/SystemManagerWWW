@@ -10,11 +10,14 @@ namespace GrowSense.SystemManager.Devices
   {
     public string IndexDirectory;
     public string DevicesDirectory;
+    public ProcessStarter Starter;
 
     public DeviceManager (string indexDirectory, string devicesDirectory)
     {
       IndexDirectory = indexDirectory;
       DevicesDirectory = devicesDirectory;
+      
+      Starter = new ProcessStarter (indexDirectory);
     }
 
     public int CountDevices ()
@@ -47,7 +50,17 @@ namespace GrowSense.SystemManager.Devices
       return deviceInfo;
     }
 
-    public void SetDeviceLabel (string deviceName, string deviceLabel)
+    public bool RemoveDevice (string deviceName)
+    {
+      Starter.Start (
+        String.Format ("bash remove-device.sh {0}",
+                       deviceName)
+      );
+      
+      return !Starter.IsError;
+    }
+
+    public bool SetDeviceLabel (string deviceName, string deviceLabel)
     {
       var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
     
@@ -55,8 +68,7 @@ namespace GrowSense.SystemManager.Devices
       starter.WorkingDirectory = indexDirectory;
       starter.StartBash ("bash set-device-label.sh " + deviceName + " " + deviceLabel);
       
-      if (starter.IsError)
-        throw new Exception ("Failed to set device label using set-device-label.sh script.\n\n" + starter.Output);
+      return !starter.IsError;
     }
   }
 }
