@@ -78,6 +78,13 @@ namespace GrowSense.SystemManager.Messages
       return !Starter.IsError;
     }
 
+    public bool RemoveAllMessages ()
+    {
+      Starter.Start ("bash remove-all-messages.sh");
+      
+      return !Starter.IsError;
+    }
+
     public string ExtractMessageHostFromFilePath (string filePath)
     {
       var folderPath = Path.GetDirectoryName (filePath);

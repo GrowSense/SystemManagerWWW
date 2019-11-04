@@ -31,7 +31,7 @@
               <th><i class="fa fa-tag"></i> Type</th>
               <th><i class="fa fa-bullhorn"></i> Message</th>
               <th><i class="fa fa-desktop"></i> Source</th>
-              <th></th>
+              <th><div class="btn btn-danger btn-xs" onclick="location.href='RemoveMessage.aspx?MessageId=all'"><i class="fa fa-trash-o "></i></div></th>
             </tr>
           </thead>
           <tbody>

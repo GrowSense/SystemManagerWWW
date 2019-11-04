@@ -20,19 +20,31 @@ namespace GrowSense.SystemManager.WWW
         resultMessage = ("No message ID specified in the query string.");
         Response.Redirect ("Messages.aspx?Result=" + resultMessage);
       }
+      
       var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
     
       var messagesDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["MessagesDirectory"]);
     
       var manager = new MessageManager (indexDirectory, messagesDirectory);
       
-      var isSuccess = manager.RemoveMessage (messageId);
+      var isSuccess = false;
+      
+      if (messageId == "all")
+        isSuccess = manager.RemoveAllMessages ();
+      else
+        isSuccess = manager.RemoveMessage (messageId);
       
       var postFixQueryString = "";
-      if (isSuccess)
-        resultMessage = "Message was removed successfully!";
-      else {
-        resultMessage = "Message couldn't be removed!";
+      if (isSuccess) {
+        if (messageId == "all")
+          resultMessage = "All messages were removed successfully!";
+        else
+          resultMessage = "Message was removed successfully!";
+      } else {
+        if (messageId == "all")
+          resultMessage = "Error when removing all messages!";
+        else
+          resultMessage = "Error when removing message!";
         postFixQueryString = "&IsSuccess=false";
       }
       
