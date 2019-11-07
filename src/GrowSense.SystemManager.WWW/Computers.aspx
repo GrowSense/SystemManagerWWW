@@ -13,6 +13,7 @@
           <hr>
           <thead>
             <tr>
+              <th><i class="fa fa-check"></i> Status</th>
               <th><i class="fa fa-desktop"></i> Computer</th>
               <th><i class="fa fa-external-link"></i> Path</th>
               <th><div class="btn btn-success btn-xs" onclick="location.href='ComputerForm.aspx'"><i class="fa fa-plus-square"></i></div></th>
@@ -22,7 +23,14 @@
             <% foreach (var computerInfo in ComputersInfo) { %>
             <tr>
               <td>
-                <div><a href="basic_table.html#"><%= computerInfo.Name %></a></div>
+                <div>
+                  <%= GenerateComputerStatusIcon(computerInfo) %>
+                </div>
+              </td>
+              <td>
+                <div>
+                  <a href="basic_table.html#"><%= computerInfo.Name %></a>
+                </div>
               </td>
               <td>
                 <div><a href="basic_table.html#"><%= computerInfo.Host %></a></div>

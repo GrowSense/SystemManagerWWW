@@ -27,9 +27,22 @@ namespace GrowSense.SystemManager
       ComputersInfo = computersManager.GetComputersInfo ();
     }
     
-    public string GetEditComputerLink(ComputerInfo computer)
+    public string GenerateComputerStatusIcon (ComputerInfo computer)
     {
-    return "";
+      var cssClass = "label-info";
+      var statusText = "Onlinle";
+      if (computer.IsOnline || computer.Name == "localhost") {
+        cssClass = "label-success";
+        statusText = "Online";
+      } else {
+        cssClass = "label-danger";
+        statusText = "Offline";
+      }
+      
+      return String.Format ("<div class=\"label {0} label-mini\">{1}</div>",
+                           cssClass,
+                           statusText
+      );
     }
   }
 }

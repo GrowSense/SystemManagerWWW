@@ -59,6 +59,10 @@ namespace GrowSense.SystemManager.Computers
       computerInfo.Username = File.ReadAllText (Path.Combine (computerDirectory, "username.security")).Trim ();
       computerInfo.Password = File.ReadAllText (Path.Combine (computerDirectory, "password.security")).Trim ();
       computerInfo.Port = Convert.ToInt32 (File.ReadAllText (Path.Combine (computerDirectory, "port.security")).Trim ());
+      if (File.Exists (Path.Combine (computerDirectory, "is-offline.txt")))
+        computerInfo.IsOnline = Convert.ToInt32 (File.ReadAllText (Path.Combine (computerDirectory, "is-offline.txt")).Trim ()) == 0;
+      else
+        computerInfo.IsOnline = true;
       
       return computerInfo;
     }

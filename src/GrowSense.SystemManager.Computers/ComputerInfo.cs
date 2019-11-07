@@ -9,6 +9,7 @@ namespace GrowSense.SystemManager.Computers
     public string Username;
     public string Password;
     public int Port;
+    public bool IsOnline;
   }
 }
 
