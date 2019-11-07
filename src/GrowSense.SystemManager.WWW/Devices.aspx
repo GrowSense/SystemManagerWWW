@@ -2,6 +2,19 @@
 <%@ MasterType VirtualPath="~/Master.master" %>
 <%@ Import Namespace="GrowSense.SystemManager.Web" %>
 <asp:Content ContentPlaceHolderID="contentPlaceHolder" ID="contentPlaceHolderContent" runat="server">
+  <script language="javascript">
+    var selectedDevice = '';
+    
+    function selectDevice(deviceName)
+    {
+      selectedDevice = deviceName;
+    }
+    
+    function removeDevice()
+    {
+      location.href='RemoveDevice.aspx?DeviceName=' + selectedDevice;
+    }
+  </script>
   <h3><i class="fa fa-angle-right"></i> Garden </h3>
   <div class="row mt">
     <div class="col-md-12">
@@ -45,13 +58,30 @@
               </td>
               <td>
                 <div class="btn btn-primary btn-xs" onclick="location.href='<%= GetDeviceEditLink(deviceInfo) %>'"><i class="fa fa-pencil"></i></div>
-                <div class="btn btn-danger btn-xs" onclick="location.href='<%= GetDeviceRemoveLink(deviceInfo) %>'"><i class="fa fa-trash-o"></i></div>
+                <div class="btn btn-danger btn-xs" data-toggle="modal" data-target="#removeModal" onclick="selectDevice('<%= deviceInfo.Name %>');"><i class="fa fa-trash-o"></i></div>
               </td>
             </tr>
             <% } %>
-            <% } %>
           </tbody>
+          <% } %>
         </table>
+        <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Confirm Removal</h4>
+              </div>
+              <div class="modal-body">
+                Are you sure you want to remove this device?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="javascript:removeDevice()">Remove Device</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

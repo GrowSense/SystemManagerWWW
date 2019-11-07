@@ -142,11 +142,6 @@ namespace GrowSense.SystemManager
     
       return "Edit" + targetName + ".aspx?DeviceName=" + deviceInfo.Name;
     }
-    
-    public string GetDeviceRemoveLink (DeviceInfo deviceInfo)
-    {    
-      return "RemoveDevice.aspx?DeviceName=" + deviceInfo.Name;
-    }
   }
 }
 

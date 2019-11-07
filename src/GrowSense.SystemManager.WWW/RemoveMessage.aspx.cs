@@ -18,7 +18,7 @@ namespace GrowSense.SystemManager.WWW
       
       if (String.IsNullOrEmpty (messageId)) {
         resultMessage = ("No message ID specified in the query string.");
-        Response.Redirect ("Messages.aspx?Result=" + resultMessage);
+        Response.Redirect ("Messages.aspx?Result=" + resultMessage + "&IsSuccess=false");
       }
       
       var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
