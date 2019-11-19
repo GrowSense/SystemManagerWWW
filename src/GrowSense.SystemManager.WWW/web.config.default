@@ -25,10 +25,15 @@ http://msdn2.microsoft.com/en-us/library/b5ysx397.aspx
     </compilation>
     <customErrors mode="RemoteOnly">
     </customErrors>
-    <authentication mode="None">
-    </authentication>
+    <authentication mode="Forms">  
+      <forms loginUrl="Login.aspx" defaultUrl="Default.aspx">  
+        <credentials passwordFormat="Clear">  
+          <user name="user" password="pass123"/>
+        </credentials>  
+      </forms>  
+    </authentication>  
     <authorization>
-      <allow users="*"/>
+      <deny users="?"/>
     </authorization>
     <httpHandlers>
     </httpHandlers>
