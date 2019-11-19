@@ -58,6 +58,7 @@
     <Content Include="RemoveComputer.aspx" />
     <Content Include="RemoveMessage.aspx" />
     <Content Include="RemoveDevice.aspx" />
+    <Content Include="Login.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -137,6 +138,12 @@
     </Compile>
     <Compile Include="RemoveDevice.aspx.designer.cs">
       <DependentUpon>RemoveDevice.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
