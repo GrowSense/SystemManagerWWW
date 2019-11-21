@@ -79,6 +79,11 @@ namespace GrowSense.SystemManager.Mqtt
     {
       Client.Subscribe (new string[] { deviceName + "/#" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
     }
+
+    public void UnsubscribeFromDeviceData (string deviceName)
+    {
+      Client.Unsubscribe (new string[] { deviceName + "/#" });
+    }
     #endregion
     #region Device Functions
     public void RefreshDevices ()
@@ -109,13 +114,35 @@ namespace GrowSense.SystemManager.Mqtt
       
       SubscribeToDeviceData (deviceInfo.Name);
     }
+
+    public void RemoveDevice (string deviceName)
+    {
+      var list = new List<DeviceInfo> ();
+      if (Devices.Length > 0)
+        list.AddRange (Devices);
+        
+      for (int i = 0; i < list.Count; i++) {
+        if (list [i].Name == deviceName)
+          list.RemoveAt (i);
+      }
+      Devices = list.ToArray ();
+      
+      UnsubscribeFromDeviceData (deviceName);
+    }
     #endregion
     #region Device Watcher Functions
     public void WatchDevicesFolder ()
     {
       DevicesWatcher = new FileSystemWatcher (Manager.DevicesDirectory);
       DevicesWatcher.Created += HandleDeviceCreated;
+      DevicesWatcher.Deleted += HandleDeviceDeleted;
       DevicesWatcher.EnableRaisingEvents = true;
+    }
+
+    void HandleDeviceDeleted (object sender, FileSystemEventArgs e)
+    {
+      var deviceName = Path.GetFileName (e.FullPath);
+      RemoveDevice (deviceName);
     }
 
     void HandleDeviceCreated (object sender, FileSystemEventArgs e)
