@@ -60,11 +60,12 @@ namespace GrowSense.SystemManager.Mqtt
 
     public void HandleGardenStatusMessage (string topicKey, string value)
     {
-      if (topicKey == "StatusMessage") {
+      // TODO: Remove if not needed. Disabled because it's likely to cause problems. Device info needs to be pulled via the supervisor script.
+      /*if (topicKey == "StatusMessage") {
         if (value.Contains ("Detected")) {
           RefreshDevices ();
         }
-      }
+      }*/
     }
     #endregion
     #region Subscribe to MQTT Functions
