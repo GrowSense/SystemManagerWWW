@@ -48,6 +48,7 @@ namespace WWW
 
     protected void Application_End (Object sender, EventArgs e)
     {
+      DeviceMqttHolder.End ();
     }
   }
 }

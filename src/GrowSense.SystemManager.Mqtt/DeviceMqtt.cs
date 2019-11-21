@@ -4,20 +4,26 @@ using GrowSense.SystemManager.Devices;
 using uPLibrary.Networking.M2Mqtt.Messages;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
+using System.ComponentModel;
 
 namespace GrowSense.SystemManager.Mqtt
 {
-  public class DeviceMqtt
+  public class DeviceMqtt : IDisposable
   {
     public DeviceInfo[] Devices;
     MqttClient Client;
     public Dictionary<string, Dictionary<string, string>> Data = new Dictionary<string, Dictionary<string, string>> ();
+    public DeviceManager Manager;
+    public FileSystemWatcher DevicesWatcher;
 
-    public DeviceMqtt (DeviceInfo[] devicesInfo)
+    public DeviceMqtt (DeviceManager manager)
     {
-      Devices = devicesInfo;
+      Manager = manager;
+      Devices = Manager.GetDevicesInfo ();
+      WatchDevicesFolder ();
     }
-
+    #region Connect
     public void Connect (string clientId, string mqttHost, string mqttUsername, string mqttPassword, int mqttPort)
     {
       Client = new MqttClient (mqttHost, mqttPort, false, null, null, MqttSslProtocols.None);
@@ -25,11 +31,12 @@ namespace GrowSense.SystemManager.Mqtt
 
       Client.Connect (clientId, mqttUsername, mqttPassword);
       
-      foreach (var deviceInfo in Devices) {
-        Client.Subscribe (new string[] { deviceInfo.Name + "/#" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
-      }
+      Client.Subscribe (new string[] { "garden/#" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+      
+      SubscribeToDeviceData ();
     }
-
+    #endregion
+    #region Handle MQTT Message
     void HandleMqttMsgPublishReceived (object sender, uPLibrary.Networking.M2Mqtt.Messages.MqttMsgPublishEventArgs e)
     {
       var topic = e.Topic;
@@ -46,8 +53,78 @@ namespace GrowSense.SystemManager.Mqtt
         Data.Add (deviceName, new Dictionary<string, string> ());
       
       Data [deviceName] [topicKey] = value;
+      
+      if (deviceName == "garden")
+        HandleGardenStatusMessage (topicKey, value);
     }
 
+    public void HandleGardenStatusMessage (string topicKey, string value)
+    {
+      if (topicKey == "StatusMessage") {
+        if (value.Contains ("Detected")) {
+          RefreshDevices ();
+        }
+      }
+    }
+    #endregion
+    #region Subscribe to MQTT Functions
+    public void SubscribeToDeviceData ()
+    {
+      foreach (var deviceInfo in Devices) {
+        SubscribeToDeviceData (deviceInfo.Name);
+      }
+    }
+
+    public void SubscribeToDeviceData (string deviceName)
+    {
+      Client.Subscribe (new string[] { deviceName + "/#" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+    }
+    #endregion
+    #region Device Functions
+    public void RefreshDevices ()
+    {
+      var latestDevices = Manager.GetDevicesInfo ();
+      foreach (var device in latestDevices) {
+        if (!DeviceIsInList (device.Name))
+          AddDevice (device);
+      }
+    }
+
+    public bool DeviceIsInList (string deviceName)
+    {
+      foreach (var device in Devices) {
+        if (device.Name == deviceName)
+          return true;
+      }
+      return false;
+    }
+
+    public void AddDevice (DeviceInfo deviceInfo)
+    {
+      var list = new List<DeviceInfo> ();
+      if (Devices.Length > 0)
+        list.AddRange (Devices);
+      list.Add (deviceInfo);
+      Devices = list.ToArray ();
+      
+      SubscribeToDeviceData (deviceInfo.Name);
+    }
+    #endregion
+    #region Device Watcher Functions
+    public void WatchDevicesFolder ()
+    {
+      DevicesWatcher = new FileSystemWatcher (Manager.DevicesDirectory);
+      DevicesWatcher.Created += HandleDeviceCreated;
+      DevicesWatcher.EnableRaisingEvents = true;
+    }
+
+    void HandleDeviceCreated (object sender, FileSystemEventArgs e)
+    {
+      var deviceName = Path.GetFileName (e.FullPath);
+      AddDevice (Manager.GetDeviceInfo (deviceName));
+    }
+    #endregion
+    #region Publish Functions
     public void Publish (string deviceName, string topicKey, int value)
     {
       Publish (deviceName, topicKey, value.ToString ());
@@ -57,6 +134,13 @@ namespace GrowSense.SystemManager.Mqtt
     {
       Client.Publish (deviceName + "/" + topicKey + "/in", Encoding.UTF8.GetBytes (value), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
     }
+    #endregion
+    #region IDisposable implementation
+    public void Dispose ()
+    {
+      DevicesWatcher.Dispose ();
+    }
+    #endregion
   }
 }
 

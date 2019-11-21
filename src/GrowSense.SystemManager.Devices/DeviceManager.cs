@@ -17,6 +17,9 @@ namespace GrowSense.SystemManager.Devices
       IndexDirectory = indexDirectory;
       DevicesDirectory = devicesDirectory;
       
+      if (!Directory.Exists (DevicesDirectory))
+        Directory.CreateDirectory (DevicesDirectory);
+      
       Starter = new ProcessStarter (indexDirectory);
     }
 

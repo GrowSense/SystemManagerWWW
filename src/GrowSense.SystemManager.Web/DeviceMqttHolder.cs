@@ -27,9 +27,15 @@ namespace GrowSense.SystemManager.Web
     
         var devicesDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["DevicesDirectory"]);
     
-        Current = new DeviceMqtt (new DeviceManager (indexDirectory, devicesDirectory).GetDevicesInfo ());
+        Current = new DeviceMqtt (new DeviceManager (indexDirectory, devicesDirectory));
         Current.Connect (mqttDeviceName, mqttHost, mqttUsername, mqttPassword, mqttPort);
       }
+    }
+
+    static public void End ()
+    {
+      if (Current != null)
+        Current.Dispose ();
     }
   }
 }
