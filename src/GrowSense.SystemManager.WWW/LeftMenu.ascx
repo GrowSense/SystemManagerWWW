@@ -5,7 +5,7 @@
     <!-- sidebar menu start-->
     <ul class="sidebar-menu" id="nav-accordion">
       <li class="mt">
-        <a class="active" href="Default.aspx">
+        <a<%= GetActiveClassAttribute("Default") %> href="Default.aspx">
           <i class="fa fa-dashboard"></i>
           <span>Dashboard</span>
           </a>
@@ -14,11 +14,11 @@
         <a href="javascript:;">
           <i class="fa fa-desktop"></i>
           <span>Garden</span>
-          </a>
+        </a>
         <ul class="sub">
-          <li><a href="Devices.aspx">Devices</a></li>
-          <li><a href="Computers.aspx">Computers</a></li>
-          <li><a href="Messages.aspx">Messages</a></li>
+          <li<%= GetActiveClassAttribute("Devices") %>><a href="Devices.aspx">Devices</a></li>
+          <li<%= GetActiveClassAttribute("Computers") %>><a href="Computers.aspx">Computers</a></li>
+          <li<%= GetActiveClassAttribute("Messages") %>><a href="Messages.aspx">Messages</a></li>
         </ul>
       </li>
     </ul>
