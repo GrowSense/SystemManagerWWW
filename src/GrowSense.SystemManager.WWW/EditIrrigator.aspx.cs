@@ -58,7 +58,7 @@ namespace GrowSense.SystemManager.WWW
       PopulatePumpBurstOn ();
       PopulatePumpBurstOff ();
       
-      PumpMode.Items.FindByValue (DeviceMqttHolder.Current.Data [Device.Name] ["P"]).Selected = true;
+      PumpMode.Items.FindByValue (DeviceMqttHolder.Current.Data [Device.Name] ["M"]).Selected = true;
       
       Threshold.Items.FindByValue (DeviceMqttHolder.Current.Data [Device.Name] ["T"]).Selected = true;
       
@@ -175,7 +175,7 @@ namespace GrowSense.SystemManager.WWW
 
     public void HandlePumpModeSubmission ()
     {
-      HandleSimpleValueSubmission ("P", PumpMode.SelectedValue);
+      HandleSimpleValueSubmission ("M", PumpMode.SelectedValue);
     }
 
     public void HandleBurstOnTimeSubmission ()
