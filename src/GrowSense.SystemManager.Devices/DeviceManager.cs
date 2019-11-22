@@ -53,6 +53,11 @@ namespace GrowSense.SystemManager.Devices
       return deviceInfo;
     }
 
+    public bool DeviceExists (string deviceName)
+    {
+      return Directory.Exists (Path.Combine (DevicesDirectory, deviceName));
+    }
+
     public bool RemoveDevice (string deviceName)
     {
       Starter.Start (

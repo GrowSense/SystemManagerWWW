@@ -14,6 +14,7 @@ namespace GrowSense.SystemManager.WWW
   {
     public DeviceInfo Device;
     public DeviceManager DeviceManager;
+    public DeviceWebUtility Utility;
 
     public void Page_Load (object sender, EventArgs e)
     {
@@ -22,10 +23,15 @@ namespace GrowSense.SystemManager.WWW
       var devicesDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["DevicesDirectory"]);
     
       DeviceManager = new DeviceManager (indexDirectory, devicesDirectory);
+      Utility = new DeviceWebUtility (DeviceManager);
       
       var deviceName = Request.QueryString ["DeviceName"];
+      
+      Utility.EnsureDeviceNameProvided (deviceName);
   
       Device = DeviceManager.GetDeviceInfo (deviceName);
+      
+      Utility.EnsureDeviceExists (deviceName);
     
       if (!IsPostBack) {
       
@@ -43,7 +49,7 @@ namespace GrowSense.SystemManager.WWW
         Threshold.Items.Add (new ListItem (i + "%", i.ToString ()));
       }
       
-      for (int i = 1; i <= 1023; i++) {
+      for (int i = 1; i <= 1024; i++) {
         DryCalibration.Items.Add (new ListItem (i.ToString (), i.ToString ()));
         WetCalibration.Items.Add (new ListItem (i.ToString (), i.ToString ()));
       }
@@ -53,22 +59,26 @@ namespace GrowSense.SystemManager.WWW
     {
       Label.Text = Device.Label;
         
+      Utility.EnsureDeviceDataExists (Device.Name);
+      
+      var deviceData = DeviceMqttHolder.Current.Data [Device.Name];
+    
       PopulateReadingInterval ();
       
       PopulatePumpBurstOn ();
       PopulatePumpBurstOff ();
       
-      PumpMode.Items.FindByValue (DeviceMqttHolder.Current.Data [Device.Name] ["M"]).Selected = true;
+      PumpMode.Items.FindByValue (Utility.GetDeviceData (Device.Name, "M")).Selected = true;
       
-      Threshold.Items.FindByValue (DeviceMqttHolder.Current.Data [Device.Name] ["T"]).Selected = true;
+      Threshold.Items.FindByValue (Utility.GetDeviceData (Device.Name, "T")).Selected = true;
       
-      DryCalibration.Items.FindByValue (DeviceMqttHolder.Current.Data [Device.Name] ["D"]).Selected = true;
-      WetCalibration.Items.FindByValue (DeviceMqttHolder.Current.Data [Device.Name] ["W"]).Selected = true;
+      DryCalibration.Items.FindByValue (Utility.GetDeviceData (Device.Name, "D")).Selected = true;
+      WetCalibration.Items.FindByValue (Utility.GetDeviceData (Device.Name, "W")).Selected = true;
     }
 
     public void PopulateReadingInterval ()
     {
-      var readingIntervalQuantity = Convert.ToInt32 (DeviceMqttHolder.Current.Data [Device.Name] ["I"]);
+      var readingIntervalQuantity = Convert.ToInt32 (Utility.GetDeviceData (Device.Name, "I"));
 
       var readingIntervalType = "Seconds";
     
@@ -86,7 +96,7 @@ namespace GrowSense.SystemManager.WWW
 
     public void PopulatePumpBurstOff ()
     {
-      var burstOffQuantity = Convert.ToInt32 (DeviceMqttHolder.Current.Data [Device.Name] ["O"]);
+      var burstOffQuantity = Convert.ToInt32 (Utility.GetDeviceData (Device.Name, "O"));
 
       var burstOffType = "Seconds";
     
@@ -104,7 +114,7 @@ namespace GrowSense.SystemManager.WWW
 
     public void PopulatePumpBurstOn ()
     {
-      var burstOnQuantity = Convert.ToInt32 (DeviceMqttHolder.Current.Data [Device.Name] ["B"]);
+      var burstOnQuantity = Convert.ToInt32 (Utility.GetDeviceData (Device.Name, "B"));
 
       var burstOnType = "Seconds";
     
@@ -155,7 +165,7 @@ namespace GrowSense.SystemManager.WWW
 
     public void HandleReadingIntervalSubmission ()
     {
-      var existingValue = Convert.ToInt32 (DeviceMqttHolder.Current.Data [Device.Name] ["I"]);
+      var existingValue = Convert.ToInt32 (Utility.GetDeviceData (Device.Name, "I"));
       
       var newValue = Convert.ToInt32 (ReadingIntervalQuantity.Text);
       

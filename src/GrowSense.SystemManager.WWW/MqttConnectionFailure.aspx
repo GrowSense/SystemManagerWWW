@@ -2,7 +2,6 @@
 <%@ MasterType VirtualPath="~/Master.master" %>
 <asp:Content ContentPlaceHolderID="contentPlaceHolder" ID="contentPlaceHolderContent" runat="server">
   <h3><i class="fa fa-angle-right"></i> Garden</h3>
-  <!-- BASIC FORM ELELEMNTS -->
   <div class="row mt">
     <div class="col-lg-12">
       <div class="form-panel">

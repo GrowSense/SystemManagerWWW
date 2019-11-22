@@ -63,8 +63,11 @@
           <div class="form-group">
             <label class="col-sm-2 col-sm-2 control-label">Calibration:</label>
             <div class="col-sm-10 form-inline">
+              Dry&nbsp;
               <asp:DropDownList runat="server" id="DryCalibration" CssClass="form-control" Style="width: 100px;">
               </asp:DropDownList>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              Wet&nbsp;
               <asp:DropDownList runat="server" id="WetCalibration" CssClass="form-control" Style="width: 100px;">
               </asp:DropDownList>
             </div>
