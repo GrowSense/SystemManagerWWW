@@ -11,7 +11,7 @@ namespace GrowSense.SystemManager.Mqtt
 {
   public class DeviceMqtt : IDisposable
   {
-    public DeviceInfo[] Devices;
+    public DeviceInfo[] Devices = new DeviceInfo[] { };
     MqttClient Client;
     public Dictionary<string, Dictionary<string, string>> Data = new Dictionary<string, Dictionary<string, string>> ();
     public DeviceManager Manager;
@@ -20,8 +20,6 @@ namespace GrowSense.SystemManager.Mqtt
     public DeviceMqtt (DeviceManager manager)
     {
       Manager = manager;
-      Devices = Manager.GetDevicesInfo ();
-      WatchDevicesFolder ();
     }
     #region Connect
     public void Connect (string clientId, string mqttHost, string mqttUsername, string mqttPassword, int mqttPort)
@@ -33,7 +31,9 @@ namespace GrowSense.SystemManager.Mqtt
       
       Client.Subscribe (new string[] { "garden/#" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
       
-      SubscribeToDeviceData ();
+      AddDevices (Manager.GetDevicesInfo ());
+      
+      WatchDevicesFolder ();
     }
     #endregion
     #region Handle MQTT Message
@@ -103,6 +103,12 @@ namespace GrowSense.SystemManager.Mqtt
           return true;
       }
       return false;
+    }
+
+    public void AddDevices (DeviceInfo[] devicesInfo)
+    {
+      foreach (var deviceInfo in devicesInfo)
+        AddDevice (deviceInfo);
     }
 
     public void AddDevice (DeviceInfo deviceInfo)
