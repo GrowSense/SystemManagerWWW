@@ -14,6 +14,7 @@ namespace GrowSense.SystemManager.WWW
   {
     public DeviceInfo Device;
     public DeviceManager DeviceManager;
+    public DeviceWebUtility Utility;
 
     public void Page_Load (object sender, EventArgs e)
     {
@@ -22,11 +23,16 @@ namespace GrowSense.SystemManager.WWW
       var devicesDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["DevicesDirectory"]);
     
       DeviceManager = new DeviceManager (indexDirectory, devicesDirectory);
+      Utility = new DeviceWebUtility (DeviceManager);
       
       var deviceName = Request.QueryString ["DeviceName"];
   
+      Utility.EnsureDeviceNameProvided (deviceName);
+      
       Device = DeviceManager.GetDeviceInfo (deviceName);
     
+      Utility.EnsureDeviceExists (deviceName);
+      
       if (!IsPostBack) {
       
         InitializeForm ();
@@ -45,9 +51,11 @@ namespace GrowSense.SystemManager.WWW
     {
       Label.Text = Device.Label;
         
+      Utility.EnsureDeviceDataExists (Device.Name);
+      
       PopulateReadingInterval ();
       
-      FanMode.Items.FindByValue (DeviceMqttHolder.Current.Data [Device.Name] ["F"]).Selected = true;
+      FanMode.Items.FindByValue (Utility.GetDeviceData (Device.Name, "M")).Selected = true;
       
       PopulateTemperatureSettings ();
       PopulateHumiditySettings ();
@@ -55,7 +63,7 @@ namespace GrowSense.SystemManager.WWW
 
     public void PopulateReadingInterval ()
     {
-      var readingIntervalQuantity = Convert.ToInt32 (DeviceMqttHolder.Current.Data [Device.Name] ["I"]);
+      var readingIntervalQuantity = Convert.ToInt32 (Utility.GetDeviceData (Device.Name, "I"));
 
       var readingIntervalType = "Seconds";
     
@@ -78,8 +86,8 @@ namespace GrowSense.SystemManager.WWW
         MaximumTemperature.Items.Add (new ListItem (i + "c", i.ToString ()));
       }
       
-      var minTemperature = DeviceMqttHolder.Current.Data [Device.Name] ["S"];
-      var maxTemperature = DeviceMqttHolder.Current.Data [Device.Name] ["U"];
+      var minTemperature = Utility.GetDeviceData (Device.Name, "S");
+      var maxTemperature = Utility.GetDeviceData (Device.Name, "U");
 
       MinimumTemperature.Items.FindByValue (minTemperature).Selected = true;
       MaximumTemperature.Items.FindByValue (maxTemperature).Selected = true;
@@ -92,8 +100,8 @@ namespace GrowSense.SystemManager.WWW
         MaximumHumidity.Items.Add (new ListItem (i + "%", i.ToString ()));
       }
       
-      var minHumidity = DeviceMqttHolder.Current.Data [Device.Name] ["G"];
-      var maxHumidity = DeviceMqttHolder.Current.Data [Device.Name] ["J"];
+      var minHumidity = Utility.GetDeviceData (Device.Name, "G");
+      var maxHumidity = Utility.GetDeviceData (Device.Name, "J");
 
       MinimumHumidity.Items.FindByValue (minHumidity).Selected = true;
       MaximumHumidity.Items.FindByValue (maxHumidity).Selected = true;
@@ -132,7 +140,7 @@ namespace GrowSense.SystemManager.WWW
 
     public void HandleReadingIntervalSubmission ()
     {
-      var existingValue = Convert.ToInt32 (DeviceMqttHolder.Current.Data [Device.Name] ["I"]);
+      var existingValue = Convert.ToInt32 (Utility.GetDeviceData (Device.Name, "I"));
       
       var newValue = Convert.ToInt32 (ReadingIntervalQuantity.Text);
       
@@ -147,7 +155,7 @@ namespace GrowSense.SystemManager.WWW
 
     public void HandleFanModeSubmission ()
     {
-      HandleSimpleValueSubmission ("F", FanMode.SelectedValue);
+      HandleSimpleValueSubmission ("M", FanMode.SelectedValue);
     }
 
     public void HandleTemperatureSubmission ()
@@ -164,7 +172,7 @@ namespace GrowSense.SystemManager.WWW
 
     public void HandleSimpleValueSubmission (string topicKey, string newValue)
     {
-      var existingValue = DeviceMqttHolder.Current.Data [Device.Name] [topicKey];
+      var existingValue = Utility.GetDeviceData (Device.Name, topicKey);
       
       if (existingValue != newValue)  
         DeviceMqttHolder.Current.Publish (Device.Name, topicKey, newValue);
