@@ -61,8 +61,6 @@ namespace GrowSense.SystemManager.WWW
         
       Utility.EnsureDeviceDataExists (Device.Name);
       
-      var deviceData = DeviceMqttHolder.Current.Data [Device.Name];
-    
       PopulateReadingInterval ();
       
       PopulatePumpBurstOn ();

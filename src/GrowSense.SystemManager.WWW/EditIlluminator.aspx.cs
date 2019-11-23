@@ -14,6 +14,7 @@ namespace GrowSense.SystemManager.WWW
   {
     public DeviceInfo Device;
     public DeviceManager DeviceManager;
+    public DeviceWebUtility Utility;
 
     public void Page_Load (object sender, EventArgs e)
     {
@@ -22,11 +23,16 @@ namespace GrowSense.SystemManager.WWW
       var devicesDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["DevicesDirectory"]);
     
       DeviceManager = new DeviceManager (indexDirectory, devicesDirectory);
+      Utility = new DeviceWebUtility (DeviceManager);
       
       var deviceName = Request.QueryString ["DeviceName"];
   
+      Utility.EnsureDeviceNameProvided (deviceName);
+  
       Device = DeviceManager.GetDeviceInfo (deviceName);
     
+      Utility.EnsureDeviceExists (deviceName);
+      
       if (!IsPostBack) {
       
         InitializeForm ();
@@ -66,14 +72,16 @@ namespace GrowSense.SystemManager.WWW
     {
       Label.Text = Device.Label;
         
+      Utility.EnsureDeviceDataExists (Device.Name);
+      
       PopulateReadingInterval ();
       
-      var lightMode = DeviceMqttHolder.Current.Data [Device.Name] ["M"];
+      var lightMode = Utility.GetDeviceData (Device.Name, "M");
       if (lightMode == "6")
         lightMode = "3";
       LightMode.Items.FindByValue (lightMode).Selected = true;
       
-      var threshold = DeviceMqttHolder.Current.Data [Device.Name] ["T"];
+      var threshold = Utility.GetDeviceData (Device.Name, "T");
       Threshold.Items.FindByValue (threshold).Selected = true;
       
       PopulateTimerSettings ();
@@ -81,7 +89,7 @@ namespace GrowSense.SystemManager.WWW
 
     public void PopulateReadingInterval ()
     {
-      var readingIntervalQuantity = Convert.ToInt32 (DeviceMqttHolder.Current.Data [Device.Name] ["I"]);
+      var readingIntervalQuantity = Convert.ToInt32 (Utility.GetDeviceData (Device.Name, "I"));
 
       var readingIntervalType = "Seconds";
     
@@ -99,10 +107,10 @@ namespace GrowSense.SystemManager.WWW
 
     public void PopulateTimerSettings ()
     {      
-      var timerStartHour = DeviceMqttHolder.Current.Data [Device.Name] ["E"];
-      var timerStartMinute = DeviceMqttHolder.Current.Data [Device.Name] ["F"];
-      var timerStopHour = DeviceMqttHolder.Current.Data [Device.Name] ["G"];
-      var timerStopMinute = DeviceMqttHolder.Current.Data [Device.Name] ["H"];
+      var timerStartHour = Utility.GetDeviceData (Device.Name, "E");
+      var timerStartMinute = Utility.GetDeviceData (Device.Name, "F");
+      var timerStopHour = Utility.GetDeviceData (Device.Name, "G");
+      var timerStopMinute = Utility.GetDeviceData (Device.Name, "H");
 
       TimerStartHour.Items.FindByValue (timerStartHour).Selected = true;
       TimerStartMinute.Items.FindByValue (timerStartMinute).Selected = true;
@@ -142,7 +150,7 @@ namespace GrowSense.SystemManager.WWW
 
     public void HandleReadingIntervalSubmission ()
     {
-      var existingValue = Convert.ToInt32 (DeviceMqttHolder.Current.Data [Device.Name] ["I"]);
+      var existingValue = Convert.ToInt32 (Utility.GetDeviceData (Device.Name, "I"));
       
       var newValue = Convert.ToInt32 (ReadingIntervalQuantity.Text);
       
@@ -175,7 +183,7 @@ namespace GrowSense.SystemManager.WWW
 
     public void HandleSimpleValueSubmission (string topicKey, string newValue)
     {
-      var existingValue = DeviceMqttHolder.Current.Data [Device.Name] [topicKey];
+      var existingValue = Utility.GetDeviceData (Device.Name, topicKey);
       
       if (existingValue != newValue)  
         DeviceMqttHolder.Current.Publish (Device.Name, topicKey, newValue);
