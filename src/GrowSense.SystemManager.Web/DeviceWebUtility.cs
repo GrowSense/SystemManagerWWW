@@ -61,7 +61,7 @@ namespace GrowSense.SystemManager.Web
 
     public void RedirectToDevicesPage (string result, bool isError)
     {
-      Redirect ("Devices.aspx?Result=" + HttpUtility.UrlEncode (result) + "&IsError=" + isError.ToString ());
+      Redirect ("Devices.aspx?Result=" + HttpUtility.UrlEncode (result) + "&IsSuccess=" + (!isError).ToString ());
     }
   }
 }
