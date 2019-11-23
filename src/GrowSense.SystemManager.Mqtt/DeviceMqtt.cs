@@ -78,7 +78,7 @@ namespace GrowSense.SystemManager.Mqtt
 
     public void SubscribeToDeviceData (string deviceName)
     {
-      Client.Subscribe (new string[] { deviceName + "/#" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+      Client.Subscribe (new string[] { deviceName + "/#" }, new byte[] { MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE });
     }
 
     public void UnsubscribeFromDeviceData (string deviceName)
