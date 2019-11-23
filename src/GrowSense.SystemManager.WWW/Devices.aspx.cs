@@ -42,6 +42,9 @@ namespace GrowSense.SystemManager
     {
       var statusText = GetDeviceData(deviceName, "StatusMessage");
     
+      if (statusText == "0")
+        statusText = "Unknown";
+    
       var cssClass = "label-info";
     
       if (statusText == "Online")
@@ -53,6 +56,8 @@ namespace GrowSense.SystemManager
       if (statusText == "Upgrading")
         cssClass = "label-info";
       if (statusText == "Upgrade Complete")
+        cssClass = "label-info";
+      if (statusText == "Unknown")
         cssClass = "label-info";
     
       return String.Format("<div class=\"label {0} label-mini\">{1}</div>",
