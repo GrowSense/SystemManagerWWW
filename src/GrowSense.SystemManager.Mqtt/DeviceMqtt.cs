@@ -107,28 +107,41 @@ namespace GrowSense.SystemManager.Mqtt
 
     public void AddDevice (DeviceInfo deviceInfo)
     {
-      var list = new List<DeviceInfo> ();
-      if (Devices.Length > 0)
-        list.AddRange (Devices);
-      list.Add (deviceInfo);
-      Devices = list.ToArray ();
+      if (!DeviceExists (deviceInfo.Name)) {
+        var list = new List<DeviceInfo> ();
+        if (Devices.Length > 0)
+          list.AddRange (Devices);
+        list.Add (deviceInfo);
+        Devices = list.ToArray ();
       
-      SubscribeToDeviceData (deviceInfo.Name);
+        SubscribeToDeviceData (deviceInfo.Name);
+      }
     }
 
     public void RemoveDevice (string deviceName)
     {
-      var list = new List<DeviceInfo> ();
-      if (Devices.Length > 0)
-        list.AddRange (Devices);
+      if (DeviceExists (deviceName)) {
+        var list = new List<DeviceInfo> ();
+        if (Devices.Length > 0)
+          list.AddRange (Devices);
         
-      for (int i = 0; i < list.Count; i++) {
-        if (list [i].Name == deviceName)
-          list.RemoveAt (i);
-      }
-      Devices = list.ToArray ();
+        for (int i = 0; i < list.Count; i++) {
+          if (list [i].Name == deviceName)
+            list.RemoveAt (i);
+        }
+        Devices = list.ToArray ();
       
-      UnsubscribeFromDeviceData (deviceName);
+        UnsubscribeFromDeviceData (deviceName);
+      }
+    }
+
+    public bool DeviceExists (string deviceName)
+    {
+      foreach (var deviceInfo in Devices) {
+        if (deviceInfo.Name == deviceName)
+          return true;
+      }
+      return false;
     }
     #endregion
     #region Device Watcher Functions
