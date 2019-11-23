@@ -54,7 +54,7 @@ namespace GrowSense.SystemManager.WWW
 
     public void InitializeTimerSettings ()
     {
-      for (int i = 1; i <= 24; i++) {
+      for (int i = 0; i <= 23; i++) {
         var postFix = "";
         if (i > 12)
           postFix = " (" + (i - 12) + ")";
@@ -111,7 +111,7 @@ namespace GrowSense.SystemManager.WWW
       var timerStartMinute = Utility.GetDeviceData (Device.Name, "F");
       var timerStopHour = Utility.GetDeviceData (Device.Name, "G");
       var timerStopMinute = Utility.GetDeviceData (Device.Name, "H");
-
+      
       TimerStartHour.Items.FindByValue (timerStartHour).Selected = true;
       TimerStartMinute.Items.FindByValue (timerStartMinute).Selected = true;
       TimerStopHour.Items.FindByValue (timerStopHour).Selected = true;

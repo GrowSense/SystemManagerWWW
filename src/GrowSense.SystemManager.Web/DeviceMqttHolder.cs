@@ -17,7 +17,7 @@ namespace GrowSense.SystemManager.Web
     static public void Initialize ()
     {
       if (Current == null) {
-        var mqttDeviceName = ConfigurationSettings.AppSettings ["MqttDeviceName"];
+        var mqttDeviceName = ConfigurationSettings.AppSettings ["MqttDeviceName"] + "-" + Guid.NewGuid ().ToString ();
         var mqttHost = ConfigurationSettings.AppSettings ["MqttHost"];
         var mqttUsername = ConfigurationSettings.AppSettings ["MqttUsername"];
         var mqttPassword = ConfigurationSettings.AppSettings ["MqttPassword"];
