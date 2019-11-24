@@ -185,8 +185,10 @@ namespace GrowSense.SystemManager.Mqtt
     #region IDisposable implementation
     public void Dispose ()
     {
-      Client.Disconnect();
-      DevicesWatcher.Dispose ();
+      if (Client != null)
+        Client.Disconnect();
+      if (DevicesWatcher != null)
+        DevicesWatcher.Dispose ();
     }
     #endregion
   }
