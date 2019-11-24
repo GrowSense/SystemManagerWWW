@@ -12,10 +12,26 @@ namespace GrowSense.SystemManager.Mqtt
   public class DeviceMqtt : IDisposable
   {
     public DeviceInfo[] Devices = new DeviceInfo[] { };
-    MqttClient Client;
+    public MqttClient Client;
     public Dictionary<string, Dictionary<string, string>> Data = new Dictionary<string, Dictionary<string, string>> ();
     public DeviceManager Manager;
     public FileSystemWatcher DevicesWatcher;
+    
+    public string ClientId;
+    public string MqttHost;
+    public string MqttUsername;
+    public string MqttPassword;
+    public int MqttPort;
+    
+    public bool IsDisposing = false;
+    
+    public bool IsConnected {
+      get {
+        if (Client == null)
+          return false;
+         return Client.IsConnected;
+       }
+    }
 
     public DeviceMqtt (DeviceManager manager)
     {
@@ -26,6 +42,7 @@ namespace GrowSense.SystemManager.Mqtt
     {
       Client = new MqttClient (mqttHost, mqttPort, false, null, null, MqttSslProtocols.None);
       Client.MqttMsgPublishReceived += HandleMqttMsgPublishReceived;
+      Client.ConnectionClosed += HandleConnectionClosed;
 
       Client.Connect (clientId, mqttUsername, mqttPassword);
       
@@ -34,6 +51,12 @@ namespace GrowSense.SystemManager.Mqtt
       AddDevices (Manager.GetDevicesInfo ());
       
       WatchDevicesFolder ();
+    }
+
+    void HandleConnectionClosed (object sender, EventArgs e)
+    {
+      if (IsDisposing)
+        Connect(ClientId, MqttHost, MqttUsername, MqttPassword, MqttPort);
     }
     #endregion
     #region Handle MQTT Message
@@ -185,6 +208,8 @@ namespace GrowSense.SystemManager.Mqtt
     #region IDisposable implementation
     public void Dispose ()
     {
+    IsDisposing = true;
+    
       if (Client != null)
         Client.Disconnect();
       if (DevicesWatcher != null)
