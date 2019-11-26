@@ -40,6 +40,12 @@ namespace GrowSense.SystemManager.Mqtt
     #region Connect
     public void Connect (string clientId, string mqttHost, string mqttUsername, string mqttPassword, int mqttPort)
     {
+      ClientId = clientId;
+      MqttHost = mqttHost;
+      MqttUsername = mqttUsername;
+      MqttPassword = mqttPassword;
+      MqttPort = mqttPort;
+    
       Client = new MqttClient (mqttHost, mqttPort, false, null, null, MqttSslProtocols.None);
       Client.MqttMsgPublishReceived += HandleMqttMsgPublishReceived;
       Client.ConnectionClosed += HandleConnectionClosed;
