@@ -33,6 +33,10 @@ namespace GrowSense.SystemManager.WWW {
 		
 		protected System.Web.UI.WebControls.DropDownList Threshold;
 		
+		protected System.Web.UI.WebControls.DropDownList DarkCalibration;
+		
+		protected System.Web.UI.WebControls.DropDownList BrightCalibration;
+		
 		public new GrowSense.SystemManager.Master Master {
 			get {
 				return ((GrowSense.SystemManager.Master)(base.Master));

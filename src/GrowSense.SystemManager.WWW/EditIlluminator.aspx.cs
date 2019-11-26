@@ -50,6 +50,8 @@ namespace GrowSense.SystemManager.WWW
       }
       
       InitializeTimerSettings ();
+      
+      InitializeCalibrationSettings ();
     }
 
     public void InitializeTimerSettings ()
@@ -65,6 +67,14 @@ namespace GrowSense.SystemManager.WWW
       for (int i = 0; i <= 60; i++) {
         TimerStartMinute.Items.Add (new ListItem (i.ToString (), i.ToString ()));
         TimerStopMinute.Items.Add (new ListItem (i.ToString (), i.ToString ()));
+      }
+    }
+
+    public void InitializeCalibrationSettings ()
+    {
+      for (int i = 0; i <= 1024; i++) {
+        DarkCalibration.Items.Add (new ListItem (i.ToString (), i.ToString ()));
+        BrightCalibration.Items.Add (new ListItem (i.ToString (), i.ToString ()));
       }
     }
 
@@ -85,6 +95,9 @@ namespace GrowSense.SystemManager.WWW
       Threshold.Items.FindByValue (threshold).Selected = true;
       
       PopulateTimerSettings ();
+      
+      DarkCalibration.Items.FindByValue (Utility.GetDeviceData (Device.Name, "D")).Selected = true;
+      BrightCalibration.Items.FindByValue (Utility.GetDeviceData (Device.Name, "B")).Selected = true;
     }
 
     public void PopulateReadingInterval ()
@@ -126,6 +139,7 @@ namespace GrowSense.SystemManager.WWW
       HandleLightModeSubmission ();
       HandleThresholdSubmission ();
       HandleTimerSubmission ();
+      HandleCalibrationSubmission ();
       
       var resultMessage = "";
       var queryStringPostFix = "";
@@ -179,6 +193,12 @@ namespace GrowSense.SystemManager.WWW
       HandleSimpleValueSubmission ("F", TimerStartMinute.SelectedValue);
       HandleSimpleValueSubmission ("G", TimerStopHour.SelectedValue);
       HandleSimpleValueSubmission ("H", TimerStopMinute.SelectedValue);
+    }
+
+    public void HandleCalibrationSubmission ()
+    {
+      HandleSimpleValueSubmission ("D", DarkCalibration.SelectedValue);
+      HandleSimpleValueSubmission ("B", BrightCalibration.SelectedValue);
     }
 
     public void HandleSimpleValueSubmission (string topicKey, string newValue)

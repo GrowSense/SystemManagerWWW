@@ -68,6 +68,10 @@ namespace GrowSense.SystemManager
     
     public string GenerateDeviceProgressBars (DeviceInfo device)
     {
+      if (device.Group == "ui") {
+        var version = GetDeviceData (device.Name, "V");
+        return "Version: " + version;
+      }
       if (device.Group == "irrigator") {
         var value = GetDeviceData (device.Name, "C");
         return GenerateDeviceProgressBar ("Soil Moisture: " + value + "%", value, "blue");

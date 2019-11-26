@@ -45,11 +45,11 @@ namespace GrowSense.SystemManager.WWW
 
     public void InitializeForm ()
     {
-      for (int i = 1; i <= 100; i++) {
+      for (int i = 0; i <= 100; i++) {
         Threshold.Items.Add (new ListItem (i + "%", i.ToString ()));
       }
       
-      for (int i = 1; i <= 1024; i++) {
+      for (int i = 0; i <= 1024; i++) {
         DryCalibration.Items.Add (new ListItem (i.ToString (), i.ToString ()));
         WetCalibration.Items.Add (new ListItem (i.ToString (), i.ToString ()));
       }
