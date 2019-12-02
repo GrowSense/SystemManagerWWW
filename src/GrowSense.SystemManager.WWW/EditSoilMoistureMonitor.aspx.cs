@@ -3,6 +3,7 @@ using System.IO;
 using System.Configuration;
 using System.Web.UI.WebControls;
 using GrowSense.SystemManager.Web;
+using System.Web.Configuration;
 
 namespace GrowSense.SystemManager.WWW
 {
@@ -14,6 +15,7 @@ namespace GrowSense.SystemManager.WWW
   {
     public DeviceInfo Device;
     public DeviceManager DeviceManager;
+    public DeviceWebUtility Utility;
 
     public void Page_Load (object sender, EventArgs e)
     {
@@ -22,10 +24,13 @@ namespace GrowSense.SystemManager.WWW
       var devicesDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["DevicesDirectory"]);
     
       DeviceManager = new DeviceManager (indexDirectory, devicesDirectory);
+      Utility = new DeviceWebUtility (DeviceManager);
       
       var deviceName = Request.QueryString ["DeviceName"];
+      Utility.EnsureDeviceNameProvided (deviceName);
   
       Device = DeviceManager.GetDeviceInfo (deviceName);
+      Utility.EnsureDeviceExists (deviceName);
     
       if (!IsPostBack) {
         InitializeForm ();
@@ -38,7 +43,7 @@ namespace GrowSense.SystemManager.WWW
 
     public void InitializeForm ()
     {      
-      for (int i = 1; i <= 1023; i++) {
+      for (int i = 0; i <= 1024; i++) {
         DryCalibration.Items.Add (new ListItem (i.ToString (), i.ToString ()));
         WetCalibration.Items.Add (new ListItem (i.ToString (), i.ToString ()));
       }
@@ -50,13 +55,15 @@ namespace GrowSense.SystemManager.WWW
         
       PopulateReadingInterval ();
       
-      DryCalibration.Items.FindByValue (DeviceMqttHolder.Current.Data [Device.Name] ["D"]).Selected = true;
-      WetCalibration.Items.FindByValue (DeviceMqttHolder.Current.Data [Device.Name] ["W"]).Selected = true;
+      DryCalibration.Items.FindByValue (Utility.GetDeviceData (Device.Name, "D")).Selected = true;
+      WetCalibration.Items.FindByValue (Utility.GetDeviceData (Device.Name, "W")).Selected = true;
+      
+      PopulateBoardType ();
     }
 
     public void PopulateReadingInterval ()
     {
-      var readingIntervalQuantity = Convert.ToInt32 (DeviceMqttHolder.Current.Data [Device.Name] ["I"]);
+      var readingIntervalQuantity = Convert.ToInt32 (Utility.GetDeviceData (Device.Name, "I"));
 
       var readingIntervalType = "Seconds";
     
@@ -70,6 +77,12 @@ namespace GrowSense.SystemManager.WWW
     
       ReadingIntervalQuantity.Text = readingIntervalQuantity.ToString ();
       ReadingIntervalType.Items.FindByValue (readingIntervalType).Selected = true;
+    }
+
+    public void PopulateBoardType ()
+    {
+      if (Device.Board == "esp")
+        BoardType.SelectedValue = "esp";
     }
 
     public void HandleSubmission ()
@@ -132,6 +145,19 @@ namespace GrowSense.SystemManager.WWW
       
       if (existingValue != newValue)  
         DeviceMqttHolder.Current.Publish (Device.Name, topicKey, newValue);
+    }
+
+    public string GetConfigSetting (string key)
+    {
+      return WebConfigurationManager.AppSettings [key];
+    }
+
+    public string GenerateRawProgressBar ()
+    {
+      int width = (int)((float)100 / (float)1024 * (float)Convert.ToInt32 (Utility.GetDeviceData (Device.Name, "R")));
+      return @"<div class=""progress-bar progress-bar-info"" role=""progressbar"" aria-valuenow='" + Utility.GetDeviceData (Device.Name, "R") + @"' aria-valuemin=""0"" aria-valuemax=""1024"" style='width: " + width + @"%'>
+                  <span class=""sr-only"">" + Utility.GetDeviceData (Device.Name, "R") + @"</span>
+                </div>";
     }
   }
 }

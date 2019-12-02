@@ -8,6 +8,7 @@ namespace GrowSense.SystemManager.Devices
     public string Label;
     public string Group;
     public string Project;
+    public string Board;
   }
 }
 

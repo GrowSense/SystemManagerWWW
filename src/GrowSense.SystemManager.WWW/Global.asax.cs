@@ -38,7 +38,8 @@ namespace WWW
     {
       var error = Server.GetLastError ();
     
-      if (error is MqttConnectionException)
+      if (error is MqttConnectionException
+        || error is MqttCommunicationException)
         HttpContext.Current.Response.Redirect ("MqttConnectionFailure.aspx");
     }
 

@@ -50,6 +50,7 @@ namespace GrowSense.SystemManager.Devices
       deviceInfo.Label = File.ReadAllText (Path.Combine (deviceDirectory, "label.txt")).Trim ();
       deviceInfo.Group = File.ReadAllText (Path.Combine (deviceDirectory, "group.txt")).Trim ();
       deviceInfo.Project = File.ReadAllText (Path.Combine (deviceDirectory, "project.txt")).Trim ();
+      deviceInfo.Board = File.ReadAllText (Path.Combine (deviceDirectory, "board.txt")).Trim ();
       return deviceInfo;
     }
 

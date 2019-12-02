@@ -1,5 +1,35 @@
 <%@ Page Language="C#" Inherits="GrowSense.SystemManager.WWW.EditSoilMoistureMonitor" MasterPageFile="~/Master.master" %>
 <asp:Content ContentPlaceHolderID="contentPlaceHolder" ID="contentPlaceHolderContent" runat="server">
+  <script language="javascript">
+  var defaultArduinoDrySoilMoistureCalibration = <%= GetConfigSetting("DefaultArduinoDrySoilMoistureCalibration") %>;
+  var defaultArduinoWetSoilMoistureCalibration = <%= GetConfigSetting("DefaultArduinoWetSoilMoistureCalibration") %>;
+  var defaultEspDrySoilMoistureCalibration = <%= GetConfigSetting("DefaultEspDrySoilMoistureCalibration") %>;
+  var defaultEspWetSoilMoistureCalibration = <%= GetConfigSetting("DefaultEspWetSoilMoistureCalibration") %>;
+  
+  function expandCalibration()
+  {
+    var calibrationAdvanced = document.getElementById("calibrationAdvanced");
+    calibrationAdvanced.style.display = "block";
+    var rawMoistureValue = document.getElementById("rawMoistureValue");
+    rawMoistureValue.style.display = "block";
+  }
+  
+  function setDefaultCalibration()
+  {
+    var s = document.getElementById("<%= BoardType.ClientID %>");
+    var boardType = s.options[s.selectedIndex].value;
+    if (boardType == "arduino")
+    {
+      $('#<%= DryCalibration.ClientID %>').val(defaultArduinoDrySoilMoistureCalibration);
+      $('#<%= WetCalibration.ClientID %>').val(defaultArduinoWetSoilMoistureCalibration);
+    }
+    else
+    {
+      $('#<%= DryCalibration.ClientID %>').val(defaultEspDrySoilMoistureCalibration);
+      $('#<%= WetCalibration.ClientID %>').val(defaultEspWetSoilMoistureCalibration);
+    }
+  }
+  </script>
   <h3><i class="fa fa-angle-right"></i> Garden</h3>
   <div class="row mt">
     <div class="col-lg-12">
@@ -30,6 +60,27 @@
               </asp:DropDownList>
               <asp:DropDownList runat="server" id="WetCalibration" CssClass="form-control" Style="width: 100px;">
               </asp:DropDownList>
+              &nbsp;
+              <div class="btn btn-info btn-xs" onclick="expandCalibration();"><i class="fa fa-plus-square"></i></div>
+            </div>
+          </div>
+          <div class="form-group" id="calibrationAdvanced" style="display:none;">
+            <label class="col-sm-2 col-sm-2 control-label">Calibration (advanced):</label>
+            <div class="col-sm-10 form-inline">
+              <asp:DropDownList runat="server" id="BoardType" CssClass="form-control" Style="width: 100px;">
+               <asp:ListItem Enabled="true" Text="Arduino" Value="arduino"></asp:ListItem>
+               <asp:ListItem Enabled="true" Text="ESP/WiFi" Value="esp"></asp:ListItem>
+              </asp:DropDownList>
+              <button class="btn btn-theme03" type="button" onclick="setDefaultCalibration();">Set Defaults</button>
+            </div>
+          </div>
+          <div class="form-group" id="rawMoistureValue" style="display:none;">
+            <label class="col-sm-2 col-sm-2 control-label">Raw soil moisture:</label>
+            <div class="col-sm-10 form-inline">
+              <%= Utility.GetDeviceData(Device.Name, "R") %>
+              <div class="progress form-inline" style="width: 200px;">
+                <%= GenerateRawProgressBar() %>
+              </div>
             </div>
           </div>
           <div class="form-group">

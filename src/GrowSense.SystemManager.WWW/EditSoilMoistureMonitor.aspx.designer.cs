@@ -24,5 +24,7 @@ namespace GrowSense.SystemManager.WWW {
 		protected System.Web.UI.WebControls.DropDownList DryCalibration;
 		
 		protected System.Web.UI.WebControls.DropDownList WetCalibration;
+		
+		protected System.Web.UI.WebControls.DropDownList BoardType;
 	}
 }

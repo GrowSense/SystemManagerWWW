@@ -3,6 +3,7 @@ using System.IO;
 using System.Configuration;
 using GrowSense.SystemManager.Web;
 using System.Web.UI.WebControls;
+using System.Web.Configuration;
 
 namespace GrowSense.SystemManager.WWW
 {
@@ -72,6 +73,8 @@ namespace GrowSense.SystemManager.WWW
       
       DryCalibration.Items.FindByValue (Utility.GetDeviceData (Device.Name, "D")).Selected = true;
       WetCalibration.Items.FindByValue (Utility.GetDeviceData (Device.Name, "W")).Selected = true;
+      
+      PopulateBoardType ();
     }
 
     public void PopulateReadingInterval ()
@@ -126,6 +129,12 @@ namespace GrowSense.SystemManager.WWW
     
       BurstOnQuantity.Text = burstOnQuantity.ToString ();
       BurstOnType.Items.FindByValue (burstOnType).Selected = true;
+    }
+
+    public void PopulateBoardType ()
+    {
+      if (Device.Board == "esp")
+        BoardType.SelectedValue = "esp";
     }
 
     public void HandleSubmission ()
@@ -188,7 +197,7 @@ namespace GrowSense.SystemManager.WWW
 
     public void HandleBurstOnTimeSubmission ()
     {
-      var existingValue = Convert.ToInt32 (DeviceMqttHolder.Current.Data [Device.Name] ["B"]);
+      var existingValue = Convert.ToInt32 (Utility.GetDeviceData (Device.Name, "B"));
       
       var newValue = Convert.ToInt32 (BurstOnQuantity.Text);
       
@@ -203,7 +212,7 @@ namespace GrowSense.SystemManager.WWW
 
     public void HandleBurstOffTimeSubmission ()
     {
-      var existingValue = Convert.ToInt32 (DeviceMqttHolder.Current.Data [Device.Name] ["O"]);
+      var existingValue = Convert.ToInt32 (Utility.GetDeviceData (Device.Name, "O"));
       
       var newValue = Convert.ToInt32 (BurstOffQuantity.Text);
       
@@ -228,11 +237,23 @@ namespace GrowSense.SystemManager.WWW
 
     public void HandleSimpleValueSubmission (string topicKey, string newValue)
     {
-      var existingValue = DeviceMqttHolder.Current.Data [Device.Name] [topicKey];
+      var existingValue = Utility.GetDeviceData (Device.Name, topicKey);
       
       if (existingValue != newValue)  
         DeviceMqttHolder.Current.Publish (Device.Name, topicKey, newValue);
     }
+
+    public string GetConfigSetting (string key)
+    {
+      return WebConfigurationManager.AppSettings [key];
+    }
+
+    public string GenerateRawProgressBar ()
+    {
+      int width = (int)((float)100 / (float)1024 * (float)Convert.ToInt32 (Utility.GetDeviceData (Device.Name, "R")));
+      return @"<div class=""progress-bar progress-bar-info"" role=""progressbar"" aria-valuenow='" + Utility.GetDeviceData (Device.Name, "R") + @"' aria-valuemin=""0"" aria-valuemax=""1024"" style='width: " + width + @"%'>
+                  <span class=""sr-only"">" + Utility.GetDeviceData (Device.Name, "R") + @"</span>
+                </div>";
+    }
   }
 }
-
