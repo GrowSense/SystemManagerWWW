@@ -33,24 +33,25 @@ namespace GrowSense.SystemManager.Mqtt
        }
     }
 
-    public DeviceMqtt (DeviceManager manager)
+    public DeviceMqtt (DeviceManager manager, string clientId, string mqttHost, string mqttUsername, string mqttPassword, int mqttPort)
     {
       Manager = manager;
-    }
-    #region Connect
-    public void Connect (string clientId, string mqttHost, string mqttUsername, string mqttPassword, int mqttPort)
-    {
+      
       ClientId = clientId;
       MqttHost = mqttHost;
       MqttUsername = mqttUsername;
       MqttPassword = mqttPassword;
       MqttPort = mqttPort;
     
-      Client = new MqttClient (mqttHost, mqttPort, false, null, null, MqttSslProtocols.None);
+    }
+    #region Connect
+    public void Connect ()
+    {
+      Client = new MqttClient (MqttHost, MqttPort, false, null, null, MqttSslProtocols.None);
       Client.MqttMsgPublishReceived += HandleMqttMsgPublishReceived;
       Client.ConnectionClosed += HandleConnectionClosed;
 
-      Client.Connect (clientId, mqttUsername, mqttPassword);
+      Client.Connect (ClientId, MqttUsername, MqttPassword);
       
       Client.Subscribe (new string[] { "garden/#" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
       
@@ -61,8 +62,8 @@ namespace GrowSense.SystemManager.Mqtt
 
     void HandleConnectionClosed (object sender, EventArgs e)
     {
-      if (IsDisposing)
-        Connect(ClientId, MqttHost, MqttUsername, MqttPassword, MqttPort);
+      if (!IsDisposing)
+        Connect();
     }
     #endregion
     #region Handle MQTT Message

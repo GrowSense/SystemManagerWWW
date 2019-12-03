@@ -24,6 +24,7 @@ namespace WWW
 
     protected void Application_BeginRequest (Object sender, EventArgs e)
     {
+      DeviceMqttHolder.EnsureConnected ();
     }
 
     protected void Application_EndRequest (Object sender, EventArgs e)
