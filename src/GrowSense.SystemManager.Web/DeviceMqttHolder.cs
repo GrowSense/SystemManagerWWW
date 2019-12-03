@@ -38,7 +38,7 @@ namespace GrowSense.SystemManager.Web
 
     static public void Connect ()
     {
-      if (!Current.IsConnected) {
+      if (Current != null && !Current.IsConnected) {
         Current.Connect ();
       }
     }
