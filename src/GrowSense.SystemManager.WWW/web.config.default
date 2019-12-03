@@ -19,8 +19,8 @@ http://msdn2.microsoft.com/en-us/library/b5ysx397.aspx
     <add key="IndexDirectory" value="../../../../"/>
     <add key="DefaultArduinoDrySoilMoistureCalibration" value="700"/>
     <add key="DefaultArduinoWetSoilMoistureCalibration" value="350"/>
-    <add key="DefaultEspDrySoilMoistureCalibration" value="800"/>
-    <add key="DefaultEspWetSoilMoistureCalibration" value="250"/>
+    <add key="DefaultEspDrySoilMoistureCalibration" value="830"/>
+    <add key="DefaultEspWetSoilMoistureCalibration" value="440"/>
   </appSettings>
   <system.web>
     <compilation defaultLanguage="C#" debug="true">
