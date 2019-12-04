@@ -179,6 +179,14 @@ namespace GrowSense.SystemManager.Mqtt
       }
       return false;
     }
+    
+    public void RenameDevice (string originalName, string newName)
+    {
+      var dataEntry = Data[originalName];
+      RemoveDevice(originalName);
+      AddDevice(Manager.GetDeviceInfo(newName));
+      Data[newName] = dataEntry;
+    }
     #endregion
     #region Device Watcher Functions
     public void WatchDevicesFolder ()

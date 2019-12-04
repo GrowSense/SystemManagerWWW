@@ -79,6 +79,17 @@ namespace GrowSense.SystemManager.Devices
       
       return !starter.IsError;
     }
+
+    public bool RenameDevice (string originalName, string newName)
+    {
+      var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
+    
+      var starter = new ProcessStarter ();
+      starter.WorkingDirectory = indexDirectory;
+      starter.StartBash ("bash rename-device.sh " + originalName + " " + newName);
+      
+      return !starter.IsError;
+    }
   }
 }
 

@@ -10,40 +10,9 @@ namespace GrowSense.SystemManager.WWW
   using System.Web;
   using System.Web.UI;
 
-  public partial class EditIlluminator : System.Web.UI.Page
+  public partial class EditIlluminator : BaseEditDevicePage
   {
-    public DeviceInfo Device;
-    public DeviceManager DeviceManager;
-    public DeviceWebUtility Utility;
-
-    public void Page_Load (object sender, EventArgs e)
-    {
-      var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
-    
-      var devicesDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["DevicesDirectory"]);
-    
-      DeviceManager = new DeviceManager (indexDirectory, devicesDirectory);
-      Utility = new DeviceWebUtility (DeviceManager);
-      
-      var deviceName = Request.QueryString ["DeviceName"];
-  
-      Utility.EnsureDeviceNameProvided (deviceName);
-  
-      Device = DeviceManager.GetDeviceInfo (deviceName);
-    
-      Utility.EnsureDeviceExists (deviceName);
-      
-      if (!IsPostBack) {
-      
-        InitializeForm ();
-      
-        PopulateForm ();
-      } else {
-        HandleSubmission ();
-      }
-    }
-
-    public void InitializeForm ()
+    public override void InitializeForm ()
     {
       for (int i = 1; i <= 100; i++) {
         Threshold.Items.Add (new ListItem (i + "%", i.ToString ()));
@@ -52,6 +21,8 @@ namespace GrowSense.SystemManager.WWW
       InitializeTimerSettings ();
       
       InitializeCalibrationSettings ();
+      
+      base.InitializeForm ();
     }
 
     public void InitializeTimerSettings ()
@@ -78,14 +49,8 @@ namespace GrowSense.SystemManager.WWW
       }
     }
 
-    public void PopulateForm ()
-    {
-      Label.Text = Device.Label;
-        
-      Utility.EnsureDeviceDataExists (Device.Name);
-      
-      PopulateReadingInterval ();
-      
+    public override void PopulateForm ()
+    {      
       var lightMode = Utility.GetDeviceData (Device.Name, "M");
       if (lightMode == "6")
         lightMode = "3";
@@ -98,24 +63,8 @@ namespace GrowSense.SystemManager.WWW
       
       DarkCalibration.Items.FindByValue (Utility.GetDeviceData (Device.Name, "D")).Selected = true;
       BrightCalibration.Items.FindByValue (Utility.GetDeviceData (Device.Name, "B")).Selected = true;
-    }
-
-    public void PopulateReadingInterval ()
-    {
-      var readingIntervalQuantity = Convert.ToInt32 (Utility.GetDeviceData (Device.Name, "I"));
-
-      var readingIntervalType = "Seconds";
-    
-      if (readingIntervalQuantity % (60 * 60) == 0) {
-        readingIntervalQuantity = readingIntervalQuantity / 60 / 60;
-        readingIntervalType = "Hours";
-      } else if (readingIntervalQuantity % 60 == 0) {
-        readingIntervalQuantity = readingIntervalQuantity / 60;
-        readingIntervalType = "Minutes";
-      }
-    
-      ReadingIntervalQuantity.Text = readingIntervalQuantity.ToString ();
-      ReadingIntervalType.Items.FindByValue (readingIntervalType).Selected = true;
+      
+      base.PopulateForm ();
     }
 
     public void PopulateTimerSettings ()
@@ -131,50 +80,14 @@ namespace GrowSense.SystemManager.WWW
       TimerStopMinute.Items.FindByValue (timerStopMinute).Selected = true;
     }
 
-    public void HandleSubmission ()
+    public override void HandleSubmission ()
     {
-      bool isSuccess = HandleLabelSubmission ();
-      
-      HandleReadingIntervalSubmission ();
       HandleLightModeSubmission ();
       HandleThresholdSubmission ();
       HandleTimerSubmission ();
       HandleCalibrationSubmission ();
       
-      var resultMessage = "";
-      var queryStringPostFix = "";
-      if (isSuccess)  
-        resultMessage = "Device updated successfully!";
-      else {
-        resultMessage = "Failed to update device!";
-        queryStringPostFix = "&IsSuccess=false";
-      }
-      Response.Redirect ("Devices.aspx?Result=" + resultMessage + queryStringPostFix);
-    }
-
-    public bool HandleLabelSubmission ()
-    {
-      var newLabel = Label.Text;
-    
-      if (Device.Label != newLabel)
-        return DeviceManager.SetDeviceLabel (Device.Name, newLabel);
-        
-      return true;
-    }
-
-    public void HandleReadingIntervalSubmission ()
-    {
-      var existingValue = Convert.ToInt32 (Utility.GetDeviceData (Device.Name, "I"));
-      
-      var newValue = Convert.ToInt32 (ReadingIntervalQuantity.Text);
-      
-      if (ReadingIntervalType.SelectedValue == "Minutes")
-        newValue = newValue * 60;
-      if (ReadingIntervalType.SelectedValue == "Hours")
-        newValue = newValue * 60 * 60;
-      
-      if (existingValue != newValue)  
-        DeviceMqttHolder.Current.Publish (Device.Name, "I", newValue);
+      base.HandleSubmission ();
     }
 
     public void HandleLightModeSubmission ()
@@ -199,14 +112,6 @@ namespace GrowSense.SystemManager.WWW
     {
       HandleSimpleValueSubmission ("D", DarkCalibration.SelectedValue);
       HandleSimpleValueSubmission ("B", BrightCalibration.SelectedValue);
-    }
-
-    public void HandleSimpleValueSubmission (string topicKey, string newValue)
-    {
-      var existingValue = Utility.GetDeviceData (Device.Name, topicKey);
-      
-      if (existingValue != newValue)  
-        DeviceMqttHolder.Current.Publish (Device.Name, topicKey, newValue);
     }
   }
 }

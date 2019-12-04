@@ -44,6 +44,12 @@
             </div>
           </div>
           <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">Name:</label>
+            <div class="col-sm-10">
+              <asp:TextBox runat="server" id="Name" CssClass="form-control"></asp:TextBox>
+            </div>
+          </div>
+          <div class="form-group">
             <label class="col-sm-2 col-sm-2 control-label">Reading Interval:</label>
             <div class="col-sm-10 form-inline">
               <asp:TextBox runat="server" id="ReadingIntervalQuantity" CssClass="form-control" Style="width: 100px;"></asp:TextBox>

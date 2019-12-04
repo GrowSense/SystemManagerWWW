@@ -9,102 +9,21 @@ namespace GrowSense.SystemManager.WWW
   using System.Web;
   using System.Web.UI;
 
-  public partial class EditLightMonitor : System.Web.UI.Page
+  public partial class EditLightMonitor : BaseEditDevicePage
   {
-    public DeviceInfo Device;
-    public DeviceManager DeviceManager;
-
-    public void Page_Load (object sender, EventArgs e)
+    public override void InitializeForm ()
     {
-      var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
-    
-      var devicesDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["DevicesDirectory"]);
-    
-      DeviceManager = new DeviceManager (indexDirectory, devicesDirectory);
-      
-      var deviceName = Request.QueryString ["DeviceName"];
-  
-      Device = DeviceManager.GetDeviceInfo (deviceName);
-    
-      if (!IsPostBack) {
-      
-        InitializeForm ();
-      
-        PopulateForm ();
-      } else {
-        HandleSubmission ();
-      }
+      base.InitializeForm ();
     }
 
-    public void InitializeForm ()
+    public override void PopulateForm ()
     {
+      base.PopulateForm ();
     }
 
-    public void PopulateForm ()
+    public override void HandleSubmission ()
     {
-      Label.Text = Device.Label;
-        
-      PopulateReadingInterval ();
-    }
-
-    public void PopulateReadingInterval ()
-    {
-      var readingIntervalQuantity = Convert.ToInt32 (DeviceMqttHolder.Current.Data [Device.Name] ["I"]);
-
-      var readingIntervalType = "Seconds";
-    
-      if (readingIntervalQuantity % (60 * 60) == 0) {
-        readingIntervalQuantity = readingIntervalQuantity / 60 / 60;
-        readingIntervalType = "Hours";
-      } else if (readingIntervalQuantity % 60 == 0) {
-        readingIntervalQuantity = readingIntervalQuantity / 60;
-        readingIntervalType = "Minutes";
-      }
-    
-      ReadingIntervalQuantity.Text = readingIntervalQuantity.ToString ();
-      ReadingIntervalType.Items.FindByValue (readingIntervalType).Selected = true;
-    }
-
-    public void HandleSubmission ()
-    {
-      var isSuccess = HandleLabelSubmission ();
-      
-      HandleReadingIntervalSubmission ();
-      
-      var resultMessage = "";
-      var queryStringPostFix = "";
-      if (isSuccess)  
-        resultMessage = "Device updated successfully!";
-      else {
-        resultMessage = "Failed to update device!";
-        queryStringPostFix = "&IsSuccess=false";
-      }
-      Response.Redirect ("Devices.aspx?Result=" + resultMessage + queryStringPostFix);
-    }
-
-    public bool HandleLabelSubmission ()
-    {
-      var newLabel = Label.Text;
-    
-      if (Device.Label != newLabel)
-        return DeviceManager.SetDeviceLabel (Device.Name, newLabel);
-        
-      return true;
-    }
-
-    public void HandleReadingIntervalSubmission ()
-    {
-      var existingValue = Convert.ToInt32 (DeviceMqttHolder.Current.Data [Device.Name] ["I"]);
-      
-      var newValue = Convert.ToInt32 (ReadingIntervalQuantity.Text);
-      
-      if (ReadingIntervalType.SelectedValue == "Minutes")
-        newValue = newValue * 60;
-      if (ReadingIntervalType.SelectedValue == "Hours")
-        newValue = newValue * 60 * 60;
-      
-      if (existingValue != newValue)  
-        DeviceMqttHolder.Current.Publish (Device.Name, "I", newValue);
+      base.HandleSubmission ();
     }
   }
 }

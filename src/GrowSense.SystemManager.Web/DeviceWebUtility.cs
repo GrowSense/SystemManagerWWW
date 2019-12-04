@@ -63,6 +63,29 @@ namespace GrowSense.SystemManager.Web
     {
       Redirect ("Devices.aspx?Result=" + HttpUtility.UrlEncode (result) + "&IsSuccess=" + (!isError).ToString ());
     }
+
+    public void RedirectToErrorPage (string message)
+    {
+      Redirect ("Error.aspx?Message=" + HttpUtility.UrlEncode (message));
+    }
+
+    public void SetDeviceLabel (string deviceName, string deviceLabel)
+    {
+      var success = Manager.SetDeviceLabel (deviceName, deviceLabel);
+    
+      if (!success)
+        RedirectToErrorPage (Manager.Starter.Output);
+    }
+
+    public void RenameDevice (string originalName, string newName)
+    {
+      var success = Manager.RenameDevice (originalName, newName);
+    
+      if (!success)
+        RedirectToErrorPage (Manager.Starter.Output);
+      else
+        DeviceMqttHolder.Current.RenameDevice (originalName, newName);
+    }
   }
 }
 

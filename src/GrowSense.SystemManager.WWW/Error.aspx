@@ -6,7 +6,7 @@
     <div class="col-lg-12">
       <div class="form-panel">
         <h4 class="mb"><i class="fa fa-angle-right"></i> Error</h4>
-        <div class="alert alert-danger"><%= ErrorMessage %></div>
+        <div class="alert alert-danger"><%= ErrorMessage.Replace(Environment.NewLine, "<br/>") %></div>
       </div>
     </div>
   </div>

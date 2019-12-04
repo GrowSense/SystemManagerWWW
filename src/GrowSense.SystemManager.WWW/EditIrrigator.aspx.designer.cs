@@ -13,9 +13,6 @@ namespace GrowSense.SystemManager.WWW
   {
 		
     protected System.Web.UI.WebControls.Content contentPlaceHolderContent;
-    protected System.Web.UI.WebControls.TextBox Label;
-    protected System.Web.UI.WebControls.TextBox ReadingIntervalQuantity;
-    protected System.Web.UI.WebControls.DropDownList ReadingIntervalType;
     protected System.Web.UI.WebControls.DropDownList PumpMode;
     protected System.Web.UI.WebControls.DropDownList Threshold;
     protected System.Web.UI.WebControls.TextBox BurstOnQuantity;

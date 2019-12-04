@@ -32,11 +32,15 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DeviceMqttHolder.cs" />
     <Compile Include="DeviceWebUtility.cs" />
+    <Compile Include="BaseEditDevicePage.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -47,6 +51,10 @@
     <ProjectReference Include="..\GrowSense.SystemManager.Devices\GrowSense.SystemManager.Devices.csproj">
       <Project>{93B07A96-9021-48A1-AD85-84016529195D}</Project>
       <Name>GrowSense.SystemManager.Devices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GrowSense.SystemManager.Common\GrowSense.SystemManager.Common.csproj">
+      <Project>{B772BBBE-B363-438F-9215-E2D533A3CD2D}</Project>
+      <Name>GrowSense.SystemManager.Common</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
