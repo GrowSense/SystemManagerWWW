@@ -36,8 +36,11 @@ namespace GrowSense.SystemManager.WWW
       }
       
       for (int i = 0; i <= 60; i++) {
-        TimerStartMinute.Items.Add (new ListItem (i.ToString (), i.ToString ()));
-        TimerStopMinute.Items.Add (new ListItem (i.ToString (), i.ToString ()));
+        var text = i.ToString ();
+        if (i <= 9)
+          text = "0" + text;
+        TimerStartMinute.Items.Add (new ListItem (text, i.ToString ()));
+        TimerStopMinute.Items.Add (new ListItem (text, i.ToString ()));
       }
     }
 

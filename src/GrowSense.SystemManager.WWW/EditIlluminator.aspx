@@ -22,7 +22,7 @@
           <div class="form-group">
             <label class="col-sm-2 col-sm-2 control-label">Reading Interval:</label>
             <div class="col-sm-10 form-inline">
-              <asp:TextBox runat="server" id="ReadingIntervalQuantity" CssClass="form-control" Style="width: 100px;"></asp:TextBox>
+              <asp:TextBox runat="server" id="ReadingIntervalQuantity" CssClass="form-control" Style="width: 60px;"></asp:TextBox>
               <asp:DropDownList runat="server" id="ReadingIntervalType" CssClass="form-control" Style="width: 100px;">
                  <asp:ListItem Enabled="true" Text="Seconds" Value="Seconds"></asp:ListItem>
                  <asp:ListItem Enabled="true" Text="Minutes" Value="Minutes"></asp:ListItem>
@@ -45,17 +45,20 @@
           <div class="form-group form-inline">
             <label class="col-sm-2 col-sm-2 control-label">Timer:</label>
             <div class="col-sm-10 form-inline">
+              <div>
               On&nbsp;
-              <asp:DropDownList runat="server" id="TimerStartHour" CssClass="form-control" Style="width: 100px;">
-              </asp:DropDownList>
-              <asp:DropDownList runat="server" id="TimerStartMinute" CssClass="form-control" Style="width: 100px;">
-              </asp:DropDownList>
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              Off&nbsp;
-              <asp:DropDownList runat="server" id="TimerStopHour" CssClass="form-control" Style="width: 100px;">
-              </asp:DropDownList>
-              <asp:DropDownList runat="server" id="TimerStopMinute" CssClass="form-control" Style="width: 100px;">
-              </asp:DropDownList>
+                <asp:DropDownList runat="server" id="TimerStartHour" CssClass="form-control" Style="width: 80px;">
+                </asp:DropDownList>
+                <asp:DropDownList runat="server" id="TimerStartMinute" CssClass="form-control" Style="width: 80px;">
+                </asp:DropDownList>
+              </div>
+              <div>
+                Off&nbsp;
+                <asp:DropDownList runat="server" id="TimerStopHour" CssClass="form-control" Style="width: 80px;">
+                </asp:DropDownList>
+                <asp:DropDownList runat="server" id="TimerStopMinute" CssClass="form-control" Style="width: 80px;">
+                </asp:DropDownList>
+              </div>
             </div>
           </div>
           <div class="form-group">
@@ -68,13 +71,16 @@
           <div class="form-group">
             <label class="col-sm-2 col-sm-2 control-label">Calibration:</label>
             <div class="col-sm-10 form-inline">
-              Dark&nbsp;
-              <asp:DropDownList runat="server" id="DarkCalibration" CssClass="form-control" Style="width: 100px;">
-              </asp:DropDownList>
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              Bright&nbsp;
-              <asp:DropDownList runat="server" id="BrightCalibration" CssClass="form-control" Style="width: 100px;">
-              </asp:DropDownList>
+              <div>
+                Dark&nbsp;&nbsp;&nbsp;
+                <asp:DropDownList runat="server" id="DarkCalibration" CssClass="form-control" Style="width: 80px;">
+                </asp:DropDownList>
+              </div>
+              <div>
+                Bright&nbsp;
+                <asp:DropDownList runat="server" id="BrightCalibration" CssClass="form-control" Style="width: 80px;">
+                </asp:DropDownList>
+              </div>
             </div>
           </div>
           <div class="form-group">
