@@ -31,7 +31,7 @@ namespace GrowSense.SystemManager.WWW
       var utility = new DeviceWebUtility (manager);
       
       var isSuccess = manager.RemoveDevice (deviceName);
-      isSuccess = false;
+      
       if (isSuccess) {
         resultMessage = "Device '" + deviceName + "' was removed successfully!";
         utility.RedirectToDevicesPage (resultMessage);
