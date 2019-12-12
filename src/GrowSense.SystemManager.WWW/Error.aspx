@@ -7,6 +7,10 @@
       <div class="form-panel">
         <h4 class="mb"><i class="fa fa-angle-right"></i> Error</h4>
         <div class="alert alert-danger"><%= ErrorMessage.Replace(Environment.NewLine, "<br/>") %></div>
+        <% if (!String.IsNullOrEmpty(ErrorDetails)) { %>
+        <h4 class="mb">Details</h4>
+        <div><%= FormatDetails(ErrorDetails) %></div>
+        <% } %>
       </div>
     </div>
   </div>

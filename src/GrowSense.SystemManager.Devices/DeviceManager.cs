@@ -62,7 +62,7 @@ namespace GrowSense.SystemManager.Devices
     public bool RemoveDevice (string deviceName)
     {
       Starter.Start (
-        String.Format ("bash remove-device.sh {0}",
+        String.Format ("bash remove-garden-device.sh {0}",
                        deviceName)
       );
       

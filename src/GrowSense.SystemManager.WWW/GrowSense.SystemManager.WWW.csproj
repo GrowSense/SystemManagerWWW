@@ -183,5 +183,9 @@
       <Project>{741C95EF-6B69-4C92-8D97-CF95B21FDF96}</Project>
       <Name>GrowSense.SystemManager.Messages</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GrowSense.SystemManager.Common\GrowSense.SystemManager.Common.csproj">
+      <Project>{B772BBBE-B363-438F-9215-E2D533A3CD2D}</Project>
+      <Name>GrowSense.SystemManager.Common</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

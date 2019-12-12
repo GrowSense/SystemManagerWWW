@@ -59,13 +59,19 @@ namespace GrowSense.SystemManager.Web
       HttpContext.Current.Response.Redirect (url);
     }
 
+    public void RedirectToDevicesPage (string result)
+    {
+      RedirectToDevicesPage (result, false);
+    }
+
     public void RedirectToDevicesPage (string result, bool isError)
     {
       Redirect ("Devices.aspx?Result=" + HttpUtility.UrlEncode (result) + "&IsSuccess=" + (!isError).ToString ());
     }
 
-    public void RedirectToErrorPage (string message)
+    public void RedirectToErrorPage (string message, string details)
     {
+      HttpContext.Current.Session ["ErrorDetails"] = details;
       Redirect ("Error.aspx?Message=" + HttpUtility.UrlEncode (message));
     }
 
@@ -74,7 +80,7 @@ namespace GrowSense.SystemManager.Web
       var success = Manager.SetDeviceLabel (deviceName, deviceLabel);
     
       if (!success)
-        RedirectToErrorPage (Manager.Starter.Output);
+        RedirectToErrorPage ("Failed to set device label.", Manager.Starter.Output);
     }
 
     public void RenameDevice (string originalName, string newName)
@@ -82,7 +88,7 @@ namespace GrowSense.SystemManager.Web
       var success = Manager.RenameDevice (originalName, newName);
     
       if (!success)
-        RedirectToErrorPage (Manager.Starter.Output);
+        RedirectToErrorPage ("Failed to rename device.", Manager.Starter.Output);
       else
         DeviceMqttHolder.Current.RenameDevice (originalName, newName);
     }

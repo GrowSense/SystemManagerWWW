@@ -1,6 +1,7 @@
 using System.IO;
 using System.Configuration;
 using GrowSense.SystemManager.Devices;
+using GrowSense.SystemManager.Web;
 
 namespace GrowSense.SystemManager.WWW
 {
@@ -27,16 +28,18 @@ namespace GrowSense.SystemManager.WWW
     
       var manager = new DeviceManager (indexDirectory, devicesDirectory);
       
-      var isSuccess = manager.RemoveDevice (deviceName);
+      var utility = new DeviceWebUtility (manager);
       
-      var postFixQueryString = "";
-      if (isSuccess)
+      var isSuccess = manager.RemoveDevice (deviceName);
+      isSuccess = false;
+      if (isSuccess) {
         resultMessage = "Device '" + deviceName + "' was removed successfully!";
-      else {
-        resultMessage = "Device '" + deviceName + "' wasn't removed.";
-        postFixQueryString = "&IsSuccess=false";
+        utility.RedirectToDevicesPage (resultMessage);
+      } else {
+        resultMessage = "Failed to remove '" + deviceName + "' device!";
+        var log = manager.Starter.Output;
+        utility.RedirectToErrorPage (resultMessage, log);
       }
-      Response.Redirect ("Devices.aspx?Result=" + (resultMessage).Replace (" ", "+") + postFixQueryString);
     }
   }
 }

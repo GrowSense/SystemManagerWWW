@@ -136,7 +136,7 @@ namespace GrowSense.SystemManager.Common
                 delegate (object sender, DataReceivedEventArgs e) {
                     Console.SetOut (c);
                     c.WriteLine (e.Data);
-                    OutputBuilder.Append (e.Data);
+                    OutputBuilder.AppendLine (e.Data);
                 }
             );
 
@@ -145,7 +145,7 @@ namespace GrowSense.SystemManager.Common
                 delegate (object sender, DataReceivedEventArgs e) {
                     Console.SetOut (c);
                     c.WriteLine (e.Data);
-                    OutputBuilder.Append (e.Data);
+                    OutputBuilder.AppendLine (e.Data);
                 }
             );
 
