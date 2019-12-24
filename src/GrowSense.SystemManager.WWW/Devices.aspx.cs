@@ -134,6 +134,8 @@ namespace GrowSense.SystemManager
     {
       var targetName = "";
       
+      if (deviceInfo.Group == "ui")
+        targetName = "UI";
       if (deviceInfo.Group == "irrigator")
         targetName = "Irrigator";
       if (deviceInfo.Group == "ventilator")

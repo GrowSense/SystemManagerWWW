@@ -17,8 +17,14 @@ namespace GrowSense.SystemManager.Web
     public DeviceInfo Device;
     public DeviceManager DeviceManager;
     public DeviceWebUtility Utility;
+    public bool EnableReadingInterval = true;
 
     public BaseEditDevicePage ()
+    {
+      Construct ();
+    }
+
+    public virtual void Construct ()
     {
     }
 
@@ -62,7 +68,8 @@ namespace GrowSense.SystemManager.Web
       
       Utility.EnsureDeviceDataExists (Device.Name);
       
-      PopulateReadingInterval ();
+      if (EnableReadingInterval)
+        PopulateReadingInterval ();
     }
 
     public void PopulateReadingInterval ()
@@ -86,7 +93,9 @@ namespace GrowSense.SystemManager.Web
     public virtual void HandleSubmission ()
     {
       HandleLabelSubmission (Label.Text);
-      HandleReadingIntervalSubmission (Convert.ToInt32 (ReadingIntervalQuantity.Text), ReadingIntervalType.SelectedValue);
+      
+      if (EnableReadingInterval)
+        HandleReadingIntervalSubmission (Convert.ToInt32 (ReadingIntervalQuantity.Text), ReadingIntervalType.SelectedValue);
       
       // Handle name changes last
       HandleNameSubmission (Name.Text);

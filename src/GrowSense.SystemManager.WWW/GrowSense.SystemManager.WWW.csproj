@@ -60,6 +60,7 @@
     <Content Include="RemoveDevice.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Error.aspx" />
+    <Content Include="EditUI.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -151,6 +152,12 @@
     </Compile>
     <Compile Include="EditIrrigator.aspx.designer.cs">
       <DependentUpon>EditIrrigator.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditUI.aspx.cs">
+      <DependentUpon>EditUI.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditUI.aspx.designer.cs">
+      <DependentUpon>EditUI.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
