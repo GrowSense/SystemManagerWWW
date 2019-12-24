@@ -3,6 +3,7 @@ using System.Web.UI.WebControls;
 using GrowSense.SystemManager.Devices;
 using System.IO;
 using System.Configuration;
+using System.Globalization;
 
 namespace GrowSense.SystemManager.WWW
 {
@@ -31,6 +32,7 @@ namespace GrowSense.SystemManager.WWW
         var postFix = "";
         if (i > 12)
           postFix = " (" + (i - 12) + ")";
+        ClockHour.Items.Add (new ListItem (i.ToString () + postFix, i.ToString ()));
         TimerStartHour.Items.Add (new ListItem (i.ToString () + postFix, i.ToString ()));
         TimerStopHour.Items.Add (new ListItem (i.ToString () + postFix, i.ToString ()));
       }
@@ -39,6 +41,7 @@ namespace GrowSense.SystemManager.WWW
         var text = i.ToString ();
         if (i <= 9)
           text = "0" + text;
+        ClockMinute.Items.Add (new ListItem (text, i.ToString ()));
         TimerStartMinute.Items.Add (new ListItem (text, i.ToString ()));
         TimerStopMinute.Items.Add (new ListItem (text, i.ToString ()));
       }
@@ -62,12 +65,26 @@ namespace GrowSense.SystemManager.WWW
       var threshold = Utility.GetDeviceData (Device.Name, "T");
       Threshold.Items.FindByValue (threshold).Selected = true;
       
+      PopulateClockSettings ();
       PopulateTimerSettings ();
       
       DarkCalibration.Items.FindByValue (Utility.GetDeviceData (Device.Name, "D")).Selected = true;
       BrightCalibration.Items.FindByValue (Utility.GetDeviceData (Device.Name, "B")).Selected = true;
       
       base.PopulateForm ();
+    }
+
+    public void PopulateClockSettings ()
+    {      
+      var clockValue = Utility.GetDeviceData (Device.Name, "C");
+      
+      var clockParts = clockValue.Split ('-');
+      
+      var clockHour = clockParts [0];
+      var clockMinute = clockParts [1];
+      
+      ClockHour.Items.FindByValue (clockHour).Selected = true;
+      ClockMinute.Items.FindByValue (clockMinute).Selected = true;
     }
 
     public void PopulateTimerSettings ()
@@ -88,6 +105,7 @@ namespace GrowSense.SystemManager.WWW
       HandleLightModeSubmission ();
       HandleThresholdSubmission ();
       HandleTimerSubmission ();
+      HandleClockSubmission ();
       HandleCalibrationSubmission ();
       
       base.HandleSubmission ();
@@ -109,6 +127,18 @@ namespace GrowSense.SystemManager.WWW
       HandleSimpleValueSubmission ("F", TimerStartMinute.SelectedValue);
       HandleSimpleValueSubmission ("G", TimerStopHour.SelectedValue);
       HandleSimpleValueSubmission ("H", TimerStopMinute.SelectedValue);
+    }
+
+    public void HandleClockSubmission ()
+    {
+      if (EnableSetClock.Checked) {
+        var dateValue = DateTimeFormatInfo.CurrentInfo.GetMonthName (DateTime.Now.Month).Substring (0, 3)
+          + " " + DateTime.Now.Day
+          + " " + DateTime.Now.Year;
+        var timeValue = ClockHour.SelectedValue + ":" + ClockMinute.SelectedValue + ":0";
+        var clockValue = dateValue + " " + timeValue;
+        DeviceMqttHolder.Current.Publish (Device.Name, "C:", clockValue);
+      }
     }
 
     public void HandleCalibrationSubmission ()

@@ -25,6 +25,12 @@ namespace GrowSense.SystemManager.WWW {
 		
 		protected System.Web.UI.WebControls.DropDownList TimerStopMinute;
 		
+		protected System.Web.UI.WebControls.CheckBox EnableSetClock;
+		
+		protected System.Web.UI.WebControls.DropDownList ClockHour;
+		
+		protected System.Web.UI.WebControls.DropDownList ClockMinute;
+		
 		protected System.Web.UI.WebControls.DropDownList Threshold;
 		
 		protected System.Web.UI.WebControls.DropDownList DarkCalibration;
