@@ -78,10 +78,12 @@ namespace GrowSense.SystemManager.WWW
     {      
       var clockValue = Utility.GetDeviceData (Device.Name, "C");
       
-      var clockParts = clockValue.Split ('-');
+      var clockParts = clockValue.Split (' ');
       
-      var clockHour = clockParts [0];
-      var clockMinute = clockParts [1];
+      var timeParts = clockParts [1].Split (':');
+      
+      var clockHour = timeParts [0];
+      var clockMinute = timeParts [1];
       
       ClockHour.Items.FindByValue (clockHour).Selected = true;
       ClockMinute.Items.FindByValue (clockMinute).Selected = true;
