@@ -104,7 +104,7 @@
             <label class="col-sm-2 col-sm-2 control-label">Clock:</label>
             <div class="col-sm-10 form-inline">
               <asp:CheckBox runat="server" id="EnableSetClock" onclick="enableSetClockChanged()"></asp:CheckBox>
-              <asp:DropDownList runat="server" id="ClockHour" CssClass="form-control" Style="width: 80px;">
+              <asp:DropDownList runat="server" id="ClockHour" CssClass="form-control" Style="width: 90px;">
               </asp:DropDownList> :
               <asp:DropDownList runat="server" id="ClockMinute" CssClass="form-control" Style="width: 80px;">
               </asp:DropDownList>

@@ -29,12 +29,12 @@ namespace GrowSense.SystemManager.WWW
     public void InitializeTimerSettings ()
     {
       for (int i = 0; i <= 23; i++) {
-        var postFix = "";
+        var text = i.ToString ();
         if (i > 12)
-          postFix = " (" + (i - 12) + ")";
-        ClockHour.Items.Add (new ListItem (i.ToString () + postFix, i.ToString ()));
-        TimerStartHour.Items.Add (new ListItem (i.ToString () + postFix, i.ToString ()));
-        TimerStopHour.Items.Add (new ListItem (i.ToString () + postFix, i.ToString ()));
+          text = (i - 12).ToString () + " (" + i + ")";
+        ClockHour.Items.Add (new ListItem (text, i.ToString ()));
+        TimerStartHour.Items.Add (new ListItem (text, i.ToString ()));
+        TimerStopHour.Items.Add (new ListItem (text, i.ToString ()));
       }
       
       for (int i = 0; i <= 60; i++) {
@@ -82,11 +82,21 @@ namespace GrowSense.SystemManager.WWW
       
       var timeParts = clockParts [1].Split (':');
       
-      var clockHour = timeParts [0];
-      var clockMinute = timeParts [1];
+      var clockHour = Convert.ToInt32 (timeParts [0]);
+      var clockMinute = Convert.ToInt32 (timeParts [1]);
       
-      ClockHour.Items.FindByValue (clockHour).Selected = true;
-      ClockMinute.Items.FindByValue (clockMinute).Selected = true;
+      if (clockHour < 0)
+        clockHour = 0;
+      if (clockHour > 23)
+        clockHour = 23;
+      
+      if (clockMinute < 0)
+        clockMinute = 0;
+      if (clockMinute > 59)
+        clockMinute = 59;
+      
+      ClockHour.Items.FindByValue (clockHour.ToString ()).Selected = true;
+      ClockMinute.Items.FindByValue (clockMinute.ToString ()).Selected = true;
     }
 
     public void PopulateTimerSettings ()
