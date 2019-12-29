@@ -5,7 +5,7 @@
   <div class="row mt">
     <div class="col-lg-12">
       <div class="form-panel">
-        <h4 class="mb"><i class="fa fa-angle-right"></i> Edit Irrigator</h4>
+        <h4 class="mb"><i class="fa fa-angle-right"></i> Edit Ventilator</h4>
         <div class="form-horizontal style-form">
           <div class="form-group">
             <label class="col-sm-2 col-sm-2 control-label">Label:</label>
