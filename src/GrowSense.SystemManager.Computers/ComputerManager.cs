@@ -32,8 +32,8 @@ namespace GrowSense.SystemManager.Computers
       var list = new List<ComputerInfo> ();
       
       var localComputerInfo = new ComputerInfo ();
-      localComputerInfo.Name = "localhost";
-      localComputerInfo.Host = "127.0.0.1";
+      localComputerInfo.Name = "Local";
+      localComputerInfo.Host = GetHostName ();
         
       list.Add (localComputerInfo);
         
@@ -150,6 +150,12 @@ namespace GrowSense.SystemManager.Computers
       }
       
       return result;
+    }
+
+    public string GetHostName ()
+    {
+      Starter.Start ("cat /etc/hostname");
+      return Starter.Output.Trim ();
     }
   }
 }
