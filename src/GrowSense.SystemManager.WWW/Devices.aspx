@@ -33,7 +33,7 @@
           </thead>
           <tbody>
             <tr>
-              <td>
+              <td colspan=3>
                 <div>No devices detected.</div>
               </td>
             </tr>
@@ -47,7 +47,14 @@
             </tr>
           </thead>
           <tbody>
-            <% foreach (var deviceInfo in DevicesInfo) { %>
+            <% foreach (var computerInfo in ComputersInfo) { %>
+            <% if (GetDevicesInfo(computerInfo).Length > 0){ %>
+            <tr>
+              <td colspan=3>
+                <div><b><%= computerInfo.Name %></b></div>
+              </td>
+            </tr>
+            <% foreach (var deviceInfo in GetDevicesInfo(computerInfo)) { %>
             <tr>
               <td>
                 <div><a href="basic_table.html#"><%= deviceInfo.Label %></a></div>
@@ -61,6 +68,8 @@
                 <div class="btn btn-danger btn-xs" data-toggle="modal" data-target="#removeModal" onclick="selectDevice('<%= deviceInfo.Name %>');"><i class="fa fa-trash-o"></i></div>
               </td>
             </tr>
+            <% } %>
+            <% } %>
             <% } %>
           </tbody>
           <% } %>

@@ -3,6 +3,8 @@ using System.IO;
 using GrowSense.SystemManager.Devices;
 using GrowSense.SystemManager.Web;
 using System.Configuration;
+using GrowSense.SystemManager.Computers;
+using System.Collections.Generic;
 
 namespace GrowSense.SystemManager
 {
@@ -13,10 +15,12 @@ namespace GrowSense.SystemManager
   public partial class DevicesPage : System.Web.UI.Page
   {
     public DeviceInfo[] DevicesInfo = new DeviceInfo[] { };
+    public ComputerInfo[] ComputersInfo = new ComputerInfo[] {};
 
     public void Page_Load (object sender, EventArgs e)
     {
       LoadDevicesInfo ();
+      LoadComputersInfo ();
     }
 
     public void LoadDevicesInfo ()
@@ -27,6 +31,26 @@ namespace GrowSense.SystemManager
     
       var deviceManager = new DeviceManager (indexDirectory, devicesDirectory);
       DevicesInfo = deviceManager.GetDevicesInfo ();
+    }
+    
+    public void LoadComputersInfo ()
+    {
+      var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
+    
+      var computersDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["ComputersDirectory"]);
+    
+      var computerManager = new ComputerManager (indexDirectory, computersDirectory);
+      ComputersInfo = computerManager.GetComputersInfo ();
+    }
+    
+    public DeviceInfo[] GetDevicesInfo (ComputerInfo computerInfo)
+    {
+      var list = new List<DeviceInfo> ();
+      foreach (var deviceInfo in DevicesInfo) {
+        if (deviceInfo.Host == computerInfo.Host)
+          list.Add (deviceInfo);
+      }
+      return list.ToArray ();
     }
     
     public string GetDeviceData (string deviceName, string topicKey)

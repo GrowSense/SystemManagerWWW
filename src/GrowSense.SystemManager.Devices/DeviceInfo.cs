@@ -9,6 +9,7 @@ namespace GrowSense.SystemManager.Devices
     public string Group;
     public string Project;
     public string Board;
+    public string Host;
   }
 }
 
