@@ -1,6 +1,7 @@
 using GrowSense.SystemManager.Web;
 using System.Net.Sockets;
 using uPLibrary.Networking.M2Mqtt.Exceptions;
+using System.IO;
 
 namespace WWW
 {
@@ -24,7 +25,9 @@ namespace WWW
 
     protected void Application_BeginRequest (Object sender, EventArgs e)
     {
-      DeviceMqttHolder.EnsureConnected ();
+      var pageName = Path.GetFileName (Request.Path);
+      if (pageName != "MqttConnectionFailure.aspx")
+        DeviceMqttHolder.EnsureConnected ();
     }
 
     protected void Application_EndRequest (Object sender, EventArgs e)
@@ -40,8 +43,12 @@ namespace WWW
       var error = Server.GetLastError ();
     
       if (error is MqttConnectionException
-        || error is MqttCommunicationException)
-        HttpContext.Current.Response.Redirect ("MqttConnectionFailure.aspx");
+        || error is MqttCommunicationException
+        || error is SocketException) {
+        var pageName = Path.GetFileName (Request.Path);
+        if (pageName != "MqttConnectionFailure.aspx")
+          HttpContext.Current.Response.Redirect ("MqttConnectionFailure.aspx");
+      }
     }
 
     protected void Session_End (Object sender, EventArgs e)

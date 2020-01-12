@@ -31,7 +31,7 @@ namespace GrowSense.SystemManager
     {
       var cssClass = "label-info";
       var statusText = "Online";
-      if (computer.IsOnline || computer.Name == "localhost") {
+      if (computer.IsOnline || computer.Name.ToLower().Contains("local")) {
         cssClass = "label-success";
         statusText = "Online";
       } else {
