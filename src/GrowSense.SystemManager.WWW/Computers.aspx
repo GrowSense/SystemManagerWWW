@@ -49,6 +49,7 @@
                 <div><a href="basic_table.html#"><%= computerInfo.Host %></a></div>
               </td>
               <td>
+                <div class="btn btn-info btn-xs" onclick="location.href='ComputerTools.aspx?ComputerName=<%= computerInfo.Name %>'"><i class="fa fa-gear"></i></div>
                 <div class="btn btn-primary btn-xs" onclick="location.href='ComputerForm.aspx?ComputerName=<%= computerInfo.Name %>'"><i class="fa fa-pencil"></i></div>
                 <div class="btn btn-danger btn-xs" data-toggle="modal" data-target="#removeModal" onclick="selectComputer('<%= computerInfo.Name %>');"><i class="fa fa-trash-o"></i></div>
               </td>

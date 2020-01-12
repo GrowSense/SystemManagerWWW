@@ -42,6 +42,19 @@ namespace GrowSense.SystemManager.Devices
       return list.ToArray ();
     }
 
+    public DeviceInfo[] GetDevicesInfo (string computerHost)
+    {
+      var list = new List<DeviceInfo> ();
+      if (Directory.Exists (DevicesDirectory)) {
+        foreach (var deviceDirectory in Directory.GetDirectories(DevicesDirectory)) {
+          var deviceInfo = GetDeviceInfo (Path.GetFileNameWithoutExtension (deviceDirectory));
+          if (deviceInfo.Host == computerHost)
+            list.Add (deviceInfo);
+        }
+      }
+      return list.ToArray ();
+    }
+
     public DeviceInfo GetDeviceInfo (string deviceName)
     {
       var deviceDirectory = Path.Combine (DevicesDirectory, deviceName);

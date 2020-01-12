@@ -212,6 +212,10 @@ namespace GrowSense.SystemManager.Common
                 return argument;
         }
 
+        public void ClearOutput ()
+        {
+          OutputBuilder.Clear ();
+        }
     }
 }
 

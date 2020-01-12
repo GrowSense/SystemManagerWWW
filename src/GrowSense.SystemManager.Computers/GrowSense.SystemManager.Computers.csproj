@@ -38,6 +38,7 @@
     <Compile Include="ComputerInfo.cs" />
     <Compile Include="ComputerActionResult.cs" />
     <Compile Include="ComputerActionError.cs" />
+    <Compile Include="ServiceStatus.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

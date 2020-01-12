@@ -30,7 +30,7 @@ namespace GrowSense.SystemManager
     public string GenerateComputerStatusIcon (ComputerInfo computer)
     {
       var cssClass = "label-info";
-      var statusText = "Onlinle";
+      var statusText = "Online";
       if (computer.IsOnline || computer.Name == "localhost") {
         cssClass = "label-success";
         statusText = "Online";

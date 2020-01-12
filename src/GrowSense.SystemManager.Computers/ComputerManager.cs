@@ -30,12 +30,8 @@ namespace GrowSense.SystemManager.Computers
     public ComputerInfo[] GetComputersInfo ()
     {
       var list = new List<ComputerInfo> ();
-      
-      var localComputerInfo = new ComputerInfo ();
-      localComputerInfo.Name = "Local";
-      localComputerInfo.Host = GetHostName ();
-        
-      list.Add (localComputerInfo);
+              
+      list.Add (GetComputerInfo ("Local"));
         
       if (Directory.Exists (ComputersDirectory)) {
         foreach (var dir in Directory.GetDirectories(ComputersDirectory)) {
@@ -52,18 +48,22 @@ namespace GrowSense.SystemManager.Computers
     {
       var computerInfo = new ComputerInfo ();
       
-      var computerDirectory = Path.Combine (ComputersDirectory, computerName);
+      if (computerName == "Local") {
+        computerInfo.Name = "Local";
+        computerInfo.Host = GetHostName ();
+      } else {
+        var computerDirectory = Path.Combine (ComputersDirectory, computerName);
       
-      computerInfo.Name = File.ReadAllText (Path.Combine (computerDirectory, "name.security")).Trim ();
-      computerInfo.Host = File.ReadAllText (Path.Combine (computerDirectory, "host.security")).Trim ();
-      computerInfo.Username = File.ReadAllText (Path.Combine (computerDirectory, "username.security")).Trim ();
-      computerInfo.Password = File.ReadAllText (Path.Combine (computerDirectory, "password.security")).Trim ();
-      computerInfo.Port = Convert.ToInt32 (File.ReadAllText (Path.Combine (computerDirectory, "port.security")).Trim ());
-      if (File.Exists (Path.Combine (computerDirectory, "is-offline.txt")))
-        computerInfo.IsOnline = Convert.ToInt32 (File.ReadAllText (Path.Combine (computerDirectory, "is-offline.txt")).Trim ()) == 0;
-      else
-        computerInfo.IsOnline = true;
-      
+        computerInfo.Name = File.ReadAllText (Path.Combine (computerDirectory, "name.security")).Trim ();
+        computerInfo.Host = File.ReadAllText (Path.Combine (computerDirectory, "host.security")).Trim ();
+        computerInfo.Username = File.ReadAllText (Path.Combine (computerDirectory, "username.security")).Trim ();
+        computerInfo.Password = File.ReadAllText (Path.Combine (computerDirectory, "password.security")).Trim ();
+        computerInfo.Port = Convert.ToInt32 (File.ReadAllText (Path.Combine (computerDirectory, "port.security")).Trim ());
+        if (File.Exists (Path.Combine (computerDirectory, "is-offline.txt")))
+          computerInfo.IsOnline = Convert.ToInt32 (File.ReadAllText (Path.Combine (computerDirectory, "is-offline.txt")).Trim ()) == 0;
+        else
+          computerInfo.IsOnline = true;
+      }
       return computerInfo;
     }
 
@@ -150,6 +150,33 @@ namespace GrowSense.SystemManager.Computers
       }
       
       return result;
+    }
+
+    public ServiceStatus GetServiceStatus (string computerName, string serviceName)
+    {
+      var command = "systemctl status " + serviceName;
+      if (!computerName.ToLower ().Contains ("local"))
+        command = "bash run-on-remote.sh " + computerName + " " + command;
+    
+      Starter.Start (command);
+      
+      var output = Starter.Output;
+      
+      Starter.ClearOutput ();
+    
+      var status = ServiceStatus.NotSet;
+      if (output.Contains ("Active: active"))
+        status = ServiceStatus.Active;
+      if (output.Contains ("Active: dead"))
+        status = ServiceStatus.Dead;
+      if (output.Contains ("Active: inactive"))
+        status = ServiceStatus.Inactive;
+      if (output.Contains ("Active: failed"))
+        status = ServiceStatus.Failed;
+      if (output.Contains ("Reason: No such file"))
+        status = ServiceStatus.NotFound;
+        
+      return status;
     }
 
     public string GetHostName ()
