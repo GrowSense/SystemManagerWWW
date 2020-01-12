@@ -42,11 +42,11 @@
               </td>
               <td>
                 <div>
-                  <a href="basic_table.html#"><%= computerInfo.Name %></a>
+                  <%= computerInfo.Name %>
                 </div>
               </td>
               <td>
-                <div><a href="basic_table.html#"><%= computerInfo.Host %></a></div>
+                <%= computerInfo.Host %>
               </td>
               <td>
                 <div class="btn btn-info btn-xs" onclick="location.href='ComputerTools.aspx?ComputerName=<%= computerInfo.Name %>'"><i class="fa fa-gear"></i></div>

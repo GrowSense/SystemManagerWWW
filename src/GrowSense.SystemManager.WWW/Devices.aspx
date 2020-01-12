@@ -57,7 +57,7 @@
             <% foreach (var deviceInfo in GetDevicesInfo(computerInfo)) { %>
             <tr>
               <td>
-                <div><a href="basic_table.html#"><%= deviceInfo.Label %></a></div>
+                <div><%= deviceInfo.Label %></div>
                 <%= GenerateDeviceStatusIcon(deviceInfo.Name) %>
               </td>
               <td>
