@@ -158,25 +158,73 @@ namespace GrowSense.SystemManager.Computers
       if (!computerName.ToLower ().Contains ("local"))
         command = "bash run-on-remote.sh " + computerName + " " + command;
     
+      var statusText = GetServiceStatusText (computerName, serviceName);
+    
+      var status = ServiceStatus.NotSet;
+      if (statusText.Contains ("Active: active"))
+        status = ServiceStatus.Active;
+      if (statusText.Contains ("Active: dead"))
+        status = ServiceStatus.Dead;
+      if (statusText.Contains ("Active: inactive"))
+        status = ServiceStatus.Inactive;
+      if (statusText.Contains ("Active: failed"))
+        status = ServiceStatus.Failed;
+      if (statusText.Contains ("Reason: No such file"))
+        status = ServiceStatus.NotFound;
+        
+      return status;
+    }
+
+    public string GetServiceStatusText (string computerName, string serviceName)
+    {
+      var command = "systemctl status " + serviceName;
+      var isRemote = false;
+      if (!computerName.ToLower ().Contains ("local")) {
+        isRemote = true;
+        command = "bash run-on-remote.sh " + computerName + " " + command;
+      }
+    
       Starter.Start (command);
       
       var output = Starter.Output;
       
       Starter.ClearOutput ();
+      
+      if (isRemote) {
+        var preText = "Launching command on remote computer...";
+        var postText = "Finished running command on remote computer.";
+        var startPosition = output.IndexOf (preText) + preText.Length + 1;
+        output = output.Substring (startPosition, output.Length - startPosition);
+        output = output.Replace (postText, "");
+      }
     
-      var status = ServiceStatus.NotSet;
-      if (output.Contains ("Active: active"))
-        status = ServiceStatus.Active;
-      if (output.Contains ("Active: dead"))
-        status = ServiceStatus.Dead;
-      if (output.Contains ("Active: inactive"))
-        status = ServiceStatus.Inactive;
-      if (output.Contains ("Active: failed"))
-        status = ServiceStatus.Failed;
-      if (output.Contains ("Reason: No such file"))
-        status = ServiceStatus.NotFound;
-        
-      return status;
+      return output;
+    }
+
+    public string RunServiceAction (string computerName, string action, string serviceName)
+    {
+      var command = "systemctl " + action + " " + serviceName;
+      var isRemote = false;
+      if (!computerName.ToLower ().Contains ("local")) {
+        isRemote = true;
+        command = "bash run-on-remote.sh " + computerName + " " + command;
+      }
+    
+      Starter.Start (command);
+      
+      var output = Starter.Output;
+      
+      Starter.ClearOutput ();
+      
+      if (isRemote) {
+        var preText = "Launching command on remote computer...";
+        var postText = "Finished running command on remote computer.";
+        var startPosition = output.IndexOf (preText) + preText.Length + 1;
+        output = output.Substring (startPosition, output.Length - startPosition);
+        output = output.Replace (postText, "");
+      }
+    
+      return output;
     }
 
     public string GetHostName ()

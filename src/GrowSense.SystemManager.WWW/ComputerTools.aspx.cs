@@ -80,12 +80,9 @@ namespace GrowSense.SystemManager.WWW
       if (device.Board == "esp")
         status = ServiceStatus.NotRequired;
       else {
-        if (device.Group == "ui")
-          serviceName = "growsense-ui-1602-" + device.Name + ".service";
-        else
-          serviceName = "growsense-mqtt-bridge-" + device.Name + ".service";
+        serviceName = GetDeviceServiceName(device);
     
-          status = Manager.GetServiceStatus (Computer.Name, serviceName);
+        status = Manager.GetServiceStatus (Computer.Name, serviceName);
       }
       
       return GenerateServiceStatusIcon (status);
@@ -115,6 +112,42 @@ namespace GrowSense.SystemManager.WWW
                             cssClass,
                             statusText
       );
+    }
+    
+    public string GetDeviceServiceName(DeviceInfo device)
+    {
+      var serviceName = "";
+    
+      if (device.Group == "ui")
+        serviceName = "growsense-ui-1602-" + device.Name + ".service";
+      else
+        serviceName = "growsense-mqtt-bridge-" + device.Name + ".service";
+          
+      return serviceName;
+    }
+    
+    public string GetViewServicePath(string serviceName)
+    {
+      return "ViewService.aspx?Computer=" + Computer.Name + "&Service=" + serviceName;
+    }
+    
+    public string GetServiceActionPath(string action, string serviceName, string label)
+    {
+      return "ServiceAction.aspx?Computer=" + Computer.Name + "&Action=" + action + "&Service=" + serviceName + "&Label=" + label;
+    }
+    
+    public string GetViewDeviceServicePath(DeviceInfo device)
+    {
+      var serviceName = GetDeviceServiceName(device);
+    
+      return "ViewService.aspx?Computer=" + Computer.Name + "&Service=" + serviceName;
+    }
+    
+    public string GetDeviceServiceActionPath(DeviceInfo device, string action)
+    {
+      var serviceName = GetDeviceServiceName(device);
+    
+      return "ServiceAction.aspx?Computer=" + Computer.Name + "&Action=" + action + "&Service=" + serviceName + "&Label=" + device.Label + "+device";
     }
   }
 }
