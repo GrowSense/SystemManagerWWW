@@ -28,10 +28,10 @@
               </td>
               <td>
                 <div class="btn btn-default btn-xs" onclick="location.href='<%= GetViewServicePath("arduino-plug-and-play.service") %>'"><i class="fa fa-search"></i></div>
-                <div class="btn btn-success btn-xs" onclick="location.href='<%= GetServiceActionPath("start", "arduino-plug-and-play", "Plug and play") %>'"><i class="fa fa-play"></i></div>
-                <div class="btn btn-primary btn-xs" onclick="location.href='<%= GetServiceActionPath("restart", "arduino-plug-and-play", "Plug and play") %>'"><i class="fa fa-refresh"></i></div>
-                <div class="btn btn-danger btn-xs" onclick="location.href='<%= GetServiceActionPath("stop", "arduino-plug-and-play", "Plug and play") %>'"><i class="fa fa-stop"></i></div>
-                <div class="btn btn-warning btn-xs" onclick="location.href='<%= GetServiceActionPath("disable", "arduino-plug-and-play", "Plug and play") %>'"><i class="fa fa-times-circle"></i></div>
+                <div class="btn btn-success btn-xs" onclick="location.href='<%= GetServiceActionPath("start", "arduino-plug-and-play.service", "Plug and play") %>'"><i class="fa fa-play"></i></div>
+                <div class="btn btn-primary btn-xs" onclick="location.href='<%= GetServiceActionPath("restart", "arduino-plug-and-play.service", "Plug and play") %>'"><i class="fa fa-refresh"></i></div>
+                <div class="btn btn-danger btn-xs" onclick="location.href='<%= GetServiceActionPath("stop", "arduino-plug-and-play.service", "Plug and play") %>'"><i class="fa fa-stop"></i></div>
+                <div class="btn btn-warning btn-xs" onclick="location.href='<%= GetServiceActionPath("disable", "arduino-plug-and-play.service", "Plug and play") %>'"><i class="fa fa-times-circle"></i></div>
               </td>
             </tr>
             <tr>

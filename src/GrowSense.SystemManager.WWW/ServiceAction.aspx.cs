@@ -30,6 +30,8 @@ namespace GrowSense.SystemManager.WWW
       var actionLabel = action + "ed";
       if (action == "stop")
         actionLabel = "stopped";
+      if (action == "disable")
+        actionLabel = "disabled";
       
       var message = serviceLabel + " service " + actionLabel + " on " + computerName + " computer.";
       Response.Redirect ("ComputerTools.aspx?ComputerName=" + computerName + "&Result=" + HttpUtility.UrlEncode (message));
