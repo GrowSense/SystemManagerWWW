@@ -19,7 +19,7 @@
   <div class="row mt">
     <div class="col-md-12">
       <% if (!String.IsNullOrEmpty(Request.QueryString["Result"])){ %>
-      <div class="alert alert-<%= (Request.QueryString["IsSuccess"] == "false" ? "danger" : "success") %> "><%= Request.QueryString["Result"] %></div>
+      <div class="alert alert-<%= (Request.QueryString["IsSuccess"] == "False" ? "danger" : "success") %> "><%= Request.QueryString["Result"] %></div>
       <% } %>
       <div class="content-panel">
         <table class="table table-striped table-advance table-hover">

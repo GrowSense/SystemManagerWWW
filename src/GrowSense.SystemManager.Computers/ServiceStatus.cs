@@ -9,6 +9,7 @@ namespace GrowSense.SystemManager.Computers
     Active,
     Failed,
     Dead,
+    Disconnected,
     NotFound,
     NotRequired,
   }

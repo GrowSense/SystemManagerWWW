@@ -16,6 +16,8 @@ namespace GrowSense.SystemManager
   {
     public DeviceInfo[] DevicesInfo = new DeviceInfo[] { };
     public ComputerInfo[] ComputersInfo = new ComputerInfo[] {};
+    
+    public DeviceManager Manager;
 
     public void Page_Load (object sender, EventArgs e)
     {
@@ -29,8 +31,8 @@ namespace GrowSense.SystemManager
     
       var devicesDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["DevicesDirectory"]);
     
-      var deviceManager = new DeviceManager (indexDirectory, devicesDirectory);
-      DevicesInfo = deviceManager.GetDevicesInfo ();
+      Manager = new DeviceManager (indexDirectory, devicesDirectory);
+      DevicesInfo = Manager.GetDevicesInfo ();
     }
     
     public void LoadComputersInfo ()
@@ -76,6 +78,8 @@ namespace GrowSense.SystemManager
       if (statusText == "Connected")
         cssClass = "label-success";
       if (statusText == "Offline")
+        cssClass = "label-danger";
+      if (statusText == "Disconnected")
         cssClass = "label-danger";
       if (statusText == "Upgrading")
         cssClass = "label-info";

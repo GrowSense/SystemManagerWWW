@@ -2,6 +2,7 @@ using GrowSense.SystemManager.Computers;
 using System.IO;
 using System.Configuration;
 using GrowSense.SystemManager.Devices;
+using GrowSense.SystemManager.Web;
 
 namespace GrowSense.SystemManager.WWW
 {
@@ -80,9 +81,16 @@ namespace GrowSense.SystemManager.WWW
       if (device.Board == "esp")
         status = ServiceStatus.NotRequired;
       else {
-        serviceName = GetDeviceServiceName(device);
+        var statusMessage = new DeviceWebUtility(DeviceManager).GetDeviceData(device.Name, "StatusMessage");
+        var isConnected = statusMessage == "Disconnected";
+        if (!isConnected)
+          status = ServiceStatus.Disconnected;
+        else
+        {
+          serviceName = GetDeviceServiceName (device);
     
-        status = Manager.GetServiceStatus (Computer.Name, serviceName);
+          status = Manager.GetServiceStatus (Computer.Name, serviceName);
+        }
       }
       
       return GenerateServiceStatusIcon (status);
