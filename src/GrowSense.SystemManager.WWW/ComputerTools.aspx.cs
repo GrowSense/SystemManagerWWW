@@ -82,7 +82,7 @@ namespace GrowSense.SystemManager.WWW
         status = ServiceStatus.NotRequired;
       else {
         var statusMessage = new DeviceWebUtility(DeviceManager).GetDeviceData(device.Name, "StatusMessage");
-        var isConnected = statusMessage == "Disconnected";
+        var isConnected = statusMessage != "Disconnected";
         if (!isConnected)
           status = ServiceStatus.Disconnected;
         else
