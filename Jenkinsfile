@@ -40,6 +40,13 @@ pipeline {
                 sh 'sh graduate.sh'
             }
         }
+        stage('Version') {
+            when { expression { !shouldSkipBuild() } }
+            steps {
+                sh 'sh increment-version.sh'
+                sh 'sh push-version.sh'
+            }
+        }
         stage('CleanWSEnd') {
             steps {
                 deleteDir()
