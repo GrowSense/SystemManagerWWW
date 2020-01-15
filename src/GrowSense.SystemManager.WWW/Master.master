@@ -71,6 +71,9 @@
       <p>
         &copy; Copyrights <strong>GrowSense</strong>. All Rights Reserved
       </p>
+      <p>
+        System Version: <%= (string)Application["SystemVersion"] %> | Web UI Version: <%= (string)Application["WebUIVersion"] %>
+      </p>
       <div class="credits">
         Created with Dashio template by <a href="https://templatemag.com/">TemplateMag</a>
       </div>

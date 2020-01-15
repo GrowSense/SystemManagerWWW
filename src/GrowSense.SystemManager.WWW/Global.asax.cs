@@ -2,6 +2,7 @@ using GrowSense.SystemManager.Web;
 using System.Net.Sockets;
 using uPLibrary.Networking.M2Mqtt.Exceptions;
 using System.IO;
+using System.Configuration;
 
 namespace WWW
 {
@@ -21,6 +22,8 @@ namespace WWW
     protected void Session_Start (Object sender, EventArgs e)
     {
       DeviceMqttHolder.Initialize ();
+      
+      LoadVersions ();
     }
 
     protected void Application_BeginRequest (Object sender, EventArgs e)
@@ -58,6 +61,32 @@ namespace WWW
     protected void Application_End (Object sender, EventArgs e)
     {
       DeviceMqttHolder.End ();
+    }
+
+    protected void LoadVersions ()
+    {
+      LoadSystemVersion ();
+      LoadWebUIVersion ();
+    }
+
+    protected void LoadSystemVersion ()
+    {
+      var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
+      var versionNumber = File.ReadAllText (Path.Combine (indexDirectory, "version.txt")).Trim ();
+      var buildNumber = File.ReadAllText (Path.Combine (indexDirectory, "buildnumber.txt")).Trim ();
+      var fullVersion = versionNumber + "-" + buildNumber;
+      fullVersion = fullVersion.Replace ("-", ".");
+      Application.Add ("SystemVersion", fullVersion);
+    }
+
+    protected void LoadWebUIVersion ()
+    {
+      var baseDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["BaseDirectory"]);
+      var versionNumber = File.ReadAllText (Path.Combine (baseDirectory, "version.txt")).Trim ();
+      var buildNumber = File.ReadAllText (Path.Combine (baseDirectory, "buildnumber.txt")).Trim ();
+      var fullVersion = versionNumber + "-" + buildNumber;
+      fullVersion = fullVersion.Replace ("-", ".");
+      Application.Add ("WebUIVersion", fullVersion);
     }
   }
 }
