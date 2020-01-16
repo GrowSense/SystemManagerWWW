@@ -197,6 +197,32 @@ namespace GrowSense.SystemManager.Computers
       return output;
     }
 
+    public string GetServiceLogText (string computerName, string serviceName)
+    {
+      var command = "journalctl -u " + serviceName + " -b";
+      var isRemote = false;
+      if (!computerName.ToLower ().Contains ("local")) {
+        isRemote = true;
+        command = "bash run-on-remote.sh " + computerName + " " + command;
+      }
+    
+      Starter.Start (command);
+      
+      var output = Starter.Output;
+      
+      Starter.ClearOutput ();
+      
+      if (isRemote) {
+        var preText = "Launching command on remote computer...";
+        var postText = "Finished running command on remote computer.";
+        var startPosition = output.IndexOf (preText) + preText.Length + 1;
+        output = output.Substring (startPosition, output.Length - startPosition);
+        output = output.Replace (postText, "");
+      }
+    
+      return output;
+    }
+
     public string RunServiceAction (string computerName, string action, string serviceName)
     {
       var command = "systemctl " + action + " " + serviceName;

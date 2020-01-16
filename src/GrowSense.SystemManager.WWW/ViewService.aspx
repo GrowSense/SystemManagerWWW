@@ -30,6 +30,14 @@
             </div>
           </div>
         </div>
+        <div class="form-horizontal style-form">
+          <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">Log output:</label>
+            <div class="col-md-9">
+              <%= LogOutput.Replace("\n", "<br/>") %>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

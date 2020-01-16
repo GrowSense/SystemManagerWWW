@@ -13,6 +13,7 @@ namespace GrowSense.SystemManager.WWW
     public string ComputerName;
     public string ServiceName;
     public string StatusOutput;
+    public string LogOutput;
     public ComputerManager Manager;
 
     public void Page_Load (object sender, EventArgs e)
@@ -27,6 +28,7 @@ namespace GrowSense.SystemManager.WWW
       Manager = new ComputerManager (indexDirectory, computersDirectory);
       
       StatusOutput = Manager.GetServiceStatusText (ComputerName, ServiceName);
+      LogOutput = Manager.GetServiceLogText (ComputerName, ServiceName);
     }
 
     public string FormatDetails (string details)
