@@ -154,10 +154,6 @@ namespace GrowSense.SystemManager.Computers
 
     public ServiceStatus GetServiceStatus (string computerName, string serviceName)
     {
-      var command = "systemctl status " + serviceName;
-      if (!computerName.ToLower ().Contains ("local"))
-        command = "bash run-on-remote.sh " + computerName + " " + command;
-    
       var statusText = GetServiceStatusText (computerName, serviceName);
     
       var status = ServiceStatus.NotSet;
