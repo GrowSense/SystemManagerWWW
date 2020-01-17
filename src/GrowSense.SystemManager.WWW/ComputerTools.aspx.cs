@@ -82,7 +82,7 @@ namespace GrowSense.SystemManager.WWW
         status = ServiceStatus.NotRequired;
       else {
         var statusMessage = "";
-        if (DeviceMqttHolder.Current.Data[device.Name].ContainsKey("StatusMessage"))
+        if (DeviceMqttHolder.Current.Data.ContainsKey(device.Name) && DeviceMqttHolder.Current.Data[device.Name].ContainsKey("StatusMessage"))
           statusMessage = DeviceMqttHolder.Current.Data[device.Name]["StatusMessage"];
         var isConnected = statusMessage != "Disconnected";
         if (!isConnected)
