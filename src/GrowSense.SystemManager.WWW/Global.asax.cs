@@ -21,9 +21,8 @@ namespace WWW
 
     protected void Session_Start (Object sender, EventArgs e)
     {
-      DeviceMqttHolder.Initialize ();
-      
       LoadVersions ();
+      DeviceMqttHolder.Initialize ();
     }
 
     protected void Application_BeginRequest (Object sender, EventArgs e)
@@ -31,6 +30,8 @@ namespace WWW
       var pageName = Path.GetFileName (Request.Path);
       if (pageName != "MqttConnectionFailure.aspx")
         DeviceMqttHolder.EnsureConnected ();
+      
+      LoadVersions ();
     }
 
     protected void Application_EndRequest (Object sender, EventArgs e)
@@ -71,22 +72,26 @@ namespace WWW
 
     protected void LoadSystemVersion ()
     {
-      var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
-      var versionNumber = File.ReadAllText (Path.Combine (indexDirectory, "version.txt")).Trim ();
-      var buildNumber = File.ReadAllText (Path.Combine (indexDirectory, "buildnumber.txt")).Trim ();
-      var fullVersion = versionNumber + "-" + buildNumber;
-      fullVersion = fullVersion.Replace ("-", ".");
-      Application.Add ("SystemVersion", fullVersion);
+      if (String.IsNullOrEmpty ((string)Application ["SystemVersion"])) {
+        var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
+        var versionNumber = File.ReadAllText (Path.Combine (indexDirectory, "version.txt")).Trim ();
+        var buildNumber = File.ReadAllText (Path.Combine (indexDirectory, "buildnumber.txt")).Trim ();
+        var fullVersion = versionNumber + "-" + buildNumber;
+        fullVersion = fullVersion.Replace ("-", ".");
+        Application.Add ("SystemVersion", fullVersion);
+      }
     }
 
     protected void LoadWebUIVersion ()
     {
-      var baseDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["BaseDirectory"]);
-      var versionNumber = File.ReadAllText (Path.Combine (baseDirectory, "version.txt")).Trim ();
-      var buildNumber = File.ReadAllText (Path.Combine (baseDirectory, "buildnumber.txt")).Trim ();
-      var fullVersion = versionNumber + "-" + buildNumber;
-      fullVersion = fullVersion.Replace ("-", ".");
-      Application.Add ("WebUIVersion", fullVersion);
+      if (String.IsNullOrEmpty ((string)Application ["WebUIVersion"])) {
+        var baseDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["BaseDirectory"]);
+        var versionNumber = File.ReadAllText (Path.Combine (baseDirectory, "version.txt")).Trim ();
+        var buildNumber = File.ReadAllText (Path.Combine (baseDirectory, "buildnumber.txt")).Trim ();
+        var fullVersion = versionNumber + "-" + buildNumber;
+        fullVersion = fullVersion.Replace ("-", ".");
+        Application.Add ("WebUIVersion", fullVersion);
+      }
     }
   }
 }
