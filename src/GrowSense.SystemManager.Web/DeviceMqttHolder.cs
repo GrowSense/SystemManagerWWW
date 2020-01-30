@@ -33,7 +33,8 @@ namespace GrowSense.SystemManager.Web
         Current = new DeviceMqtt (deviceManager, mqttDeviceName, mqttHost, mqttUsername, mqttPassword, mqttPort);
       }
       
-      Connect ();
+      if (!Current.IsConnected)
+        Connect ();
     }
 
     static public void Connect ()

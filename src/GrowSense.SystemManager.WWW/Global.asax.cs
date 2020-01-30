@@ -28,8 +28,10 @@ namespace WWW
     protected void Application_BeginRequest (Object sender, EventArgs e)
     {
       var pageName = Path.GetFileName (Request.Path);
-      if (pageName != "MqttConnectionFailure.aspx")
+      if (pageName != "MqttConnectionFailure.aspx") {
+        DeviceMqttHolder.Initialize ();
         DeviceMqttHolder.EnsureConnected ();
+      }
       
       LoadVersions ();
     }
