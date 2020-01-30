@@ -5,68 +5,65 @@
   <div class="row mt">
     <div class="col-lg-12">
       <div class="form-panel">
-        <h4 class="mb"><i class="fa fa-angle-right"></i> WiFi Network</h4>
         <% if (Stage == 1){ %>
         <script language="javascript">
         var computerConnectionTypeFields = <%= GetComputerConnectionTypeFieldsArray() %>;
         
-        function connectionChanged()
+        function ethernetActivateChanged()
         {
-          showHideFields();
-        }
-        
-        function showHideFields()
-        {
-          var c = document.getElementById("");
-          var connectionType = c.options[c.selectedIndex].value;
-          switch(connectionType) {
-            case "Ethernet":
-            case "WiFi":
-              $("#WiFiNameHolder").css("display","block");
-              $("#WiFiPassHolder").css("display","block");
-              $("#HotSpotNameHolder").css("display","none");
-              $("#HotSpotPassHolder").css("display","none");
-              break;
-            case "WiFiHotSpot":
-              $("#WiFiNameHolder").css("display","none");
-              $("#WiFiPassHolder").css("display","none");
-              $("#HotSpotNameHolder").css("display","block");
-              $("#HotSpotPassHolder").css("display","block");
-              break;
-          }
-        }
-        
-        function wifiNetworkEnabledChanged()
-        {
-          var wifiNetworkEnabled = document.getElementById("<%= EnableWiFiNetwork.ClientID %>");
-          var wifiHotSpotEnabled = document.getElementById("<%= EnableWiFiHotSpot.ClientID %>");
+          var activateEthernet = document.getElementById("<%= ActivateEthernet.ClientID %>");
+          var activateWiFiNetwork = document.getElementById("<%= ActivateWiFiNetwork.ClientID %>");
+          var activateHotSpot = document.getElementById("<%= ActivateWiFiHotSpot.ClientID %>");
           
-          if (wifiNetworkEnabled.checked)
+          if (activateEthernet.checked)
+          {
+              $("#<%= WiFiName.ClientID %>").prop("disabled", true);
+              $("#<%= WiFiPass.ClientID %>").prop("disabled", true);
+              $("#<%= HotSpotName.ClientID %>").prop("disabled", true);
+              $("#<%= HotSpotPass.ClientID %>").prop("disabled", true);
+              
+              activateWiFiNetwork.checked = false;
+              activateHotSpot.checked = false;
+          }
+          
+          updateComputerFields();
+        }
+        
+        function wifiNetworkActivateChanged()
+        {
+          var activateEthernet = document.getElementById("<%= ActivateEthernet.ClientID %>");
+          var activateWiFiNetwork = document.getElementById("<%= ActivateWiFiNetwork.ClientID %>");
+          var activateWiFiHotSpot = document.getElementById("<%= ActivateWiFiHotSpot.ClientID %>");
+          
+          if (activateWiFiNetwork.checked)
           {
               $("#<%= WiFiName.ClientID %>").prop("disabled", false);
               $("#<%= WiFiPass.ClientID %>").prop("disabled", false);
               $("#<%= HotSpotName.ClientID %>").prop("disabled", true);
               $("#<%= HotSpotPass.ClientID %>").prop("disabled", true);
               
-              wifiHotSpotEnabled.checked = false;
+              activateEthernet.checked = false;
+              activateWiFiHotSpot.checked = false;
           }
           
           updateComputerFields();
         }
         
-        function wifiHotSpotEnabledChanged()
+        function activateWiFiHotSpotChanged()
         {
-          var wifiNetworkEnabled = document.getElementById("<%= EnableWiFiNetwork.ClientID %>");
-          var wifiHotSpotEnabled = document.getElementById("<%= EnableWiFiHotSpot.ClientID %>");
+          var activateEthernet = document.getElementById("<%= ActivateEthernet.ClientID %>");
+          var activateWiFiNetwork = document.getElementById("<%= ActivateWiFiNetwork.ClientID %>");
+          var activateWiFiHotSpot = document.getElementById("<%= ActivateWiFiHotSpot.ClientID %>");
           
-          if (wifiHotSpotEnabled.checked)
+          if (activateWiFiHotSpot.checked)
           {
               $("#<%= WiFiName.ClientID %>").prop("disabled", true);
               $("#<%= WiFiPass.ClientID %>").prop("disabled", true);
               $("#<%= HotSpotName.ClientID %>").prop("disabled", false);
               $("#<%= HotSpotPass.ClientID %>").prop("disabled", false);
               
-              wifiNetworkEnabled.checked = false;
+              activateEthernet.checked = false;
+              activateWiFiNetwork.checked = false;
           }
           
           updateComputerFields();
@@ -75,54 +72,46 @@
         function updateComputerFields()
         {
         
-          var wifiNetworkEnabled = document.getElementById("<%= EnableWiFiNetwork.ClientID %>");
-          var wifiHotSpotEnabled = document.getElementById("<%= EnableWiFiHotSpot.ClientID %>");
-          
-          var localConnectionType = document.getElementById("<%= LocalConnectionType.ClientID %>");
-          
-          if (wifiHotSpotEnabled.checked)
-          {
-            $("#<%= LocalConnectionType.ClientID %>").val("WiFiHotSpot");
-          }
-          
-          if (wifiNetworkEnabled.checked)
-          {
-            if ($("#<%= LocalConnectionType.ClientID %>").val() != "Ethernet")
-              $("#<%= LocalConnectionType.ClientID %>").val("WiFi");
-          }
-          
-          if (!wifiHotSpotEnabled.checked && !wifiNetworkEnabled.checked)
-          {
-            $("#<%= LocalConnectionType.ClientID %>").val("Ethernet");
-          }
+          var activateWiFiNetwork = document.getElementById("<%= ActivateWiFiNetwork.ClientID %>");
+          var activateWiFiHotSpot = document.getElementById("<%= ActivateWiFiHotSpot.ClientID %>");
         
           for (i = 0; i < computerConnectionTypeFields.length; i++) { 
-            if (wifiHotSpotEnabled.checked)
+            if (activateWiFiHotSpot.checked)
             {
               $("#" + computerConnectionTypeFields[i]).val("WiFi");
             }
             
-            if (!wifiHotSpotEnabled.checked && !wifiNetworkEnabled.checked)
+            if (!activateWiFiHotSpot.checked && !activateWiFiNetwork.checked)
             {
               $("#" + computerConnectionTypeFields[i]).val("Ethernet");
             }
           }
         }
         </script>
+        <h4 class="mb"><i class="fa fa-angle-right"></i> Ethernet</h4>
         <div class="form-horizontal style-form">
-          <div class="form-group" id="WiFiNameHolder">
-            <label class="col-sm-2 col-sm-2 control-label">Enable:</label>
+          <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">Activate:</label>
             <div class="col-sm-10">
-              <asp:CheckBox runat="server" id="EnableWiFiNetwork" CssClass="form-control" OnClick="wifiNetworkEnabledChanged();"></asp:CheckBox>
+              <asp:CheckBox runat="server" id="ActivateEthernet" CssClass="form-control" OnClick="ethernetActivateChanged();"></asp:CheckBox>
             </div>
           </div>
-          <div class="form-group" id="WiFiNameHolder">
+        </div>
+        <h4 class="mb"><i class="fa fa-angle-right"></i> WiFi Network</h4>
+        <div class="form-horizontal style-form">
+          <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">Activate:</label>
+            <div class="col-sm-10">
+              <asp:CheckBox runat="server" id="ActivateWiFiNetwork" CssClass="form-control" OnClick="wifiNetworkActivateChanged();"></asp:CheckBox>
+            </div>
+          </div>
+          <div class="form-group">
             <label class="col-sm-2 col-sm-2 control-label">WiFi Name:</label>
             <div class="col-sm-10">
               <asp:TextBox runat="server" id="WiFiName" CssClass="form-control"></asp:TextBox>
             </div>
           </div>
-          <div class="form-group" id="WiFiPassHolder">
+          <div class="form-group">
             <label class="col-sm-2 col-sm-2 control-label">WiFi Pass:</label>
             <div class="col-sm-10">
               <asp:TextBox runat="server" id="WiFiPass" CssClass="form-control"></asp:TextBox>
@@ -131,40 +120,32 @@
         </div>
         <h4 class="mb"><i class="fa fa-angle-right"></i> WiFi HotSpot</h4>
         <div class="form-horizontal style-form">
-          <div class="form-group" id="WiFiNameHolder">
-            <label class="col-sm-2 col-sm-2 control-label">Enable:</label>
+          <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">Activate:</label>
             <div class="col-sm-10">
-              <asp:CheckBox runat="server" id="EnableWiFiHotSpot" CssClass="form-control" OnClick="wifiHotSpotEnabledChanged();"></asp:CheckBox>
+              <asp:CheckBox runat="server" id="ActivateWiFiHotSpot" CssClass="form-control" OnClick="activateWiFiHotSpotChanged();"></asp:CheckBox>
             </div>
           </div>
-          <div class="form-group" id="HotSpotNameHolder">
+          <div class="form-group">
             <label class="col-sm-2 col-sm-2 control-label">HotSpot Name:</label>
             <div class="col-sm-10">
               <asp:TextBox runat="server" id="HotSpotName" CssClass="form-control"></asp:TextBox>
             </div>
           </div>
-          <div class="form-group" id="HotSpotPassHolder">
+          <div class="form-group">
             <label class="col-sm-2 col-sm-2 control-label">HotSpot Pass:</label>
             <div class="col-sm-10">
               <asp:TextBox runat="server" id="HotSpotPass" CssClass="form-control"></asp:TextBox>
             </div>
           </div>
         </div>
+        <% if (RemoteComputersExist) { %>
         <h4 class="mb"><i class="fa fa-angle-right"></i> Computers</h4>
         <div class="form-horizontal style-form">
-          <div class="form-group">
-            <label class="col-sm-2 col-sm-2 control-label">Local:</label>
-            <div class="col-sm-4">
-              <asp:DropDownList runat="server" id="LocalConnectionType" CssClass="form-control" onchange="connectionChanged()">
-                <asp:ListItem Enabled="true" Text="Ethernet" Value="Ethernet"></asp:ListItem>
-                <asp:ListItem Enabled="true" Text="WiFi" Value="WiFi"></asp:ListItem>
-                <asp:ListItem Enabled="true" Text="WiFi HotSpot (local)" Value="WiFiHotSpot"></asp:ListItem>
-              </asp:DropDownList>
-            </div>
-          </div>
         <asp:PlaceHolder runat="server" id="ComputerFieldsHolder">
         </asp:PlaceHolder>
         </div>
+        <% } %>
         <div class="form-horizontal style-form">
           <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">
@@ -178,7 +159,7 @@
           <div class="form-group" id="WiFiNameHolder">
             <label class="col-sm-2 col-sm-2 control-label">Enable:</label>
             <div class="col-sm-10">
-              <%= EnableWiFiNetwork.Checked %>
+              <%= ActivateWiFiNetwork.Checked %>
             </div>
           </div>
           <div class="form-group" id="WiFiNameHolder">
@@ -199,7 +180,7 @@
           <div class="form-group" id="WiFiNameHolder">
             <label class="col-sm-2 col-sm-2 control-label">Enable:</label>
             <div class="col-sm-10">
-              <%= EnableWiFiHotSpot.Checked %>
+              <%= ActivateWiFiHotSpot.Checked %>
             </div>
           </div>
           <div class="form-group" id="HotSpotNameHolder">
@@ -238,8 +219,8 @@
   </div>
   <script language="javascript">
   $( document ).ready(function() {
-    wifiNetworkEnabledChanged();
-    wifiHotSpotEnabledChanged();
+    wifiNetworkActivateChanged();
+    activateWiFiHotSpotChanged();
   });
   </script>
 </asp:Content>

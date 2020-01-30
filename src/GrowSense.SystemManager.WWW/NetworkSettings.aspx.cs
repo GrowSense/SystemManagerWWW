@@ -14,6 +14,7 @@ namespace GrowSense.SystemManager.WWW
   {
     public Dictionary<string, DropDownList> DDLS = new Dictionary<string, DropDownList> ();
     public ComputerManager Manager;
+    public bool RemoteComputersExist;
 
     public int Stage {
       get {
@@ -43,7 +44,8 @@ namespace GrowSense.SystemManager.WWW
     {
       var localConnectionType = Manager.GetNetworkConnectionType ("Local");
     
-      LocalConnectionType.SelectedValue = localConnectionType.ToString (); 
+      if (localConnectionType == NetworkConnectionType.Ethernet)
+        ActivateEthernet.Checked = true;
       
       var wifiName = GetSecurityValue ("wifi-network-name");
       if (!String.IsNullOrEmpty (wifiName) && wifiName != "na")
@@ -55,7 +57,7 @@ namespace GrowSense.SystemManager.WWW
         
       if (!String.IsNullOrEmpty (wifiName) && wifiName != "na" && 
         !String.IsNullOrEmpty (wifiPass) && wifiPass != "na")
-        EnableWiFiNetwork.Checked = true;
+        ActivateWiFiNetwork.Checked = true;
           
       var hotSpotName = GetSecurityValue ("wifi-hotspot-name");
       if (!String.IsNullOrEmpty (hotSpotName) && hotSpotName != "na")
@@ -72,7 +74,7 @@ namespace GrowSense.SystemManager.WWW
       if (!String.IsNullOrEmpty (hotSpotName) && hotSpotName != "na" && 
         !String.IsNullOrEmpty (hotSpotPass) && hotSpotPass != "na" &&
         localConnectionType == NetworkConnectionType.WiFiHotSpot)
-        EnableWiFiHotSpot.Checked = true;
+        ActivateWiFiHotSpot.Checked = true;
     }
 
     public string GetSecurityValue (string key)
@@ -103,8 +105,8 @@ namespace GrowSense.SystemManager.WWW
         pass = HotSpotPass.Text;
       }*/
       
-      var connectionType = (NetworkConnectionType)Enum.Parse (typeof(NetworkConnectionType), LocalConnectionType.SelectedValue);
-      Manager.SetNetworkDetails (connectionType, EnableWiFiNetwork.Checked, WiFiName.Text, WiFiPass.Text, EnableWiFiHotSpot.Checked, HotSpotName.Text, HotSpotPass.Text);
+      //var connectionType = (NetworkConnectionType)Enum.Parse (typeof(NetworkConnectionType), LocalConnectionType.SelectedValue);
+      Manager.SetNetworkDetails (ActivateEthernet.Checked, ActivateWiFiNetwork.Checked, WiFiName.Text, WiFiPass.Text, ActivateWiFiHotSpot.Checked, HotSpotName.Text, HotSpotPass.Text);
       
       Stage = 2;
     }
@@ -124,7 +126,10 @@ namespace GrowSense.SystemManager.WWW
 
     public void GenerateComputerFields ()
     {
-      /*foreach (var computer in Manager.GetComputersInfo()) {
+      var computers = Manager.GetComputersInfo ();
+      RemoteComputersExist = false; // Disabled because it's not yet fully implemented
+      
+      /*foreach (var computer in computers) {
         if (computer.Name != "Local") {
           var startLiteral = new LiteralControl (@"
           <div class=""form-group"">

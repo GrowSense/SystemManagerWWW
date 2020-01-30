@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using GrowSense.SystemManager.Common;
+using GrowSense.SystemManager.Computers;
 
 namespace GrowSense.SystemManager.Computers
 {
@@ -230,20 +231,27 @@ namespace GrowSense.SystemManager.Computers
       return StartCommand (computerName, command);
     }
 
-    public string SetNetworkDetails (NetworkConnectionType connectionType, bool wifiNetworkEnabled, string wifiName, string wifiPassword, bool hotspotEnabled, string hotSpotName, string hotSpotPassword)
+    public string SetNetworkDetails (bool activateEthernet, bool activateWiFiNetwork, string wifiName, string wifiPassword, bool activateHotSpot, string hotSpotName, string hotSpotPassword)
     {
     
       var name = "";
       var pass = "";
+      var connectionType = NetworkConnectionType.None;
       
-      if (wifiNetworkEnabled) {
-        
+      if (activateEthernet) {
+        connectionType = NetworkConnectionType.Ethernet;
         name = wifiName;
         pass = wifiPassword;
       }
       
-      if (hotspotEnabled) {
+      if (activateWiFiNetwork) {
+        connectionType = NetworkConnectionType.WiFi;
+        name = wifiName;
+        pass = wifiPassword;
+      }
       
+      if (activateHotSpot) {
+        connectionType = NetworkConnectionType.WiFiHotSpot;
         name = hotSpotName;
         pass = hotSpotPassword;
       }
