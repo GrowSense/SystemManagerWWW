@@ -226,13 +226,78 @@ namespace GrowSense.SystemManager.Computers
     public string RunServiceAction (string computerName, string action, string serviceName)
     {
       var command = "systemctl " + action + " " + serviceName;
+      
+      return StartCommand (computerName, command);
+    }
+
+    public string SetNetworkDetails (NetworkConnectionType connectionType, bool wifiNetworkEnabled, string wifiName, string wifiPassword, bool hotspotEnabled, string hotSpotName, string hotSpotPassword)
+    {
+    
+      var name = "";
+      var pass = "";
+      
+      if (wifiNetworkEnabled) {
+        
+        name = wifiName;
+        pass = wifiPassword;
+      }
+      
+      if (hotspotEnabled) {
+      
+        name = hotSpotName;
+        pass = hotSpotPassword;
+      }
+    
+      Starter.Start ("bash set-wifi-credentials.sh " + name + " " + pass);
+      Starter.Start ("bash set-wifi-network-credentials.sh " + wifiName + " " + wifiPassword);
+      Starter.Start ("bash set-wifi-hotspot-credentials.sh " + hotSpotName + " " + hotSpotPassword);
+      
+      Starter.Start ("bash set-network-connection-type.sh " + connectionType.ToString ());
+      
+      return Starter.Output.Trim ();
+    }
+
+    public string NetworkReconnect (string computerName)
+    {
+      if (computerName == "Local") {
+        Starter.Start ("bash network-reconnect.sh");
+        
+        return Starter.Output;
+      }
+      
+      return String.Empty;
+    }
+
+    public NetworkConnectionType GetNetworkConnectionType (string computerName)
+    {
+      var networkConnectionTypeString = "";
+      if (computerName == "Local") {
+        var fileName = Path.Combine (IndexDirectory, "network-connection-type.txt");
+        if (File.Exists (fileName))
+          networkConnectionTypeString = File.ReadAllText (fileName).Trim ();
+      } else {
+      
+        var command = "[[ -f network-connection-type.txt ]] && cat network-connection-type.txt";
+        
+        networkConnectionTypeString = StartCommand (computerName, command);
+      }
+      
+      if (!String.IsNullOrEmpty (networkConnectionTypeString))
+        return (NetworkConnectionType)Enum.Parse (typeof(NetworkConnectionType), networkConnectionTypeString);
+      else
+        return NetworkConnectionType.Ethernet;
+    }
+
+    public string StartCommand (string computerName, string command)
+    {
+      var fullCommand = command;
       var isRemote = false;
       if (!computerName.ToLower ().Contains ("local")) {
         isRemote = true;
-        command = "bash run-on-remote.sh " + computerName + " " + command;
+        fullCommand = "bash run-on-remote.sh " + computerName + " " + command;
       }
     
-      Starter.Start (command);
+      Starter.Start (fullCommand);
       
       var output = Starter.Output;
       
@@ -244,6 +309,7 @@ namespace GrowSense.SystemManager.Computers
         var startPosition = output.IndexOf (preText) + preText.Length + 1;
         output = output.Substring (startPosition, output.Length - startPosition);
         output = output.Replace (postText, "");
+        output = output.Trim ();
       }
     
       return output;

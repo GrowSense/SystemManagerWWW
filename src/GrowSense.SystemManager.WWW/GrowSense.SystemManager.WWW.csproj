@@ -66,6 +66,8 @@
     <Content Include="css\style.css" />
     <Content Include="css\style-responsive.css" />
     <Content Include="ServiceAction.aspx" />
+    <Content Include="Settings.aspx" />
+    <Content Include="NetworkSettings.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -175,6 +177,15 @@
     </Compile>
     <Compile Include="ServiceAction.aspx.designer.cs">
       <DependentUpon>ServiceAction.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.aspx.cs">
+      <DependentUpon>Settings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NetworkSettings.aspx.cs">
+      <DependentUpon>NetworkSettings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NetworkSettings.aspx.designer.cs">
+      <DependentUpon>NetworkSettings.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

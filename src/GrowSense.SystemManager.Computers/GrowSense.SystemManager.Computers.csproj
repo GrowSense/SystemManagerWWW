@@ -39,6 +39,7 @@
     <Compile Include="ComputerActionResult.cs" />
     <Compile Include="ComputerActionError.cs" />
     <Compile Include="ServiceStatus.cs" />
+    <Compile Include="NetworkConnectionType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
