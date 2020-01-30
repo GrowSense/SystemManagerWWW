@@ -154,21 +154,38 @@
             </div>
           </div>
         </div>
+        <script language="javascript">
+        $( document ).ready(function() {
+          ethernetActivateChanged();
+          wifiNetworkActivateChanged();
+          activateWiFiHotSpotChanged();
+        });
+        </script>
       <% } else if (Stage == 2) { %>
-      <div class="form-horizontal style-form">
-          <div class="form-group" id="WiFiNameHolder">
-            <label class="col-sm-2 col-sm-2 control-label">Enable:</label>
+        <h4 class="mb"><i class="fa fa-angle-right"></i> Ethernet</h4>
+        <div class="form-horizontal style-form">
+          <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">Activate:</label>
+            <div class="col-sm-10">
+              <%= ActivateEthernet.Checked %>
+            </div>
+          </div>
+        </div>
+        <h4 class="mb"><i class="fa fa-angle-right"></i> WiFi</h4>
+        <div class="form-horizontal style-form">
+          <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">Activate:</label>
             <div class="col-sm-10">
               <%= ActivateWiFiNetwork.Checked %>
             </div>
           </div>
-          <div class="form-group" id="WiFiNameHolder">
+          <div class="form-group">
             <label class="col-sm-2 col-sm-2 control-label">WiFi Name:</label>
             <div class="col-sm-10">
               <%= WiFiName.Text %>
             </div>
           </div>
-          <div class="form-group" id="WiFiPassHolder">
+          <div class="form-group">
             <label class="col-sm-2 col-sm-2 control-label">WiFi Pass:</label>
             <div class="col-sm-10">
               <%= WiFiPass.Text %>
@@ -177,19 +194,19 @@
         </div>
         <h4 class="mb"><i class="fa fa-angle-right"></i> WiFi HotSpot</h4>
         <div class="form-horizontal style-form">
-          <div class="form-group" id="WiFiNameHolder">
-            <label class="col-sm-2 col-sm-2 control-label">Enable:</label>
+          <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">Activate:</label>
             <div class="col-sm-10">
               <%= ActivateWiFiHotSpot.Checked %>
             </div>
           </div>
-          <div class="form-group" id="HotSpotNameHolder">
+          <div class="form-group">
             <label class="col-sm-2 col-sm-2 control-label">HotSpot Name:</label>
             <div class="col-sm-10">
               <%= HotSpotName.Text %>
             </div>
           </div>
-          <div class="form-group" id="HotSpotPassHolder">
+          <div class="form-group">
             <label class="col-sm-2 col-sm-2 control-label">HotSpot Pass:</label>
             <div class="col-sm-10">
               <%= HotSpotPass.Text %>
@@ -213,16 +230,69 @@
             </div>
           </div>
         </div>
+      <% } else if (Stage == 3) { %>
+        <h4 class="mb"><i class="fa fa-angle-right"></i> Network</h4>
+        <div class="form-horizontal style-form">
+          <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">Connection:</label>
+            <div class="col-sm-10">
+              <%= ConnectionType.ToString() %>
+            </div>
+          </div>
+        </div>
+        <div class="form-horizontal style-form">
+          <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">Status:</label>
+            <div class="col-sm-10" id="Result">
+              Reconnecting...
+            </div>
+          </div>
+        </div>
+        <div class="form-horizontal style-form" id="MessageHolder" style="display:none;">
+          <div class="form-group">
+            <div class="col-lg-offset-2 col-lg-10">
+              If you are viewing this web page from a separate device (ie. not on a monitor connected to the garden computer itself), please connect your device to the specified network before clicking continue.
+            </div>
+          </div>
+        </div>
+        <div class="form-horizontal style-form">
+          <div class="form-group">
+            <div class="col-lg-offset-2 col-lg-10">
+              <button class="btn btn-theme04" type="button" onclick="location.href='Default.aspx'" id="ContinueButton" disabled="true">Continue</button>
+            </div>
+          </div>
+        </div>
+        <script language="javascript">
+        function loadResultLoop()
+        {
+          const interval = setInterval(function() {
+
+            var messageHolder = document.getElementById("MessageHolder");
+            var continueButton = document.getElementById("ContinueButton");
+            
+            $('#Result').load('NetworkReconnectStatus.aspx #Status');
+            
+            var result = document.getElementById("Result").innerText;
+            
+            if (result.includes("Finished") || result.includes("not yet supported"))
+            {
+              messageHolder.style.display = "block";
+              continueButton.disabled = false;
+              
+              clearInterval(interval);
+            }
+            
+          }, 2000);
+        }
+
+        $( document ).ready(function() {
+          loadResultLoop();
+        });
+        </script>
       <% } %>
       </div>
     </div>
   </div>
-  <script language="javascript">
-  $( document ).ready(function() {
-    wifiNetworkActivateChanged();
-    activateWiFiHotSpotChanged();
-  });
-  </script>
 </asp:Content>
 
 

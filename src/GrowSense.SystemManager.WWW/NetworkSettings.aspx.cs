@@ -25,6 +25,15 @@ namespace GrowSense.SystemManager.WWW
       set { ViewState ["Stage"] = value; }
     }
 
+    public NetworkConnectionType ConnectionType {
+      get {
+        if (ViewState ["ConnectionType"] == null)
+          ViewState ["ConnectionType"] = NetworkConnectionType.None;
+        return (NetworkConnectionType)ViewState ["ConnectionType"];
+      }
+      set { ViewState ["ConnectionType"] = value; }
+    }
+
     public void Page_Load (object sender, EventArgs e)
     {
       var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
@@ -56,7 +65,8 @@ namespace GrowSense.SystemManager.WWW
         WiFiPass.Text = wifiPass;
         
       if (!String.IsNullOrEmpty (wifiName) && wifiName != "na" && 
-        !String.IsNullOrEmpty (wifiPass) && wifiPass != "na")
+        !String.IsNullOrEmpty (wifiPass) && wifiPass != "na" &&
+        localConnectionType == NetworkConnectionType.WiFi)
         ActivateWiFiNetwork.Checked = true;
           
       var hotSpotName = GetSecurityValue ("wifi-hotspot-name");
@@ -107,6 +117,8 @@ namespace GrowSense.SystemManager.WWW
       
       //var connectionType = (NetworkConnectionType)Enum.Parse (typeof(NetworkConnectionType), LocalConnectionType.SelectedValue);
       Manager.SetNetworkDetails (ActivateEthernet.Checked, ActivateWiFiNetwork.Checked, WiFiName.Text, WiFiPass.Text, ActivateWiFiHotSpot.Checked, HotSpotName.Text, HotSpotPass.Text);
+            
+      ConnectionType = Manager.GetNetworkConnectionType ("Local");
       
       Stage = 2;
     }
@@ -115,8 +127,10 @@ namespace GrowSense.SystemManager.WWW
     {
       Manager.NetworkReconnect ("Local");
       
-      var message = "Your network connection has been updated!";
-      Response.Redirect ("Settings.aspx?Result=" + HttpUtility.UrlEncode (message));
+      //var message = "Your network connection has been updated!";
+      //Response.Redirect ("Settings.aspx?Result=" + HttpUtility.UrlEncode (message));
+      
+      Stage = 3;
     }
 
     public void Back_Click (object sender, EventArgs e)
