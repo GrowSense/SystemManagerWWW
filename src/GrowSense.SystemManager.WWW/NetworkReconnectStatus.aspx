@@ -6,8 +6,8 @@
 </head>
 <body>
  <form id="form1" runat="server">
-   <div id="Status">
-     <%= Status %>
+   <div id="Result">
+     <%= Result %>
    </div>
  </form>
 </body>

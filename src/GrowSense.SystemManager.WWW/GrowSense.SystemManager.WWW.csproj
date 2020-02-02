@@ -185,14 +185,14 @@
     <Compile Include="NetworkSettings.aspx.cs">
       <DependentUpon>NetworkSettings.aspx</DependentUpon>
     </Compile>
-    <Compile Include="NetworkSettings.aspx.designer.cs">
-      <DependentUpon>NetworkSettings.aspx</DependentUpon>
-    </Compile>
     <Compile Include="NetworkReconnectStatus.aspx.cs">
       <DependentUpon>NetworkReconnectStatus.aspx</DependentUpon>
     </Compile>
     <Compile Include="NetworkReconnectStatus.aspx.designer.cs">
       <DependentUpon>NetworkReconnectStatus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NetworkSettings.aspx.designer.cs">
+      <DependentUpon>NetworkSettings.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

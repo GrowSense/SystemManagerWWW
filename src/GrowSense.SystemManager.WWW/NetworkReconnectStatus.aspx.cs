@@ -10,7 +10,7 @@ namespace GrowSense.SystemManager.WWW
 
   public partial class NetworkReconnectStatus : System.Web.UI.Page
   {
-    public string Status = "Reconnecting... (please wait)";
+    public string Result = "Reconnecting... (please wait)";
 
     public void Page_Load (object sender, EventArgs e)
     {
@@ -22,11 +22,11 @@ namespace GrowSense.SystemManager.WWW
       var output = manager.GetServiceStatusText ("Local", "growsense-network-reconnect.service");
       
       if (output.Contains ("Failed to issue method call") || output.Contains ("not supported"))
-        Status = "Network reconnect not yet supported on this board. Please manually reconnect.";
+        Result = "Network reconnect not yet supported on this board. Please manually reconnect.";
       if (output.Contains ("connected"))
-        Status = "Successfully connected to network.";
+        Result = "Successfully connected to network.";
       if (output.Contains ("failed"))
-        Status = "Failed to connect to network.";
+        Result = "Failed to connect to network.";
     }
   }
 }

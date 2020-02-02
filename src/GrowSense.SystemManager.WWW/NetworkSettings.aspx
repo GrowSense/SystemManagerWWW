@@ -243,10 +243,16 @@
         <div class="form-horizontal style-form">
           <div class="form-group">
             <label class="col-sm-2 col-sm-2 control-label">Status:</label>
-            <div class="col-sm-10" id="Result">
-              <div class="label info label-mini" id="Connecting">Connecting</div>
-            <div class="label success label-mini" id="Connected" style="display:none;">Connected</div>
-            <div class="label danger label-mini" id="Failed" style="display:none;">Failed</div>
+            <div class="col-sm-10">
+              <div class="label label-info label-mini" id="Connecting">Connecting</div>
+              <div class="label label-success label-mini" id="Connected" style="display:none;">Connected</div>
+              <div class="label label-danger label-mini" id="Failed" style="display:none;">Failed</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-horizontal style-form">
+          <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">Result:</label>
             <div class="col-sm-10" id="Result">
               Reconnecting...
             </div>
@@ -277,7 +283,7 @@
             var connected = document.getElementById("Connected");
             var failed = document.getElementById("Failed");
             
-            $('#Result').load('NetworkReconnectStatus.aspx #Status');
+            $('#Result').load('NetworkReconnectStatus.aspx #Result');
             
             var result = document.getElementById("Result").innerText;
             
