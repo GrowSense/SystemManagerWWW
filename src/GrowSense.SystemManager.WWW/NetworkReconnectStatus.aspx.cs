@@ -23,8 +23,10 @@ namespace GrowSense.SystemManager.WWW
       
       if (output.Contains ("Failed to issue method call") || output.Contains ("not supported"))
         Status = "Network reconnect not yet supported on this board. Please manually reconnect.";
-      if (output.Contains ("Finished reconnecting"))
-        Status = "Finished reconnecting to network.";
+      if (output.Contains ("connected"))
+        Status = "Successfully connected to network.";
+      if (output.Contains ("failed"))
+        Status = "Failed to connect to network.";
     }
   }
 }

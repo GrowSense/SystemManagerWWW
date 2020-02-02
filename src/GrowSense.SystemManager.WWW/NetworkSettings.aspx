@@ -244,6 +244,10 @@
           <div class="form-group">
             <label class="col-sm-2 col-sm-2 control-label">Status:</label>
             <div class="col-sm-10" id="Result">
+              <div class="label info label-mini" id="Connecting">Connecting</div>
+            <div class="label success label-mini" id="Connected" style="display:none;">Connected</div>
+            <div class="label danger label-mini" id="Failed" style="display:none;">Failed</div>
+            <div class="col-sm-10" id="Result">
               Reconnecting...
             </div>
           </div>
@@ -269,17 +273,38 @@
 
             var messageHolder = document.getElementById("MessageHolder");
             var continueButton = document.getElementById("ContinueButton");
+            var connecting = document.getElementById("Connecting");
+            var connected = document.getElementById("Connected");
+            var failed = document.getElementById("Failed");
             
             $('#Result').load('NetworkReconnectStatus.aspx #Status');
             
             var result = document.getElementById("Result").innerText;
             
-            if (result.includes("Finished") || result.includes("not yet supported"))
+            if (result.includes("connected")) || result.includes("not yet supported"))
             {
               messageHolder.style.display = "block";
               continueButton.disabled = false;
               
               clearInterval(interval);
+            }
+            
+            if (result.includes("connected")))
+            {
+              connecting.style.display = "none";
+              connected.style.display = "block";
+            }
+            
+            if (result.includes("failed")))
+            {
+              connecting.style.display = "none";
+              failed.style.display = "block";
+            }
+            
+            if (result.includes("not yet supported")))
+            {
+              connecting.style.display = "";
+              failed.style.display = "block";
             }
             
           }, 2000);
