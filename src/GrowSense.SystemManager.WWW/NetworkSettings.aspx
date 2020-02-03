@@ -258,10 +258,10 @@
             </div>
           </div>
         </div>
-        <div class="form-horizontal style-form" id="MessageHolder" style="display:none;">
+        <div class="form-horizontal style-form" id="ManualReconnectDeviceHolder" style="display:none;">
           <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">
-              If you are viewing this web page from a separate device (ie. not on a monitor connected to the garden computer itself), please connect your device to the specified network before clicking continue.
+              Your device can no longer reach the web UI because it is on another network. Please manually connect your current device to the specified network, then wait for connection to complete, before clicking continue.
             </div>
           </div>
         </div>
@@ -277,19 +277,31 @@
         {
           const interval = setInterval(function() {
 
-            var messageHolder = document.getElementById("MessageHolder");
+            var manualReconnectDeviceHolder = document.getElementById("ManualReconnectDeviceHolder");
             var continueButton = document.getElementById("ContinueButton");
             var connecting = document.getElementById("Connecting");
             var connected = document.getElementById("Connected");
             var failed = document.getElementById("Failed");
             
-            $('#Result').load('NetworkReconnectStatus.aspx #Result');
+            $('#Result').load('NetworkReconnectStatus.aspx #Result', "", function(responseText, textStatus, XMLHttpRequest) {
+             switch (XMLHttpRequest.status) {
+              case 200: break;
+              case 404:
+               manualReconnectDeviceHolder.style.display = "block";
+               break;
+              //default:
+              // $('#results').html('<p>' + XMLHttpRequest.status + ': ' + XMLHttpRequest.statusText + '. Please contact the club and let them know.</p>');
+              // break;
+              default:
+              //alert(responseText);
+               break;
+             }
+            });
             
             var result = document.getElementById("Result").innerText;
-            
+            //alert(result);
             if (result.includes("connected") || result.includes("failed") || result.includes("not yet supported"))
             {
-              messageHolder.style.display = "block";
               continueButton.disabled = false;
               
               clearInterval(interval);
@@ -313,7 +325,7 @@
               failed.style.display = "inline";
             }
             
-          }, 2000);
+          }, 1000);
         }
 
         $( document ).ready(function() {
