@@ -8,7 +8,7 @@ namespace GrowSense.SystemManager.WWW
   using System.Web;
   using System.Web.UI;
 
-  public partial class NetworkReconnectStatus : System.Web.UI.Page
+  public partial class NetworkSetupStatus : System.Web.UI.Page
   {
     public string Result = "Reconnecting... (please wait)";
 

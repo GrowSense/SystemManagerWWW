@@ -68,7 +68,7 @@
     <Content Include="ServiceAction.aspx" />
     <Content Include="Settings.aspx" />
     <Content Include="NetworkSettings.aspx" />
-    <Content Include="NetworkReconnectStatus.aspx" />
+    <Content Include="NetworkSetupStatus.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -185,14 +185,14 @@
     <Compile Include="NetworkSettings.aspx.cs">
       <DependentUpon>NetworkSettings.aspx</DependentUpon>
     </Compile>
-    <Compile Include="NetworkReconnectStatus.aspx.cs">
-      <DependentUpon>NetworkReconnectStatus.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="NetworkReconnectStatus.aspx.designer.cs">
-      <DependentUpon>NetworkReconnectStatus.aspx</DependentUpon>
-    </Compile>
     <Compile Include="NetworkSettings.aspx.designer.cs">
       <DependentUpon>NetworkSettings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NetworkSetupStatus.aspx.cs">
+      <DependentUpon>NetworkSetupStatus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NetworkSetupStatus.aspx.designer.cs">
+      <DependentUpon>NetworkSetupStatus.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
