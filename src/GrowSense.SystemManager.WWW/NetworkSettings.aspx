@@ -287,7 +287,7 @@
             
             var result = document.getElementById("Result").innerText;
             
-            if (result.includes("connected") || result.includes("not yet supported"))
+            if (result.includes("connected") || result.includes("failed") || result.includes("not yet supported"))
             {
               messageHolder.style.display = "block";
               continueButton.disabled = false;
@@ -298,19 +298,19 @@
             if (result.includes("connected"))
             {
               connecting.style.display = "none";
-              connected.style.display = "block";
+              connected.style.display = "inline";
             }
             
             if (result.includes("failed"))
             {
               connecting.style.display = "none";
-              failed.style.display = "block";
+              failed.style.display = "inline";
             }
             
             if (result.includes("not yet supported"))
             {
-              connecting.style.display = "";
-              failed.style.display = "block";
+              connecting.style.display = "none";
+              failed.style.display = "inline";
             }
             
           }, 2000);
