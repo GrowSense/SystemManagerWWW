@@ -123,9 +123,9 @@ namespace GrowSense.SystemManager.WWW
       Stage = 2;
     }
 
-    public void Reconnect_Click (object sender, EventArgs e)
+    public void Apply_Click (object sender, EventArgs e)
     {
-      Manager.NetworkReconnect ("Local");
+      Manager.NetworkSetup ("Local");
       
       //var message = "Your network connection has been updated!";
       //Response.Redirect ("Settings.aspx?Result=" + HttpUtility.UrlEncode (message));

@@ -265,10 +265,10 @@ namespace GrowSense.SystemManager.Computers
       return Starter.Output.Trim ();
     }
 
-    public string NetworkReconnect (string computerName)
+    public string NetworkSetup (string computerName)
     {
       if (computerName == "Local") {
-        Starter.Start ("bash start-network-reconnect-service.sh");
+        Starter.Start ("bash start-network-setup-service.sh");
         
         return Starter.Output;
       }

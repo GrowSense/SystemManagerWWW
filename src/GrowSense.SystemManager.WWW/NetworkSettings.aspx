@@ -217,7 +217,7 @@
           <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">
               <p>The network settings have been updated. Please confirm that they are correct before continuing.</p>
-              <p>Click "Reconnect" below to disconnect from the current network connection and connect to the specified connection.</p>
+              <p>Click "Apply" below to set up the specified connection.</p>
             </div>
           </div>
         </div>
@@ -225,7 +225,7 @@
           <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">
               <asp:Button runat="server" CssClass="btn btn-info" type="submit" Text="&laquo; Back" OnClick="Back_Click" />
-              <asp:Button runat="server" CssClass="btn btn-theme" type="submit" Text="Reconnect" OnClick="Reconnect_Click" />
+              <asp:Button runat="server" CssClass="btn btn-theme" type="submit" Text="Apply" OnClick="Apply_Click" />
               <button class="btn btn-theme04" type="button" onclick="location.href='NetworkSettings.aspx'">Cancel</button>
             </div>
           </div>
@@ -254,14 +254,14 @@
           <div class="form-group">
             <label class="col-sm-2 col-sm-2 control-label">Result:</label>
             <div class="col-sm-10" id="Result">
-              Reconnecting...
+              Pending... (please wait)
             </div>
           </div>
         </div>
         <div class="form-horizontal style-form" id="ManualReconnectDeviceHolder" style="display:none;">
           <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">
-              Your device can no longer reach the web UI because it is on another network. Please manually connect your current device to the specified network, then wait for connection to complete, before clicking continue.
+              Please manually connect your current device to the specified network, then wait for connection to complete, before clicking continue.
             </div>
           </div>
         </div>
@@ -283,7 +283,7 @@
             var connected = document.getElementById("Connected");
             var failed = document.getElementById("Failed");
             
-            $('#Result').load('NetworkReconnectStatus.aspx #Result', "", function(responseText, textStatus, XMLHttpRequest) {
+            $('#Result').load('NetworkSetupStatus.aspx #Result', "", function(responseText, textStatus, XMLHttpRequest) {
              switch (XMLHttpRequest.status) {
               case 200: break;
               case 404:
