@@ -22,7 +22,10 @@ namespace WWW
     protected void Session_Start (Object sender, EventArgs e)
     {
       LoadVersions ();
-      DeviceMqttHolder.Initialize ();
+      var pageName = Path.GetFileName (Request.Path);
+      if (pageName != "MqttConnectionFailure.aspx") {
+        DeviceMqttHolder.Initialize ();
+      }
     }
 
     protected void Application_BeginRequest (Object sender, EventArgs e)

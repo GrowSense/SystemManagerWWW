@@ -1,5 +1,6 @@
 <%@ Page Language="C#" Inherits="GrowSense.SystemManager.WWW.NetworkSettings" enableEventValidation="false" MasterPageFile="~/Master.master" %>
 <%@ MasterType VirtualPath="~/Master.master" %>
+<%@ Import Namespace="GrowSense.SystemManager.Computers" %>
 <asp:Content ContentPlaceHolderID="contentPlaceHolder" ID="contentPlaceHolderContent" runat="server">
   <h3><i class="fa fa-angle-right"></i> Settings</h3>
   <div class="row mt">
@@ -162,6 +163,7 @@
         });
         </script>
       <% } else if (Stage == 2) { %>
+        <% if (ConnectionType == NetworkConnectionType.Ethernet) { %>
         <h4 class="mb"><i class="fa fa-angle-right"></i> Ethernet</h4>
         <div class="form-horizontal style-form">
           <div class="form-group">
@@ -171,6 +173,7 @@
             </div>
           </div>
         </div>
+        <% } else if (ConnectionType == NetworkConnectionType.WiFi) { %>
         <h4 class="mb"><i class="fa fa-angle-right"></i> WiFi</h4>
         <div class="form-horizontal style-form">
           <div class="form-group">
@@ -192,6 +195,7 @@
             </div>
           </div>
         </div>
+        <% } else if (ConnectionType == NetworkConnectionType.WiFiHotSpot) { %>
         <h4 class="mb"><i class="fa fa-angle-right"></i> WiFi HotSpot</h4>
         <div class="form-horizontal style-form">
           <div class="form-group">
@@ -213,6 +217,7 @@
             </div>
           </div>
         </div>
+        <% } %>
         <div class="form-horizontal style-form">
           <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">
@@ -240,6 +245,62 @@
             </div>
           </div>
         </div>
+        <% if (ConnectionType == NetworkConnectionType.Ethernet) { %>
+        <h4 class="mb"><i class="fa fa-angle-right"></i> Ethernet</h4>
+        <div class="form-horizontal style-form">
+          <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">Activate:</label>
+            <div class="col-sm-10">
+              <%= ActivateEthernet.Checked %>
+            </div>
+          </div>
+        </div>
+        <% } else if (ConnectionType == NetworkConnectionType.WiFi) { %>
+        <h4 class="mb"><i class="fa fa-angle-right"></i> WiFi</h4>
+        <div class="form-horizontal style-form">
+          <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">Activate:</label>
+            <div class="col-sm-10">
+              <%= ActivateWiFiNetwork.Checked %>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">WiFi Name:</label>
+            <div class="col-sm-10">
+              <%= WiFiName.Text %>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">WiFi Pass:</label>
+            <div class="col-sm-10">
+              <%= WiFiPass.Text %>
+            </div>
+          </div>
+        </div>
+        <% } else if (ConnectionType == NetworkConnectionType.WiFiHotSpot) { %>
+        <h4 class="mb"><i class="fa fa-angle-right"></i> WiFi HotSpot</h4>
+        <div class="form-horizontal style-form">
+          <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">Activate:</label>
+            <div class="col-sm-10">
+              <%= ActivateWiFiHotSpot.Checked %>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">HotSpot Name:</label>
+            <div class="col-sm-10">
+              <%= HotSpotName.Text %>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">HotSpot Pass:</label>
+            <div class="col-sm-10">
+              <%= HotSpotPass.Text %>
+            </div>
+          </div>
+        </div>
+        <% } %>
+        <h4 class="mb"><i class="fa fa-angle-right"></i> Connection</h4>
         <div class="form-horizontal style-form">
           <div class="form-group">
             <label class="col-sm-2 col-sm-2 control-label">Status:</label>
@@ -307,7 +368,6 @@
               continueButton.disabled = false;
               
               isFinished = true;
-  //            clearInterval(interval);
             }
             
             if (result.includes("connected"))
@@ -331,7 +391,7 @@
             if (!isFinished)
               loadResultLoop();
             
-          }, 3000);
+          }, 2000);
         }
 
         $( document ).ready(function() {
