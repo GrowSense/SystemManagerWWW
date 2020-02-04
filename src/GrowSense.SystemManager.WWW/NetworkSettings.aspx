@@ -273,9 +273,11 @@
           </div>
         </div>
         <script language="javascript">
+        var isFinished = false;
+
         function loadResultLoop()
         {
-          const interval = setInterval(function() {
+          const interval = setTimeout(function() {
 
             var manualReconnectDeviceHolder = document.getElementById("ManualReconnectDeviceHolder");
             var continueButton = document.getElementById("ContinueButton");
@@ -304,7 +306,8 @@
             {
               continueButton.disabled = false;
               
-              clearInterval(interval);
+              isFinished = true;
+  //            clearInterval(interval);
             }
             
             if (result.includes("connected"))
@@ -324,8 +327,11 @@
               connecting.style.display = "none";
               failed.style.display = "inline";
             }
+
+            if (!isFinished)
+              loadResultLoop();
             
-          }, 1000);
+          }, 3000);
         }
 
         $( document ).ready(function() {
