@@ -245,25 +245,9 @@
             </div>
           </div>
         </div>
-        <% if (ConnectionType == NetworkConnectionType.Ethernet) { %>
-        <h4 class="mb"><i class="fa fa-angle-right"></i> Ethernet</h4>
-        <div class="form-horizontal style-form">
-          <div class="form-group">
-            <label class="col-sm-2 col-sm-2 control-label">Activate:</label>
-            <div class="col-sm-10">
-              <%= ActivateEthernet.Checked %>
-            </div>
-          </div>
-        </div>
-        <% } else if (ConnectionType == NetworkConnectionType.WiFi) { %>
+        <% if (ConnectionType == NetworkConnectionType.WiFi) { %>
         <h4 class="mb"><i class="fa fa-angle-right"></i> WiFi</h4>
         <div class="form-horizontal style-form">
-          <div class="form-group">
-            <label class="col-sm-2 col-sm-2 control-label">Activate:</label>
-            <div class="col-sm-10">
-              <%= ActivateWiFiNetwork.Checked %>
-            </div>
-          </div>
           <div class="form-group">
             <label class="col-sm-2 col-sm-2 control-label">WiFi Name:</label>
             <div class="col-sm-10">
@@ -280,12 +264,6 @@
         <% } else if (ConnectionType == NetworkConnectionType.WiFiHotSpot) { %>
         <h4 class="mb"><i class="fa fa-angle-right"></i> WiFi HotSpot</h4>
         <div class="form-horizontal style-form">
-          <div class="form-group">
-            <label class="col-sm-2 col-sm-2 control-label">Activate:</label>
-            <div class="col-sm-10">
-              <%= ActivateWiFiHotSpot.Checked %>
-            </div>
-          </div>
           <div class="form-group">
             <label class="col-sm-2 col-sm-2 control-label">HotSpot Name:</label>
             <div class="col-sm-10">
