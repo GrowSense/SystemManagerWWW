@@ -19,7 +19,7 @@ namespace GrowSense.SystemManager.WWW
       var computersDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["ComputersDirectory"]);
      
       var manager = new ComputerManager (indexDirectory, computersDirectory);
-      var output = manager.GetServiceStatusText ("Local", "growsense-network-reconnect.service");
+      var output = manager.GetServiceStatusText ("Local", "growsense-network-setup.service");
       
       if (output.Contains ("Failed to issue method call") || output.Contains ("not supported"))
         Result = "Network reconnect not yet supported on this board. Please manually reconnect.";
