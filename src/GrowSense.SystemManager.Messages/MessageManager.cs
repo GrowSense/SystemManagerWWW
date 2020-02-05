@@ -44,7 +44,8 @@ namespace GrowSense.SystemManager.Messages
           
           var key = message.Timestamp + "--" + message.Id;
           
-          sorted.Add (key, message);
+          if (!sorted.ContainsKey (key))
+            sorted.Add (key, message);
         }
       }
       var list = new List<MessageInfo> ();
