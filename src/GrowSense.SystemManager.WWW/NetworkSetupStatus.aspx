@@ -9,6 +9,9 @@
    <div id="Result">
      <%= Result %>
    </div>
+   <div id="ServiceOutput">
+     <%= ServiceOutput %>
+   </div>
  </form>
 </body>
 </html>

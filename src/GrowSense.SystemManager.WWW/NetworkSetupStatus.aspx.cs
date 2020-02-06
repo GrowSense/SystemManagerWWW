@@ -11,6 +11,7 @@ namespace GrowSense.SystemManager.WWW
   public partial class NetworkSetupStatus : System.Web.UI.Page
   {
     public string Result = "Reconnecting... (please wait)";
+    public string ServiceOutput = "Pending...";
 
     public void Page_Load (object sender, EventArgs e)
     {
@@ -20,6 +21,8 @@ namespace GrowSense.SystemManager.WWW
      
       var manager = new ComputerManager (indexDirectory, computersDirectory);
       var output = manager.GetServiceStatusText ("Local", "growsense-network-setup.service");
+      
+      ServiceOutput = output.Replace ("\n", "<br/>");
       
       if (output.Contains ("Failed to issue method call") || output.Contains ("not supported"))
         Result = "Network reconnect not yet supported on this board. Please manually reconnect.";

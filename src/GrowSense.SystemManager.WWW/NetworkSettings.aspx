@@ -297,6 +297,17 @@
             </div>
           </div>
         </div>
+        <div class="form-horizontal style-form">
+          <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">Service output:</label>
+            <div class="col-sm-10">
+              <div class="btn btn-info btn-xs" onclick="showServiceOutput();" id="ShowServiceOutput"><i class="fa fa-plus-square"></i></div>
+            </div>
+            <div class="col-sm-10" id="ServiceOutput" style="display:none;">
+              Pending...
+            </div>
+          </div>
+        </div>
         <div class="form-horizontal style-form" id="ManualReconnectDeviceHolder" style="display:none;">
           <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">
@@ -307,7 +318,7 @@
         <div class="form-horizontal style-form">
           <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">
-              <button class="btn btn-theme04" type="button" onclick="location.href='Default.aspx'" id="ContinueButton" disabled="true">Continue</button>
+              <button class="btn btn-theme" type="button" onclick="location.href='Default.aspx'" id="ContinueButton" disabled="true">Continue</button>
             </div>
           </div>
         </div>
@@ -366,10 +377,21 @@
               failed.style.display = "inline";
             }
 
+            $('#ServiceOutput').load('NetworkSetupStatus.aspx #ServiceOutput');
+
             if (!isFinished)
               loadResultLoop();
             
           }, 2000);
+        }
+        
+        function showServiceOutput()
+        {
+          var showServiceOutput = document.getElementById("ShowServiceOutput");
+          var serviceOutput = document.getElementById("ServiceOutput");
+            
+          showServiceOutput.style.display = "none";
+          serviceOutput.style.display = "inline";
         }
 
         $( document ).ready(function() {
