@@ -399,6 +399,9 @@
                 document.getElementById("InternetOnline").style.display = "none";
                 document.getElementById("InternetOffline").style.display = "inline";
               }
+              
+              var serviceOutputText = $(result).find('#ServiceOutput').innerHtml();
+              $('#ServiceOutput').innerHtml(serviceOutputText);
             });
             
             if (!isFinished)

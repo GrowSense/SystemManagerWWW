@@ -23,7 +23,7 @@ namespace GrowSense.SystemManager.WWW
       var manager = new ComputerManager (indexDirectory, computersDirectory);
       var output = manager.GetServiceStatusText ("Local", "growsense-network-setup.service");
       
-      ServiceOutput = output.Replace ("\n", "<br/>");
+      ServiceOutput = output.Trim ().Replace ("\n", "<br/>");
       
       if (output.Contains ("Failed to issue method call") || output.Contains ("not supported"))
         Result = "Network setup not yet supported on this board. Please manually set up network connection.";
