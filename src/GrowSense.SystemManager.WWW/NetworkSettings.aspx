@@ -400,8 +400,8 @@
                 document.getElementById("InternetOffline").style.display = "inline";
               }
               
-              var serviceOutputText = $(result).find('#ServiceOutput').innerHtml();
-              $('#ServiceOutput').innerHtml(serviceOutputText);
+              var serviceOutputText = $(result).find('#ServiceOutput').html();
+              $('#ServiceOutput').html(serviceOutputText);
             });
             
             if (!isFinished)
