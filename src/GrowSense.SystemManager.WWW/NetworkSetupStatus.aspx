@@ -6,12 +6,9 @@
 </head>
 <body>
  <form id="form1" runat="server">
-   <div id="Result">
-     <%= Result %>
-   </div>
-   <div id="ServiceOutput">
-     <%= ServiceOutput %>
-   </div>
+   <div id="Result"><%= Result %></div>
+   <div id="ServiceOutput"><%= ServiceOutput %></div>
+   <div id="InternetStatus"><%= InternetStatus %></div>
  </form>
 </body>
 </html>

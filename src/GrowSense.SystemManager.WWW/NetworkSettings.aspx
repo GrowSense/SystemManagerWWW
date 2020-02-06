@@ -308,6 +308,16 @@
             </div>
           </div>
         </div>
+        <div class="form-horizontal style-form">
+          <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">Internet connection:</label>
+            <div class="col-sm-10">
+              <div class="label label-info label-mini" id="InternetPending">Pending</div>
+              <div class="label label-success label-mini" id="InternetOnline" style="display:none;">Online</div>
+              <div class="label label-danger label-mini" id="InternetOffline" style="display:none;">Offline</div>
+            </div>
+          </div>
+        </div>
         <div class="form-horizontal style-form" id="ManualReconnectDeviceHolder" style="display:none;">
           <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">
@@ -376,9 +386,21 @@
               connecting.style.display = "none";
               failed.style.display = "inline";
             }
-
-            $('#ServiceOutput').load('NetworkSetupStatus.aspx #ServiceOutput');
-
+            
+            $.get('NetworkSetupStatus.aspx', function(result){
+              var internetStatusText = $(result).find('#InternetStatus').text();
+              
+              if (internetStatusText.includes("Online")){
+                document.getElementById("InternetPending").style.display = "none";
+                document.getElementById("InternetOnline").style.display = "inline";
+                document.getElementById("InternetOffline").style.display = "none";
+              }else{
+                document.getElementById("InternetPending").style.display = "none";
+                document.getElementById("InternetOnline").style.display = "none";
+                document.getElementById("InternetOffline").style.display = "inline";
+              }
+            });
+            
             if (!isFinished)
               loadResultLoop();
             

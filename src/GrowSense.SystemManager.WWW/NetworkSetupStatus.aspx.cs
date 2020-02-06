@@ -12,6 +12,7 @@ namespace GrowSense.SystemManager.WWW
   {
     public string Result = "Reconnecting... (please wait)";
     public string ServiceOutput = "Pending...";
+    public string InternetStatus = "Offline";
 
     public void Page_Load (object sender, EventArgs e)
     {
@@ -25,11 +26,16 @@ namespace GrowSense.SystemManager.WWW
       ServiceOutput = output.Replace ("\n", "<br/>");
       
       if (output.Contains ("Failed to issue method call") || output.Contains ("not supported"))
-        Result = "Network reconnect not yet supported on this board. Please manually reconnect.";
+        Result = "Network setup not yet supported on this board. Please manually set up network connection.";
       if (output.Contains ("connected"))
         Result = "Successfully connected to network.";
       if (output.Contains ("failed"))
         Result = "Failed to connect to network.";
+        
+      var gitHubPingResult = manager.StartCommand ("Local", "timeout 5 ping -c 1 google.com");
+      
+      if (gitHubPingResult.Contains ("64 bytes from"))
+        InternetStatus = "Online";
     }
   }
 }
