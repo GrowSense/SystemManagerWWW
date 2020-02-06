@@ -34,6 +34,15 @@ namespace GrowSense.SystemManager.WWW
       set { ViewState ["ConnectionType"] = value; }
     }
 
+    public string CountryCode {
+      get {
+        if (ViewState ["CountryCode"] == null)
+          ViewState ["CountryCode"] = "US";
+        return (string)ViewState ["CountryCode"];
+      }
+      set { ViewState ["CountryCode"] = value; }
+    }
+
     public void Page_Load (object sender, EventArgs e)
     {
       var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
@@ -51,6 +60,10 @@ namespace GrowSense.SystemManager.WWW
 
     public void PopulateForm ()
     {
+      var countryCode = Manager.GetCountryCode ("Local");
+      
+      CountryCodeList.SelectedValue = countryCode;
+    
       var localConnectionType = Manager.GetNetworkConnectionType ("Local");
     
       if (localConnectionType == NetworkConnectionType.Ethernet)
@@ -103,22 +116,10 @@ namespace GrowSense.SystemManager.WWW
 
     public void Save_Click (object sender, EventArgs e)
     {
-      /*var name = "";
-      var pass = "";
-      
-      if (ConnectionType.SelectedValue == "Ethernet" ||
-        ConnectionType.SelectedValue == "WiFi") {
-        name = WiFiName.Text;
-        pass = WiFiPass.Text;
-      } else {
-        name = HotSpotName.Text;
-        pass = HotSpotPass.Text;
-      }*/
-      
-      //var connectionType = (NetworkConnectionType)Enum.Parse (typeof(NetworkConnectionType), LocalConnectionType.SelectedValue);
-      Manager.SetNetworkDetails (ActivateEthernet.Checked, ActivateWiFiNetwork.Checked, WiFiName.Text, WiFiPass.Text, ActivateWiFiHotSpot.Checked, HotSpotName.Text, HotSpotPass.Text);
+      Manager.SetNetworkDetails ("Local", CountryCodeList.SelectedValue, ActivateEthernet.Checked, ActivateWiFiNetwork.Checked, WiFiName.Text, WiFiPass.Text, ActivateWiFiHotSpot.Checked, HotSpotName.Text, HotSpotPass.Text);
             
       ConnectionType = Manager.GetNetworkConnectionType ("Local");
+      CountryCode = CountryCodeList.SelectedValue;
       
       Stage = 2;
     }

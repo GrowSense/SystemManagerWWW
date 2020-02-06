@@ -15,6 +15,8 @@ namespace GrowSense.SystemManager.WWW {
 		
 		protected System.Web.UI.WebControls.Content contentPlaceHolderContent;
 		
+		protected System.Web.UI.WebControls.DropDownList CountryCodeList;
+		
 		protected System.Web.UI.WebControls.CheckBox ActivateEthernet;
 		
 		protected System.Web.UI.WebControls.CheckBox ActivateWiFiNetwork;

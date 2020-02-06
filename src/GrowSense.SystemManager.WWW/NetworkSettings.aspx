@@ -89,6 +89,60 @@
           }
         }
         </script>
+        <h4 class="mb"><i class="fa fa-angle-right"></i> General</h4>
+        <div class="form-horizontal style-form">
+          <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">Country code:</label>
+            <div class="col-sm-10">
+              <asp:DropDownList runat="server" id="CountryCodeList">
+                <asp:ListItem Text="Australia" Value="AU"></asp:ListItem>
+                <asp:ListItem Text="Belgium" Value="BE"></asp:ListItem>
+                <asp:ListItem Text="Brazil" Value="BR"></asp:ListItem>
+                <asp:ListItem Text="Canada" Value="CA"></asp:ListItem>
+                <asp:ListItem Text="Switzerland and Liechtenstein" Value="CH"></asp:ListItem>
+                <asp:ListItem Text="China" Value="CN"></asp:ListItem>
+                <asp:ListItem Text="Cyprus" Value="CY"></asp:ListItem>
+                <asp:ListItem Text="Czech Republic" Value="CZ"></asp:ListItem>
+                <asp:ListItem Text="Germany" Value="DE"></asp:ListItem>
+                <asp:ListItem Text="Denmark" Value="DK"></asp:ListItem>
+                <asp:ListItem Text="Estonia" Value="EE"></asp:ListItem>
+                <asp:ListItem Text="Spain" Value="ES"></asp:ListItem>
+                <asp:ListItem Text="Finland" Value="FI"></asp:ListItem>
+                <asp:ListItem Text="France" Value="FR"></asp:ListItem>
+                <asp:ListItem Text="United Kingdom" Value="GB"></asp:ListItem>
+                <asp:ListItem Text="Greece" Value="GR"></asp:ListItem>
+                <asp:ListItem Text="Hong Kong" Value="HK"></asp:ListItem>
+                <asp:ListItem Text="Hungary" Value="HU"></asp:ListItem>
+                <asp:ListItem Text="Indonesia" Value="ID"></asp:ListItem>
+                <asp:ListItem Text="Ireland" Value="IE"></asp:ListItem>
+                <asp:ListItem Text="Israel" Value="IL"></asp:ListItem>
+                <asp:ListItem Text="India" Value="IN"></asp:ListItem>
+                <asp:ListItem Text="Iceland" Value="IS"></asp:ListItem>
+                <asp:ListItem Text="Italy" Value="IT"></asp:ListItem>
+                <asp:ListItem Text="Japan" Value="JP"></asp:ListItem>
+                <asp:ListItem Text="Republic of Korea" Value="KR"></asp:ListItem>
+                <asp:ListItem Text="Lithuania" Value="LT"></asp:ListItem>
+                <asp:ListItem Text="Luxembourg" Value="LU"></asp:ListItem>
+                <asp:ListItem Text="Latvia" Value="LV"></asp:ListItem>
+                <asp:ListItem Text="Malaysia" Value="MY"></asp:ListItem>
+                <asp:ListItem Text="Netherlands" Value="NL"></asp:ListItem>
+                <asp:ListItem Text="Norway" Value="NO"></asp:ListItem>
+                <asp:ListItem Text="New Zealand" Value="NZ"></asp:ListItem>
+                <asp:ListItem Text="Philippines" Value="PH"></asp:ListItem>
+                <asp:ListItem Text="Poland" Value="PL"></asp:ListItem>
+                <asp:ListItem Text="Portugal" Value="PT"></asp:ListItem>
+                <asp:ListItem Text="Sweden" Value="SE"></asp:ListItem>
+                <asp:ListItem Text="Singapore" Value="SG"></asp:ListItem>
+                <asp:ListItem Text="Slovenia" Value="SI"></asp:ListItem>
+                <asp:ListItem Text="Slovak Republic" Value="SK"></asp:ListItem>
+                <asp:ListItem Text="Thailand" Value="TH"></asp:ListItem>
+                <asp:ListItem Text="Taiwan" Value="TW"></asp:ListItem>
+                <asp:ListItem Text="United States of America" Value="US"></asp:ListItem>
+                <asp:ListItem Text="South Africa" Value="ZA"></asp:ListItem>
+              </asp:DropDownList>
+            </div>
+          </div>
+        </div>
         <h4 class="mb"><i class="fa fa-angle-right"></i> Ethernet</h4>
         <div class="form-horizontal style-form">
           <div class="form-group">
@@ -163,25 +217,26 @@
         });
         </script>
       <% } else if (Stage == 2) { %>
-        <% if (ConnectionType == NetworkConnectionType.Ethernet) { %>
-        <h4 class="mb"><i class="fa fa-angle-right"></i> Ethernet</h4>
+        <h4 class="mb"><i class="fa fa-angle-right"></i> Network</h4>
         <div class="form-horizontal style-form">
           <div class="form-group">
-            <label class="col-sm-2 col-sm-2 control-label">Activate:</label>
+            <label class="col-sm-2 col-sm-2 control-label">Country Code:</label>
             <div class="col-sm-10">
-              <%= ActivateEthernet.Checked %>
+              <%= CountryCode %>
             </div>
           </div>
         </div>
-        <% } else if (ConnectionType == NetworkConnectionType.WiFi) { %>
-        <h4 class="mb"><i class="fa fa-angle-right"></i> WiFi</h4>
         <div class="form-horizontal style-form">
           <div class="form-group">
-            <label class="col-sm-2 col-sm-2 control-label">Activate:</label>
+            <label class="col-sm-2 col-sm-2 control-label">Connection:</label>
             <div class="col-sm-10">
-              <%= ActivateWiFiNetwork.Checked %>
+              <%= ConnectionType.ToString() %>
             </div>
           </div>
+        </div>
+        <% if (ConnectionType == NetworkConnectionType.WiFi) { %>
+        <h4 class="mb"><i class="fa fa-angle-right"></i> WiFi</h4>
+        <div class="form-horizontal style-form">
           <div class="form-group">
             <label class="col-sm-2 col-sm-2 control-label">WiFi Name:</label>
             <div class="col-sm-10">
@@ -198,12 +253,6 @@
         <% } else if (ConnectionType == NetworkConnectionType.WiFiHotSpot) { %>
         <h4 class="mb"><i class="fa fa-angle-right"></i> WiFi HotSpot</h4>
         <div class="form-horizontal style-form">
-          <div class="form-group">
-            <label class="col-sm-2 col-sm-2 control-label">Activate:</label>
-            <div class="col-sm-10">
-              <%= ActivateWiFiHotSpot.Checked %>
-            </div>
-          </div>
           <div class="form-group">
             <label class="col-sm-2 col-sm-2 control-label">HotSpot Name:</label>
             <div class="col-sm-10">
@@ -237,6 +286,14 @@
         </div>
       <% } else if (Stage == 3) { %>
         <h4 class="mb"><i class="fa fa-angle-right"></i> Network</h4>
+        <div class="form-horizontal style-form">
+          <div class="form-group">
+            <label class="col-sm-2 col-sm-2 control-label">Country Code:</label>
+            <div class="col-sm-10">
+              <%= CountryCode %>
+            </div>
+          </div>
+        </div>
         <div class="form-horizontal style-form">
           <div class="form-group">
             <label class="col-sm-2 col-sm-2 control-label">Connection:</label>

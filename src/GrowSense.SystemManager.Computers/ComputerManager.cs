@@ -231,9 +231,8 @@ namespace GrowSense.SystemManager.Computers
       return StartCommand (computerName, command);
     }
 
-    public string SetNetworkDetails (bool activateEthernet, bool activateWiFiNetwork, string wifiName, string wifiPassword, bool activateHotSpot, string hotSpotName, string hotSpotPassword)
+    public string SetNetworkDetails (string computerName, string countryCode, bool activateEthernet, bool activateWiFiNetwork, string wifiName, string wifiPassword, bool activateHotSpot, string hotSpotName, string hotSpotPassword)
     {
-    
       var name = "";
       var pass = "";
       var connectionType = NetworkConnectionType.None;
@@ -256,11 +255,12 @@ namespace GrowSense.SystemManager.Computers
         pass = hotSpotPassword;
       }
     
-      Starter.Start ("bash set-wifi-credentials.sh " + name + " " + pass);
-      Starter.Start ("bash set-wifi-network-credentials.sh " + wifiName + " " + wifiPassword);
-      Starter.Start ("bash set-wifi-hotspot-credentials.sh " + hotSpotName + " " + hotSpotPassword);
+      StartCommand (computerName, "bash set-wifi-credentials.sh " + name + " " + pass);
+      StartCommand (computerName, "bash set-wifi-network-credentials.sh " + wifiName + " " + wifiPassword);
+      StartCommand (computerName, "bash set-wifi-hotspot-credentials.sh " + hotSpotName + " " + hotSpotPassword);
       
-      Starter.Start ("bash set-network-connection-type.sh " + connectionType.ToString ());
+      SetCountryCode (computerName, countryCode);
+      SetNetworkConnectionType (computerName, connectionType);
       
       return Starter.Output.Trim ();
     }
@@ -294,6 +294,40 @@ namespace GrowSense.SystemManager.Computers
         return (NetworkConnectionType)Enum.Parse (typeof(NetworkConnectionType), networkConnectionTypeString);
       else
         return NetworkConnectionType.Ethernet;
+    }
+
+    public string SetNetworkConnectionType (string computerName, NetworkConnectionType connectionType)
+    {
+      var command = "bash set-network-connection-type.sh " + connectionType;
+        
+      return StartCommand (computerName, command);
+    }
+
+    public string GetCountryCode (string computerName)
+    {
+      var countryCode = "";
+      if (computerName == "Local") {
+        var fileName = Path.Combine (IndexDirectory, "country-code.txt");
+        if (File.Exists (fileName))
+          countryCode = File.ReadAllText (fileName).Trim ();
+      } else {
+      
+        var command = "[[ -f country-code.txt ]] && cat country-code.txt";
+        
+        countryCode = StartCommand (computerName, command);
+      }
+      
+      if (!String.IsNullOrEmpty (countryCode))
+        return countryCode;
+      else
+        return "US";
+    }
+
+    public string SetCountryCode (string computerName, string countryCode)
+    {
+      var command = "bash set-country-code.sh " + countryCode;
+        
+      return StartCommand (computerName, command);
     }
 
     public string StartCommand (string computerName, string command)
