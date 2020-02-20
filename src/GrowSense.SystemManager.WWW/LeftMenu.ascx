@@ -19,6 +19,7 @@
           <li<%= GetActiveClassAttribute("Devices") %>><a href="Devices.aspx">Devices</a></li>
           <li<%= GetActiveClassAttribute("Computers") %>><a href="Computers.aspx">Computers</a></li>
           <li<%= GetActiveClassAttribute("Messages") %>><a href="Messages.aspx">Messages</a></li>
+          <li<%= GetActiveClassAttribute("Settings") %>><a href="Settings.aspx">Settings</a></li>
         </ul>
       </li>
     </ul>

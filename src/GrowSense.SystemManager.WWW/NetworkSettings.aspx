@@ -375,10 +375,10 @@
             </div>
           </div>
         </div>
-        <div class="form-horizontal style-form" id="ManualReconnectDeviceHolder" style="display:none;">
+        <div class="form-horizontal style-form" id="ReconnectDeviceMessageHolder" style="display:none;">
           <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">
-              Please manually connect your current device to the specified network, then wait for connection to complete, before clicking continue.
+              The GrowSense computer has switched to a different network.<br/>Please connect your current device to the specified network, then wait for connection to complete, before clicking continue.
             </div>
           </div>
         </div>
@@ -396,7 +396,7 @@
         {
           const interval = setTimeout(function() {
 
-            var manualReconnectDeviceHolder = document.getElementById("ManualReconnectDeviceHolder");
+            var reconnectDeviceMessageHolder = document.getElementById("ReconnectDeviceMessageHolder");
             var continueButton = document.getElementById("ContinueButton");
             var connecting = document.getElementById("Connecting");
             var connected = document.getElementById("Connected");
@@ -405,8 +405,9 @@
             $('#Result').load('NetworkSetupStatus.aspx #Result', "", function(responseText, textStatus, XMLHttpRequest) {
              switch (XMLHttpRequest.status) {
               case 200: break;
+              case 0:
               case 404:
-               manualReconnectDeviceHolder.style.display = "block";
+               reconnectDeviceMessageHolder.style.display = "block";
                break;
               //default:
               // $('#results').html('<p>' + XMLHttpRequest.status + ': ' + XMLHttpRequest.statusText + '. Please contact the club and let them know.</p>');
