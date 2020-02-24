@@ -394,72 +394,64 @@
 
         function loadResultLoop()
         {
-          const interval = setTimeout(function() {
-
-            var reconnectDeviceMessageHolder = document.getElementById("ReconnectDeviceMessageHolder");
-            var continueButton = document.getElementById("ContinueButton");
-            var connecting = document.getElementById("Connecting");
-            var connected = document.getElementById("Connected");
-            var failed = document.getElementById("Failed");
-            
-            $('#Result').load('NetworkSetupStatus.aspx #Result', "", function(responseText, textStatus, XMLHttpRequest) {
-             switch (XMLHttpRequest.status) {
-              case 200: break;
-              case 0:
-              case 404:
-               reconnectDeviceMessageHolder.style.display = "block";
-               break;
-              //default:
-              // $('#results').html('<p>' + XMLHttpRequest.status + ': ' + XMLHttpRequest.statusText + '. Please contact the club and let them know.</p>');
-              // break;
-              default:
-              //alert(responseText);
-               break;
-             }
-            });
-            
-            var result = document.getElementById("Result").innerText;
-            //alert(result);
-            if (result.includes("connected") || result.includes("failed") || result.includes("not yet supported"))
-            {
-              continueButton.disabled = false;
-              
-              isFinished = true;
-            }
-            
-            if (result.includes("connected"))
-            {
-              connecting.style.display = "none";
-              connected.style.display = "inline";
-            }
-            
-            if (result.includes("failed"))
-            {
-              connecting.style.display = "none";
-              failed.style.display = "inline";
-            }
-            
-            if (result.includes("not yet supported"))
-            {
-              connecting.style.display = "none";
-              failed.style.display = "inline";
-            }
-            
-            $.get('NetworkSetupStatus.aspx', function(result){
-              var internetStatusText = $(result).find('#InternetStatus').text();
-              
-              if (internetStatusText.includes("Online")){
-                document.getElementById("InternetPending").style.display = "none";
-                document.getElementById("InternetOnline").style.display = "inline";
-                document.getElementById("InternetOffline").style.display = "none";
-              }else{
-                document.getElementById("InternetPending").style.display = "none";
-                document.getElementById("InternetOnline").style.display = "none";
-                document.getElementById("InternetOffline").style.display = "inline";
-              }
-              
-              var serviceOutputText = $(result).find('#ServiceOutput').html();
-              $('#ServiceOutput').html(serviceOutputText);
+          const interval = setTimeout(function() {          
+            $.ajax({
+               url: 'NetworkSetupStatus.aspx',
+               success: function(returnData){
+                 var jsonData = jQuery.parseJSON(returnData);
+                 $('#Result').text(jsonData.result);
+                 $('#ServiceOutput').text(jsonData.serviceOutput)
+                 
+                 if (jsonData.result.includes("connected") || jsonData.result.includes("failed") || jsonData.result.includes("not yet supported"))
+                 {
+                   $("#ContinueButton").prop("disabled", false);
+                  
+                   isFinished = true;
+                 }
+                
+                 if (jsonData.result.includes("connected"))
+                 {
+                   $("#Connecting").hide();
+                   $("#Connected").show();
+                 }
+                
+                 if (jsonData.result.includes("failed"))
+                 {
+                   $("#Connecting").hide();
+                   $("#Failed").show();
+                 }
+                
+                 if (jsonData.result.includes("not yet supported"))
+                 {
+                   $("#Connecting").hide();
+                   $("#Failed").show();
+                 }
+                 
+                 if (jsonData.internetStatus.includes("Online")){
+                   $("#InternetPending").hide();
+                   $("#InternetOnline").show();
+                   $("#InternetOffline").hide();
+                 }else{
+                   $("#InternetPending").hide();
+                   $("#InternetOnline").hide();
+                   $("#InternetOffline").show();
+                 }
+                 $('#InternetStatus').text(jsonData.internetStatus);
+               },
+               error: function(xhr, status, error){
+                 switch (xhr.status) {
+                  case 200:
+                    $('#ReconnectDeviceMessageHolder').hide();
+                    break;
+                  case 0:
+                  case 404:
+                    $('#ReconnectDeviceMessageHolder').show();
+                    break;
+                  default:
+                    alert("Error code: " + xhr.status);
+                    break;
+                 }
+               }
             });
             
             if (!isFinished)
