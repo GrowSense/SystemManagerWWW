@@ -400,7 +400,7 @@
                success: function(returnData){
                  var jsonData = jQuery.parseJSON(returnData);
                  $('#Result').text(jsonData.result);
-                 $('#ServiceOutput').text(jsonData.serviceOutput)
+                 $('#ServiceOutput').text(jsonData.serviceOutput.replace("\n", "<br/>"));
                  
                  if (jsonData.result.includes("connected") || jsonData.result.includes("failed") || jsonData.result.includes("not yet supported"))
                  {
