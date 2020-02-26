@@ -441,11 +441,11 @@
                error: function(xhr, status, error){
                  switch (xhr.status) {
                   case 200:
-                    $('#ReconnectDeviceMessageHolder').hide();
+                    $("#ReconnectDeviceMessageHolder").hide();
                     break;
                   case 0:
                   case 404:
-                    $('#ReconnectDeviceMessageHolder').show();
+                    $("#ReconnectDeviceMessageHolder").show();
                     break;
                   default:
                     alert("Error code: " + xhr.status);
