@@ -47,6 +47,8 @@ namespace GrowSense.SystemManager.Mqtt
     #region Connect
     public void Connect ()
     {
+      Console.WriteLine("Connecting to MQTT broker...");
+      
       Client = new MqttClient (MqttHost, MqttPort, false, null, null, MqttSslProtocols.None);
       Client.MqttMsgPublishReceived += HandleMqttMsgPublishReceived;
       Client.ConnectionClosed += HandleConnectionClosed;
@@ -62,8 +64,10 @@ namespace GrowSense.SystemManager.Mqtt
 
     void HandleConnectionClosed (object sender, EventArgs e)
     {
-      if (!IsDisposing)
-        Connect();
+      if (!IsDisposing) {
+        Console.WriteLine("MQTT connection closed. Reconnecting...");
+        Connect ();
+      }
     }
     #endregion
     #region Handle MQTT Message
