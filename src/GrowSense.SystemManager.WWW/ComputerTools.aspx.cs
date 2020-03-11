@@ -3,6 +3,7 @@ using System.IO;
 using System.Configuration;
 using GrowSense.SystemManager.Devices;
 using GrowSense.SystemManager.Web;
+using System.Web.Configuration;
 
 namespace GrowSense.SystemManager.WWW
 {
@@ -21,11 +22,11 @@ namespace GrowSense.SystemManager.WWW
 
     public void Page_Load (object sender, EventArgs e)
     {
-      var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
+      var indexDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["IndexDirectory"]);
     
-      var computersDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["ComputersDirectory"]);
+      var computersDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["ComputersDirectory"]);
     
-      var devicesDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["DevicesDirectory"]);
+      var devicesDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["DevicesDirectory"]);
     
       Manager = new ComputerManager (indexDirectory, computersDirectory);
       DeviceManager = new DeviceManager (indexDirectory, devicesDirectory);

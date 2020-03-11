@@ -5,6 +5,7 @@ using GrowSense.SystemManager.Web;
 using System.Configuration;
 using GrowSense.SystemManager.Computers;
 using System.Collections.Generic;
+using System.Web.Configuration;
 
 namespace GrowSense.SystemManager
 {
@@ -27,9 +28,9 @@ namespace GrowSense.SystemManager
 
     public void LoadDevicesInfo ()
     {
-      var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
+      var indexDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["IndexDirectory"]);
     
-      var devicesDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["DevicesDirectory"]);
+      var devicesDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["DevicesDirectory"]);
     
       Manager = new DeviceManager (indexDirectory, devicesDirectory);
       DevicesInfo = Manager.GetDevicesInfo ();
@@ -37,9 +38,9 @@ namespace GrowSense.SystemManager
     
     public void LoadComputersInfo ()
     {
-      var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
+      var indexDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["IndexDirectory"]);
     
-      var computersDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["ComputersDirectory"]);
+      var computersDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["ComputersDirectory"]);
     
       var computerManager = new ComputerManager (indexDirectory, computersDirectory);
       ComputersInfo = computerManager.GetComputersInfo ();

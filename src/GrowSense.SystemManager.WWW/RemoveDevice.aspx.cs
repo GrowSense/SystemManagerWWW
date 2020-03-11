@@ -2,6 +2,7 @@ using System.IO;
 using System.Configuration;
 using GrowSense.SystemManager.Devices;
 using GrowSense.SystemManager.Web;
+using System.Web.Configuration;
 
 namespace GrowSense.SystemManager.WWW
 {
@@ -22,9 +23,9 @@ namespace GrowSense.SystemManager.WWW
         Response.Redirect ("Devices.aspx?Result=" + resultMessage);
       }
       
-      var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
+      var indexDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["IndexDirectory"]);
     
-      var devicesDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["DevicesDirectory"]);
+      var devicesDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["DevicesDirectory"]);
     
       var manager = new DeviceManager (indexDirectory, devicesDirectory);
       

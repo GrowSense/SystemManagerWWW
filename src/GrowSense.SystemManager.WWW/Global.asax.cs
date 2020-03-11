@@ -3,6 +3,7 @@ using System.Net.Sockets;
 using uPLibrary.Networking.M2Mqtt.Exceptions;
 using System.IO;
 using System.Configuration;
+using System.Web.Configuration;
 
 namespace WWW
 {
@@ -78,7 +79,7 @@ namespace WWW
     protected void LoadSystemVersion ()
     {
       if (String.IsNullOrEmpty ((string)Application ["SystemVersion"])) {
-        var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
+        var indexDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["IndexDirectory"]);
         var versionNumber = File.ReadAllText (Path.Combine (indexDirectory, "version.txt")).Trim ();
         var buildNumber = File.ReadAllText (Path.Combine (indexDirectory, "buildnumber.txt")).Trim ();
         var fullVersion = versionNumber + "-" + buildNumber;
@@ -90,7 +91,7 @@ namespace WWW
     protected void LoadWebUIVersion ()
     {
       if (String.IsNullOrEmpty ((string)Application ["WebUIVersion"])) {
-        var baseDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["BaseDirectory"]);
+        var baseDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["BaseDirectory"]);
         var versionNumber = File.ReadAllText (Path.Combine (baseDirectory, "version.txt")).Trim ();
         var buildNumber = File.ReadAllText (Path.Combine (baseDirectory, "buildnumber.txt")).Trim ();
         var fullVersion = versionNumber + "-" + buildNumber;

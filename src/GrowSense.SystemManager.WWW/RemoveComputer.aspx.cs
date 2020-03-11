@@ -1,6 +1,7 @@
 using GrowSense.SystemManager.Computers;
 using System.IO;
 using System.Configuration;
+using System.Web.Configuration;
 
 namespace GrowSense.SystemManager.WWW
 {
@@ -20,9 +21,9 @@ namespace GrowSense.SystemManager.WWW
         resultMessage = ("No computer name specified in the query string.");
         Response.Redirect ("Computers.aspx?Result=" + resultMessage);
       }
-      var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
+      var indexDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["IndexDirectory"]);
     
-      var computersDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["ComputersDirectory"]);
+      var computersDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["ComputersDirectory"]);
     
       var manager = new ComputerManager (indexDirectory, computersDirectory);
       

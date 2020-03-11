@@ -3,6 +3,7 @@ using GrowSense.SystemManager.Mqtt;
 using GrowSense.SystemManager.Devices;
 using System.IO;
 using System.Configuration;
+using System.Web.Configuration;
 
 namespace GrowSense.SystemManager.Web
 {
@@ -18,22 +19,22 @@ namespace GrowSense.SystemManager.Web
     {
       if (Current == null) {
       
-        var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
+        var indexDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["IndexDirectory"]);
     
-        var devicesDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["DevicesDirectory"]);
+        var devicesDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["DevicesDirectory"]);
      
         var deviceManager = new DeviceManager (indexDirectory, devicesDirectory);
       
-        var mqttDeviceName = ConfigurationSettings.AppSettings ["MqttDeviceName"] + "-" + Guid.NewGuid ().ToString ();
-        var mqttHost = ConfigurationSettings.AppSettings ["MqttHost"];
-        var mqttUsername = ConfigurationSettings.AppSettings ["MqttUsername"];
-        var mqttPassword = ConfigurationSettings.AppSettings ["MqttPassword"];
-        var mqttPort = Convert.ToInt32 (ConfigurationSettings.AppSettings ["MqttPort"]);
+        var mqttDeviceName = WebConfigurationManager.AppSettings ["MqttDeviceName"] + "-" + Guid.NewGuid ().ToString ();
+        var mqttHost = WebConfigurationManager.AppSettings ["MqttHost"];
+        var mqttUsername = WebConfigurationManager.AppSettings ["MqttUsername"];
+        var mqttPassword = WebConfigurationManager.AppSettings ["MqttPassword"];
+        var mqttPort = Convert.ToInt32 (WebConfigurationManager.AppSettings ["MqttPort"]);
       
         Current = new DeviceMqtt (deviceManager, mqttDeviceName, mqttHost, mqttUsername, mqttPassword, mqttPort);
       }
       
-      if (!Current.IsConnected)
+      if (!Current.IsConnected && !Current.IsConnecting)
         Connect ();
     }
 

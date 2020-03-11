@@ -25,6 +25,8 @@ namespace GrowSense.SystemManager.Mqtt
     
     public bool IsDisposing = false;
     
+    public bool IsConnecting = false;
+    
     public bool IsConnected {
       get {
         if (Client == null)
@@ -46,8 +48,10 @@ namespace GrowSense.SystemManager.Mqtt
     }
     #region Connect
     public void Connect ()
-    {
-      Console.WriteLine("Connecting to MQTT broker...");
+  {
+    if (!IsConnecting) {
+      IsConnecting = true;
+      Console.WriteLine ("Connecting to MQTT broker...");
       
       Client = new MqttClient (MqttHost, MqttPort, false, null, null, MqttSslProtocols.None);
       Client.MqttMsgPublishReceived += HandleMqttMsgPublishReceived;
@@ -60,7 +64,11 @@ namespace GrowSense.SystemManager.Mqtt
       AddDevices (Manager.GetDevicesInfo ());
       
       WatchDevicesFolder ();
-    }
+      
+      IsConnecting = false;
+    } else
+      Console.WriteLine ("Is already connecting. Skipping connection for this thread.");
+  }
 
     void HandleConnectionClosed (object sender, EventArgs e)
     {
@@ -227,7 +235,7 @@ namespace GrowSense.SystemManager.Mqtt
     #region IDisposable implementation
     public void Dispose ()
     {
-    IsDisposing = true;
+      IsDisposing = true;
     
       if (Client != null)
         Client.Disconnect();

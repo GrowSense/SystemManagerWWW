@@ -3,6 +3,7 @@ using System.Configuration;
 using GrowSense.SystemManager.Computers;
 using System.Web.UI.WebControls;
 using System.Collections.Generic;
+using System.Web.Configuration;
 
 namespace GrowSense.SystemManager.WWW
 {
@@ -45,9 +46,9 @@ namespace GrowSense.SystemManager.WWW
 
     public void Page_Load (object sender, EventArgs e)
     {
-      var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
+      var indexDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["IndexDirectory"]);
      
-      var computersDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["ComputersDirectory"]);
+      var computersDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["ComputersDirectory"]);
      
       Manager = new ComputerManager (indexDirectory, computersDirectory);
     
@@ -102,7 +103,7 @@ namespace GrowSense.SystemManager.WWW
 
     public string GetSecurityValue (string key)
     {
-      var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
+      var indexDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["IndexDirectory"]);
      
       var fileName = Path.Combine (indexDirectory, key + ".security");
       
@@ -141,7 +142,7 @@ namespace GrowSense.SystemManager.WWW
 
     public void GenerateComputerFields ()
     {
-      var computers = Manager.GetComputersInfo ();
+      //var computers = Manager.GetComputersInfo ();
       RemoteComputersExist = false; // Disabled because it's not yet fully implemented
       
       /*foreach (var computer in computers) {

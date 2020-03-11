@@ -32,9 +32,9 @@ namespace GrowSense.SystemManager.Web
     {
       base.OnLoad (e);
       
-      var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
+      var indexDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["IndexDirectory"]);
     
-      var devicesDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["DevicesDirectory"]);
+      var devicesDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["DevicesDirectory"]);
     
       DeviceManager = new DeviceManager (indexDirectory, devicesDirectory);
       Utility = new DeviceWebUtility (DeviceManager);

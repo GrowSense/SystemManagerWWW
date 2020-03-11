@@ -1,6 +1,7 @@
 using System.IO;
 using System.Configuration;
 using GrowSense.SystemManager.Messages;
+using System.Web.Configuration;
 
 namespace GrowSense.SystemManager.WWW
 {
@@ -19,9 +20,9 @@ namespace GrowSense.SystemManager.WWW
 
     public void LoadMessagesInfo ()
     {
-      var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
+      var indexDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["IndexDirectory"]);
     
-      var messagesDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["MessagesDirectory"]);
+      var messagesDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["MessagesDirectory"]);
     
       var messageManager = new MessageManager(indexDirectory, messagesDirectory);
       MessagesInfo = messageManager.GetMessagesInfo ();

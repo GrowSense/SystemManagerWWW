@@ -85,7 +85,7 @@ namespace GrowSense.SystemManager.Devices
 
     public bool SetDeviceLabel (string deviceName, string deviceLabel)
     {
-      var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
+      var indexDirectory = Path.GetFullPath (IndexDirectory);
     
       var starter = new ProcessStarter ();
       starter.WorkingDirectory = indexDirectory;
@@ -96,7 +96,7 @@ namespace GrowSense.SystemManager.Devices
 
     public bool RenameDevice (string originalName, string newName)
     {
-      var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
+      var indexDirectory = Path.GetFullPath (IndexDirectory);
     
       var starter = new ProcessStarter ();
       starter.WorkingDirectory = indexDirectory;

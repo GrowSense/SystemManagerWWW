@@ -1,6 +1,7 @@
 using GrowSense.SystemManager.Computers;
 using System.IO;
 using System.Configuration;
+using System.Web.Configuration;
 
 namespace GrowSense.SystemManager.WWW
 {
@@ -17,9 +18,9 @@ namespace GrowSense.SystemManager.WWW
 
     public void Page_Load (object sender, EventArgs e)
     {
-      var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
+      var indexDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["IndexDirectory"]);
     
-      var computersDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["ComputersDirectory"]);
+      var computersDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["ComputersDirectory"]);
     
       Manager = new ComputerManager (indexDirectory, computersDirectory);
      

@@ -1,6 +1,7 @@
 using GrowSense.SystemManager.Computers;
 using System.IO;
 using System.Configuration;
+using System.Web.Configuration;
 
 namespace GrowSense.SystemManager.WWW
 {
@@ -16,14 +17,14 @@ namespace GrowSense.SystemManager.WWW
 
     public void Page_Load (object sender, EventArgs e)
     {
-      var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
+      var indexDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["IndexDirectory"]);
      
-      var computersDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["ComputersDirectory"]);
+      var computersDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["ComputersDirectory"]);
      
       var manager = new ComputerManager (indexDirectory, computersDirectory);
       var output = manager.GetServiceStatusText ("Local", "growsense-network-setup.service");
       
-      ServiceOutput = EncodeForJson (output);
+      ServiceOutput = EncodeForJson (output.Trim ());
       
       if (output.Contains ("Failed to issue method call") || output.Contains ("not supported"))
         Result = "Network setup not yet supported on this board. Please manually set up network connection.";

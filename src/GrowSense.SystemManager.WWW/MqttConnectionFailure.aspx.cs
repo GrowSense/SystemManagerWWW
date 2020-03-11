@@ -1,4 +1,5 @@
 using System.Configuration;
+using System.Web.Configuration;
 
 namespace GrowSense.SystemManager.WWW
 {
@@ -14,9 +15,9 @@ namespace GrowSense.SystemManager.WWW
 
     public void Page_Load (object sender, EventArgs e)
     {
-      MqttHost = ConfigurationSettings.AppSettings ["MqttHost"];
-      MqttUsername = ConfigurationSettings.AppSettings ["MqttUsername"];
-      MqttPort = Convert.ToInt32 (ConfigurationSettings.AppSettings ["MqttPort"]);
+      MqttHost = WebConfigurationManager.AppSettings ["MqttHost"];
+      MqttUsername = WebConfigurationManager.AppSettings ["MqttUsername"];
+      MqttPort = Convert.ToInt32 (WebConfigurationManager.AppSettings ["MqttPort"]);
     }
   }
 }

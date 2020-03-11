@@ -3,6 +3,7 @@ using System.Configuration;
 using System.IO;
 using GrowSense.SystemManager.Computers;
 using GrowSense.SystemManager.Messages;
+using System.Web.Configuration;
 
 namespace GrowSense.SystemManager
 {
@@ -19,10 +20,10 @@ namespace GrowSense.SystemManager
 
     public void Page_Load (object sender, EventArgs e)
     {
-      var indexDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["IndexDirectory"]);
-      var devicesDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["DevicesDirectory"]);
-      var messagesDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["MessagesDirectory"]);
-      var computersDirectory = Path.GetFullPath (ConfigurationSettings.AppSettings ["ComputersDirectory"]);
+      var indexDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["IndexDirectory"]);
+      var devicesDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["DevicesDirectory"]);
+      var messagesDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["MessagesDirectory"]);
+      var computersDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["ComputersDirectory"]);
     
       TotalDevices = new DeviceManager (indexDirectory, devicesDirectory).CountDevices ();
       TotalMessages = new MessageManager (indexDirectory, messagesDirectory).CountMessages (MessageType.Message);
