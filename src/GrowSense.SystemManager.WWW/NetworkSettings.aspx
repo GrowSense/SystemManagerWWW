@@ -451,7 +451,8 @@
                     alert("Error code: " + xhr.status);
                     break;
                  }
-               }
+               },
+               timeout: 5000
             });
             
             if (!isFinished)
