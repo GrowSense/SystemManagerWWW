@@ -90,7 +90,7 @@ namespace GrowSense.SystemManager.Mqtt
 
     bool HasConnectionTimedOut()
     {
-      var hasTimedOut = IsConnecting && ConnectingStartTime.AddSeconds(-ConnectionTimeoutInSeconds) < DateTime.Now; ;
+      var hasTimedOut = IsConnecting && ConnectingStartTime.AddSeconds(ConnectionTimeoutInSeconds) < DateTime.Now; ;
 
       return hasTimedOut;
     }
