@@ -28,7 +28,6 @@ test-unit:
     - git config --global user.name "CompulsiveCoder"
     - git checkout "$CI_COMMIT_BRANCH"
     - bash pull.sh
-    - cat full-version.txt
   script:
     - bash test.sh
   dependencies:
@@ -39,8 +38,8 @@ graduate:
   tags:
     - docker
   before_script:
-    - git remote set-url origin https://$GHTOKEN@github.com/GrowSense/Index.git
-    - git remote add lan http://Internal:$GLTOKEN@10.0.0.101:180/growsense/index.git || git remote set-url lan http://Internal:$GLTOKEN@10.0.0.101:180/growsense/index.git
+    - git remote set-url origin https://$GHTOKEN@github.com/GrowSense/SystemManagerWWW.git
+    - git remote add lan http://Internal:$GLTOKEN@10.0.0.101:180/growsense/SystemManagerWWW.git || git remote set-url lan http://Internal:$GLTOKEN@10.0.0.101:180/growsense/SystemManagerWWW.git
     - git config --global user.email "compulsivecoder@gmail.com"
     - git config --global user.name "CompulsiveCoder"
     - git checkout "$CI_COMMIT_BRANCH"
@@ -56,8 +55,8 @@ version:
   tags:
     - docker
   before_script:
-    - git remote set-url origin https://$GHTOKEN@github.com/GrowSense/Index.git
-    - git remote add lan http://Internal:$GLTOKEN@10.0.0.101:180/growsense/index.git || git remote set-url lan http://Internal:$GLTOKEN@10.0.0.101:180/growsense/index.git
+    - git remote set-url origin https://$GHTOKEN@github.com/GrowSense/SystemManagerWWW.git
+    - git remote add lan http://Internal:$GLTOKEN@10.0.0.101:180/growsense/SystemManagerWWW.git || git remote set-url lan http://Internal:$GLTOKEN@10.0.0.101:180/growsense/SystemManagerWWW.git
     - git config --global user.email "compulsivecoder@gmail.com"
     - git config --global user.name "CompulsiveCoder"
     - git checkout "$CI_COMMIT_BRANCH"
