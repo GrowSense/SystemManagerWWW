@@ -5,11 +5,8 @@ stages:
   - verify
   - graduate
   - version
-  
-variables:
-     GIT_SUBMODULE_STRATEGY: recursive
 
-build-sketches:
+build:
   stage: build
   tags:
     - docker
