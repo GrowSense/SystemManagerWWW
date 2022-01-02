@@ -30,8 +30,13 @@
     {
       if (device.Group == "irrigator")
       {
-        $("#" + device.Name + "-moisture-bar").attr('aria-valuenow', device.Data["C"]).css('width', device.Data.C + "%");
+        $("#" + device.Name + "-moisture-bar").attr('aria-valuenow', device.Data["C"]).css('width', device.Data["C"] + "%");
         $("#" + device.Name + "-moisture-value").text(device.Data["C"]);
+      }
+      else if (device.Group == "illuminator")
+      {
+        $("#" + device.Name + "-light-bar").attr('aria-valuenow', device.Data["L"]).css('width', device.Data["L"] + "%");
+        $("#" + device.Name + "-light-value").text(device.Data["L"]);
       }
     }
     
@@ -92,6 +97,8 @@
                 <% if (RequiresCalibration(deviceInfo)){ %>
                 <div class="btn btn-success btn-xs" onclick="location.href='<%= GetDeviceCalibrateLink(deviceInfo) %>'"><i class="fa fa-arrows-h"></i></div>
                 <% } %>
+              </td>
+              <td>
                 <div class="btn btn-primary btn-xs" onclick="location.href='<%= GetDeviceEditLink(deviceInfo) %>'"><i class="fa fa-pencil"></i></div>
                 <div class="btn btn-danger btn-xs" data-toggle="modal" data-target="#removeModal" onclick="selectDevice('<%= deviceInfo.Name %>');"><i class="fa fa-trash-o"></i></div>
               </td>

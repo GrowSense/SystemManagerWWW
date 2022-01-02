@@ -107,7 +107,7 @@ namespace GrowSense.SystemManager
       }
       if (device.Group == "illuminator") {
         var value = GetDeviceData (device.Name, "L");
-        return GenerateDeviceProgressBar (device.Name, "light", "Light: " + value + "%", value, "yellow");
+        return GenerateDeviceProgressBar (device.Name, "light", "Light: <span id='" + device.Name + "-moisture-value'>" + value + "</span>%", value, "yellow");
       }
       if (device.Group == "ventilator") {
         var temperatureValue = GetDeviceData (device.Name, "T");
