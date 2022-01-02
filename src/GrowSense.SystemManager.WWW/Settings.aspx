@@ -19,6 +19,18 @@
           </thead>
           <tbody>
             <tr>
+              <td> Login </td>
+              <td>
+                <div class="btn btn-primary btn-xs" onclick="location.href='LoginSettings.aspx'"><i class="fa fa-pencil"></i></div>
+              </td>
+            </tr>
+            <tr>
+              <td> MQTT </td>
+              <td>
+                <div class="btn btn-primary btn-xs" onclick="location.href='MqttSettings.aspx'"><i class="fa fa-pencil"></i></div>
+              </td>
+            </tr>
+            <tr>
               <td> Network </td>
               <td>
                 <div class="btn btn-primary btn-xs" onclick="location.href='NetworkSettings.aspx'"><i class="fa fa-pencil"></i></div>

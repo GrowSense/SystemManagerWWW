@@ -11,21 +11,9 @@
 namespace GrowSense.SystemManager.WWW {
 	
 	
-	public partial class EditIrrigator {
+	public partial class CalibrateSoilMoistureSensor {
 		
 		protected System.Web.UI.WebControls.Content contentPlaceHolderContent;
-		
-		protected System.Web.UI.WebControls.DropDownList PumpMode;
-		
-		protected System.Web.UI.WebControls.DropDownList Threshold;
-		
-		protected System.Web.UI.WebControls.TextBox BurstOnQuantity;
-		
-		protected System.Web.UI.WebControls.DropDownList BurstOnType;
-		
-		protected System.Web.UI.WebControls.TextBox BurstOffQuantity;
-		
-		protected System.Web.UI.WebControls.DropDownList BurstOffType;
 		
 		public new GrowSense.SystemManager.Master Master {
 			get {

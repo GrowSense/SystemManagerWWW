@@ -1,4 +1,5 @@
 using System.Web.Security;
+using GrowSense.SystemManager.Web;
 
 namespace GrowSense.SystemManager.WWW
 {
@@ -18,7 +19,10 @@ namespace GrowSense.SystemManager.WWW
 
     public void LogInButton_Click (object sender, EventArgs e)
     {
-      if (FormsAuthentication.Authenticate (Username.Text, Password.Text)) {  
+      var authenticator = new Authenticator();
+      
+      if (authenticator.IsAuthentic(Username.Text, Password.Text))
+      {
         FormsAuthentication.RedirectFromLoginPage (Username.Text, RememberMe.Checked);  
       } else {  
         IsInvalid = true;
