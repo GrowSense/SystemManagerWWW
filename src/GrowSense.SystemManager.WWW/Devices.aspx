@@ -14,6 +14,31 @@
     {
       location.href='RemoveDevice.aspx?DeviceName=' + selectedDevice;
     }
+    
+    function updateValues()
+    {
+      console.log("Updating values");
+        
+      $.getJSON( "DevicesJson.aspx", function( data ) {
+        $.each( data, function( key, device ) {
+          updateDevice(device);
+        });
+      });  
+    }
+    
+    function updateDevice(device)
+    {
+      if (device.Group == "irrigator")
+      {
+        $("#" + device.Name + "-moisture-bar").attr('aria-valuenow', device.Data["C"]).css('width', device.Data.C + "%");
+        $("#" + device.Name + "-moisture-value").text(device.Data["C"]);
+      }
+    }
+    
+    $( document ).ready(function() {
+      setInterval(updateValues, 3000);
+      //updateValues();
+    });
   </script>
   <h3><i class="fa fa-angle-right"></i> Garden </h3>
   <div class="row mt">
@@ -64,6 +89,9 @@
                 <%= GenerateDeviceProgressBars(deviceInfo) %>
               </td>
               <td>
+                <% if (RequiresCalibration(deviceInfo)){ %>
+                <div class="btn btn-success btn-xs" onclick="location.href='<%= GetDeviceCalibrateLink(deviceInfo) %>'"><i class="fa fa-arrows-h"></i></div>
+                <% } %>
                 <div class="btn btn-primary btn-xs" onclick="location.href='<%= GetDeviceEditLink(deviceInfo) %>'"><i class="fa fa-pencil"></i></div>
                 <div class="btn btn-danger btn-xs" data-toggle="modal" data-target="#removeModal" onclick="selectDevice('<%= deviceInfo.Name %>');"><i class="fa fa-trash-o"></i></div>
               </td>

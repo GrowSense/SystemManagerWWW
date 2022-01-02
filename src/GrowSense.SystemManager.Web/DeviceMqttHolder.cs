@@ -4,6 +4,7 @@ using GrowSense.SystemManager.Devices;
 using System.IO;
 using System.Configuration;
 using System.Web.Configuration;
+using GrowSense.SystemManager.Common;
 
 namespace GrowSense.SystemManager.Web
 {
@@ -24,25 +25,24 @@ namespace GrowSense.SystemManager.Web
         var devicesDirectory = Path.GetFullPath (WebConfigurationManager.AppSettings ["DevicesDirectory"]);
      
         var deviceManager = new DeviceManager (indexDirectory, devicesDirectory);
-      
+
         var mqttDeviceName = WebConfigurationManager.AppSettings ["MqttDeviceName"] + "-" + Guid.NewGuid ().ToString ();
-        var mqttHost = WebConfigurationManager.AppSettings ["MqttHost"];
-        var mqttUsername = WebConfigurationManager.AppSettings ["MqttUsername"];
-        var mqttPassword = WebConfigurationManager.AppSettings ["MqttPassword"];
-        var mqttPort = Convert.ToInt32 (WebConfigurationManager.AppSettings ["MqttPort"]);
+        
+        var settingsManager = new SettingsManager(indexDirectory);
+        var settings = settingsManager.LoadSettings();
       
-        Current = new DeviceMqtt (deviceManager, mqttDeviceName, mqttHost, mqttUsername, mqttPassword, mqttPort);
+        Current = new DeviceMqtt (deviceManager, mqttDeviceName, settings.MqttHost, settings.MqttUsername, settings.MqttPassword, settings.MqttPort);
       }
       
-      if (!Current.IsConnected && !Current.IsConnecting)
-        Connect ();
+      Connect ();
     }
 
     static public void Connect ()
     {
-      if (Current != null && !Current.IsConnected) {
+    // TODO: Clean up
+      //if (Current != null && !Current.IsConnected) {
         Current.Connect ();
-      }
+      //}
     }
 
     static public void EnsureConnected ()

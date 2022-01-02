@@ -38,6 +38,9 @@
     <Reference Include="M2Mqtt.Net">
       <HintPath>..\..\lib\M2Mqtt\lib\net45\M2Mqtt.Net.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\lib\Newtonsoft.Json\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -69,6 +72,10 @@
     <Content Include="Settings.aspx" />
     <Content Include="NetworkSettings.aspx" />
     <Content Include="NetworkSetupStatus.aspx" />
+    <Content Include="MqttSettings.aspx" />
+    <Content Include="LoginSettings.aspx" />
+    <Content Include="DevicesJson.aspx" />
+    <Content Include="CalibrateSoilMoistureSensor.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -194,13 +201,37 @@
     <Compile Include="NetworkSetupStatus.aspx.designer.cs">
       <DependentUpon>NetworkSetupStatus.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MqttSettings.aspx.cs">
+      <DependentUpon>MqttSettings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MqttSettings.aspx.designer.cs">
+      <DependentUpon>MqttSettings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LoginSettings.aspx.cs">
+      <DependentUpon>LoginSettings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LoginSettings.aspx.designer.cs">
+      <DependentUpon>LoginSettings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DevicesJson.aspx.cs">
+      <DependentUpon>DevicesJson.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DevicesJson.aspx.designer.cs">
+      <DependentUpon>DevicesJson.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CalibrateSoilMoistureSensor.aspx.cs">
+      <DependentUpon>CalibrateSoilMoistureSensor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CalibrateSoilMoistureSensor.aspx.designer.cs">
+      <DependentUpon>CalibrateSoilMoistureSensor.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <ProjectExtensions>
     <MonoDevelop>
       <Properties VerifyCodeBehindFields="True" VerifyCodeBehindEvents="True">
-        <XspParameters Port="8082" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
+        <XspParameters Port="8089" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>

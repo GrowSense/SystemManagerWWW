@@ -41,6 +41,7 @@
     <Compile Include="DeviceMqttHolder.cs" />
     <Compile Include="DeviceWebUtility.cs" />
     <Compile Include="BaseEditDevicePage.cs" />
+    <Compile Include="Authenticator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

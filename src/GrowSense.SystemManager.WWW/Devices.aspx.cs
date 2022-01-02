@@ -103,41 +103,41 @@ namespace GrowSense.SystemManager
       }
       if (device.Group == "irrigator") {
         var value = GetDeviceData (device.Name, "C");
-        return GenerateDeviceProgressBar ("Soil Moisture: " + value + "%", value, "blue");
+        return GenerateDeviceProgressBar (device.Name, "moisture", "Soil Moisture: <span id='" + device.Name + "-moisture-value'>" + value + "</span>%", value, "blue");
       }
       if (device.Group == "illuminator") {
         var value = GetDeviceData (device.Name, "L");
-        return GenerateDeviceProgressBar ("Light: " + value + "%", value, "yellow");
+        return GenerateDeviceProgressBar (device.Name, "light", "Light: " + value + "%", value, "yellow");
       }
       if (device.Group == "ventilator") {
         var temperatureValue = GetDeviceData (device.Name, "T");
         var humidityValue = GetDeviceData (device.Name, "H");
-        return GenerateDeviceProgressBar ("Temperature: " + temperatureValue + "c", temperatureValue, "red") +
-          GenerateDeviceProgressBar ("Humidity: " + humidityValue + "%", humidityValue, "blue");
+        return GenerateDeviceProgressBar (device.Name, "temperature", "Temperature: " + temperatureValue + "c", temperatureValue, "red") +
+          GenerateDeviceProgressBar (device.Name, "humidity", "Humidity: " + humidityValue + "%", humidityValue, "blue");
       }
       if (device.Group == "monitor") {
         if (device.Project.StartsWith("SoilMoisture")) {
           var value = GetDeviceData (device.Name, "C");
-          return GenerateDeviceProgressBar ("Soil Moisture: " + value + "%", value, "blue");
+          return GenerateDeviceProgressBar (device.Name, "moisture", "Soil Moisture: " + value + "%", value, "blue");
         }
         if (device.Project.StartsWith("Light")) {
           var value = GetDeviceData (device.Name, "L");
-          return GenerateDeviceProgressBar ("Light: " + value + "%", value, "yellow");
+          return GenerateDeviceProgressBar (device.Name, "light", "Light: " + value + "%", value, "yellow");
         }
         if (device.Project.StartsWith("TemperatureHumidity")) {
           var temperatureValue = GetDeviceData (device.Name, "T");
           var humidityValue = GetDeviceData (device.Name, "H");
-          return GenerateDeviceProgressBar ("Temperature: " + temperatureValue + "c", temperatureValue, "red") +
-            GenerateDeviceProgressBar ("Humidity: " + humidityValue + "%", humidityValue, "blue");
+          return GenerateDeviceProgressBar (device.Name, "temperature", "Temperature: " + temperatureValue + "c", temperatureValue, "red") +
+            GenerateDeviceProgressBar (device.Name, "humidity", "Humidity: " + humidityValue + "%", humidityValue, "blue");
         }
       }
       return "Device type not implemented: " + device.Group + " " + device.Project;
     }
-    
-    public string GenerateDeviceProgressBar (string text, string value, string color)
+
+    public string GenerateDeviceProgressBar(string deviceName, string property, string text, string value, string color)
     {
       var cssClass = "";
-      
+
       if (color == "blue")
         cssClass = "progress-bar-info";
       if (color == "red")
@@ -146,16 +146,17 @@ namespace GrowSense.SystemManager
         cssClass = "progress-bar-success";
       if (color == "yellow")
         cssClass = "progress-bar-warning";
-    
+
       return String.Format(@"{1}
                       <div class=""progress"">
-                        <div class=""progress-bar {2}"" role=""progressbar"" aria-valuenow=""{0}"" aria-valuemin=""0"" aria-valuemax=""100"" style=""width: {0}%"">
+                        <div class=""progress-bar {2}"" id=""{3}"" role=""progressbar"" aria-valuenow=""{0}"" aria-valuemin=""0"" aria-valuemax=""100"" style=""width: {0}%"">
                           <span class=""sr-only"">{0}</span>
                         </div>
                       </div>",
                       value,
                       text,
-                      cssClass
+                      cssClass,
+                      deviceName + "-" + property + "-bar"
         );
     }
     
@@ -181,6 +182,52 @@ namespace GrowSense.SystemManager
       }
     
       return "Edit" + targetName + ".aspx?DeviceName=" + deviceInfo.Name;
+    }
+    
+    public string GetDeviceCalibrateLink (DeviceInfo deviceInfo)
+    {
+      var targetName = "";
+      
+      //if (deviceInfo.Group == "ui")
+      //  targetName = "UI";
+      if (deviceInfo.Group == "irrigator")
+        targetName = "SoilMoistureSensor";
+      //if (deviceInfo.Group == "ventilator")
+      //  targetName = "Ventilator";
+      //if (deviceInfo.Group == "illuminator")
+      //  targetName = "Illuminator";
+      if (deviceInfo.Group == "monitor") {
+        if (deviceInfo.Project.StartsWith("SoilMoisture"))
+          targetName = "SoilMoistureSensor";
+      //  if (deviceInfo.Project.StartsWith("TemperatureHumidity"))
+      //    targetName = "TemperatureHumidityMonitor";
+      //  if (deviceInfo.Project.StartsWith("Light"))
+      //    targetName = "LightMonitor";
+      }
+    
+      return "Calibrate" + targetName + ".aspx?DeviceName=" + deviceInfo.Name;
+    }
+
+    public bool RequiresCalibration(DeviceInfo deviceInfo)
+    {
+      //if (deviceInfo.Group == "ui")
+      //  targetName = "UI";
+      if (deviceInfo.Group == "irrigator")
+        return true;
+      //if (deviceInfo.Group == "ventilator")
+      //  targetName = "Ventilator";
+      //if (deviceInfo.Group == "illuminator")
+      //  targetName = "Illuminator";
+      if (deviceInfo.Group == "monitor") {
+        if (deviceInfo.Project.StartsWith("SoilMoisture"))
+          return true;
+      //  if (deviceInfo.Project.StartsWith("TemperatureHumidity"))
+      //    targetName = "TemperatureHumidityMonitor";
+      //  if (deviceInfo.Project.StartsWith("Light"))
+      //    targetName = "LightMonitor";
+      }
+
+      return false;
     }
   }
 }

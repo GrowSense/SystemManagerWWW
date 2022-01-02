@@ -19,11 +19,6 @@ namespace GrowSense.SystemManager.WWW
         Threshold.Items.Add (new ListItem (i + "%", i.ToString ()));
       }
       
-      for (int i = 0; i <= 1024; i++) {
-        DryCalibration.Items.Add (new ListItem (i.ToString (), i.ToString ()));
-        WetCalibration.Items.Add (new ListItem (i.ToString (), i.ToString ()));
-      }
-      
       base.InitializeForm ();
     }
 
@@ -37,11 +32,6 @@ namespace GrowSense.SystemManager.WWW
       PumpMode.Items.FindByValue (Utility.GetDeviceData (Device.Name, "M")).Selected = true;
       
       Threshold.Items.FindByValue (Utility.GetDeviceData (Device.Name, "T")).Selected = true;
-      
-      DryCalibration.Items.FindByValue (Utility.GetDeviceData (Device.Name, "D")).Selected = true;
-      WetCalibration.Items.FindByValue (Utility.GetDeviceData (Device.Name, "W")).Selected = true;
-      
-      PopulateBoardType ();
     }
 
     public void PopulatePumpBurstOff ()
@@ -80,20 +70,12 @@ namespace GrowSense.SystemManager.WWW
       BurstOnType.Items.FindByValue (burstOnType).Selected = true;
     }
 
-    public void PopulateBoardType ()
-    {
-      if (Device.Board == "esp")
-        BoardType.SelectedValue = "esp";
-    }
-
     public override void HandleSubmission ()
     {
       HandleThresholdSubmission ();
       HandlePumpModeSubmission ();
       HandleBurstOnTimeSubmission ();
       HandleBurstOffTimeSubmission ();
-      HandleDryCalibrationSubmission ();
-      HandleWetCalibrationSubmission ();
       
       base.HandleSubmission ();
     }
@@ -136,16 +118,6 @@ namespace GrowSense.SystemManager.WWW
       
       if (existingValue != newValue)  
         DeviceMqttHolder.Current.Publish (Device.Name, "O", newValue);
-    }
-
-    public void HandleDryCalibrationSubmission ()
-    {
-      HandleSimpleValueSubmission ("D", DryCalibration.SelectedValue);
-    }
-
-    public void HandleWetCalibrationSubmission ()
-    {
-      HandleSimpleValueSubmission ("W", WetCalibration.SelectedValue);
     }
 
     public string GenerateRawProgressBar ()
