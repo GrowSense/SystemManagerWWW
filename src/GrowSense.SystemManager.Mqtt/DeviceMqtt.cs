@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.ComponentModel;
+using System.Threading;
 
 namespace GrowSense.SystemManager.Mqtt
 {
@@ -28,7 +29,7 @@ namespace GrowSense.SystemManager.Mqtt
     public bool IsConnecting = false;
 
     public DateTime ConnectingStartTime;
-    public int ConnectionTimeoutInSeconds = 10;
+    public int ConnectionTimeoutInSeconds = 20;
 
     public bool IsConnected
     {
@@ -64,16 +65,36 @@ namespace GrowSense.SystemManager.Mqtt
         Client = new MqttClient(MqttHost, MqttPort, false, null, null, MqttSslProtocols.None);
         Client.MqttMsgPublishReceived += HandleMqttMsgPublishReceived;
         Client.ConnectionClosed += HandleConnectionClosed;
+        
 
-        Client.Connect(ClientId, MqttUsername, MqttPassword);
+        var b = Client.Connect(ClientId, MqttUsername, MqttPassword, true, 10000);
 
-        Client.Subscribe(new string[] { "garden/#" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+        if (b == 0 && Client.IsConnected)
+        {
+          Console.WriteLine("  Connected to MQTT");
+          Client.Subscribe(new string[] { "garden/#" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
 
-        AddDevices(Manager.GetDevicesInfo());
+          AddDevices(Manager.GetDevicesInfo());
 
-        WatchDevicesFolder();
+          WatchDevicesFolder();
 
-        IsConnecting = false;
+          IsConnecting = false;
+        }
+        else
+        {
+          Console.WriteLine("  Failed to connect to MQTT");
+
+          if (b == 1)
+            throw new Exception("MQTT connection error: Unacceptable protocol version.");
+          if (b == 2)
+            throw new Exception("MQTT connection error: Identifier rejected.");
+          if (b == 3)
+            throw new Exception("MQTT connection error: Server unavailable.");
+          if (b == 4)
+            throw new Exception("MQTT connection error: Bad username or password.");
+          if (b == 5)
+            throw new Exception("MQTT connection error: Not authorized.");
+        }
       }
       else
         Console.WriteLine("Is already connecting. Skipping connection for this thread.");
@@ -91,6 +112,9 @@ namespace GrowSense.SystemManager.Mqtt
     bool HasConnectionTimedOut()
     {
       var hasTimedOut = IsConnecting && ConnectingStartTime.AddSeconds(ConnectionTimeoutInSeconds) < DateTime.Now; ;
+
+      if (hasTimedOut)
+        Console.WriteLine("  Timed out while connecting");
 
       return hasTimedOut;
     }
