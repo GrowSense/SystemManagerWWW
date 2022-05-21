@@ -8,11 +8,21 @@ then
 
   sh clean.sh
 
-  echo " " >> Jenkinsfile
+  echo " " >> .gitlab-ci.yml
+  
+  git pull local dev && \
+  git commit .gitlab-ci.yml -m "Forcing retest" && \
+  git push local dev && \
+  
+  git pull lan dev && \
+  git commit .gitlab-ci.yml -m "Forcing retest" && \
+  git push lan dev && \
   
   git pull origin dev && \
-  git commit Jenkinsfile -m "Forcing retest" && \
+  git commit .gitlab-ci.yml -m "Forcing retest" && \
   git push origin dev && \
+  
+  
   
   echo "Repository has been updated. Test should now start on test server."
 else
