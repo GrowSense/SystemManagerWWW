@@ -76,6 +76,7 @@
     <Content Include="LoginSettings.aspx" />
     <Content Include="DevicesJson.aspx" />
     <Content Include="CalibrateSoilMoistureSensor.aspx" />
+    <Content Include="StatusJson.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -224,6 +225,12 @@
     </Compile>
     <Compile Include="CalibrateSoilMoistureSensor.aspx.designer.cs">
       <DependentUpon>CalibrateSoilMoistureSensor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StatusJson.aspx.cs">
+      <DependentUpon>StatusJson.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StatusJson.aspx.designer.cs">
+      <DependentUpon>StatusJson.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

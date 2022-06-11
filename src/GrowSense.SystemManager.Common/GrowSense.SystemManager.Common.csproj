@@ -40,6 +40,8 @@
     <Compile Include="ProcessStarter.cs" />
     <Compile Include="SystemSettings.cs" />
     <Compile Include="SettingsManager.cs" />
+    <Compile Include="SystemStatus.cs" />
+    <Compile Include="SystemStatusEnum.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
